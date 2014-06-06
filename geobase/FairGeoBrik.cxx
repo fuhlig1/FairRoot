@@ -3,7 +3,7 @@
  *                                                                              *
  *              This software is distributed under the terms of the             * 
  *         GNU Lesser General Public Licence version 3 (LGPL) version 3,        *  
- *                  copied verbatim in the file "LICENCE"                       *
+ *                  copied verbatim in the file "LICENSE"                       *
  ********************************************************************************/
 //*-- AUTHOR : Ilse Koenig
 //*-- Modified : 11/11/2003 by Ilse Koenig

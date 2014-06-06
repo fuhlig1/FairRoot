@@ -3,7 +3,7 @@
  *                                                                              *
  *              This software is distributed under the terms of the             * 
  *         GNU Lesser General Public Licence version 3 (LGPL) version 3,        *  
- *                  copied verbatim in the file "LICENCE"                       *
+ *                  copied verbatim in the file "LICENSE"                       *
  ********************************************************************************/
 
 /** Configuration macro for setting common cuts and processes for G3, G4 and Fluka (M. Al-Turany 27.03.2008)

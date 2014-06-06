@@ -3,7 +3,7 @@
  *                                                                              *
  *              This software is distributed under the terms of the             * 
  *         GNU Lesser General Public Licence version 3 (LGPL) version 3,        *  
- *                  copied verbatim in the file "LICENCE"                       *
+ *                  copied verbatim in the file "LICENSE"                       *
  ********************************************************************************/
 #ifndef _FAIRCUDA_H_
 #define _FAIRCUDA_H_
