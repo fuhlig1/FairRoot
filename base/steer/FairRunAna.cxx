@@ -419,6 +419,7 @@ void FairRunAna::RunMixed(Int_t Ev_start, Int_t Ev_end)
     }
   }
   fTask->FinishTask();
+  fTask->PrintStatistics();
   fRootManager->StoreAllWriteoutBufferData();
   fRootManager->LastFill();
   fRootManager->Write();
@@ -502,6 +503,7 @@ void FairRunAna::Run(Int_t Ev_start, Int_t Ev_end)
 
     fRootManager->StoreAllWriteoutBufferData();
     fTask->FinishTask();
+    fTask->PrintStatistics();
     if (fWriteRunInfo) {
       fRunInfo.WriteInfo();
     }
@@ -576,6 +578,7 @@ void FairRunAna::RunEventReco(Int_t Ev_start, Int_t Ev_end)
   }
 
   fTask->FinishTask();
+  fTask->PrintStatistics();  
   if (fWriteRunInfo) {
     fRunInfo.WriteInfo();
   }
@@ -599,6 +602,7 @@ void FairRunAna::Run(Double_t delta_t)
 
   fRootManager->StoreAllWriteoutBufferData();
   fTask->FinishTask();
+  fTask->PrintStatistics();
   fRootManager->LastFill();
   fRootManager->Write();
 
@@ -676,6 +680,7 @@ void FairRunAna::RunTSBuffers()
   }
   fRootManager->StoreAllWriteoutBufferData();
   fTask->FinishTask();
+  fTask->PrintStatistics();
   fRootManager->LastFill();
   fRootManager->Write();
 }
@@ -700,6 +705,7 @@ void FairRunAna::RunOnLmdFiles(UInt_t NStart, UInt_t NStop)
   }
 
   fTask->FinishTask();
+  fTask->PrintStatistics();
   fRootManager->Write();
 
 }
@@ -715,6 +721,7 @@ void FairRunAna::DummyRun(Int_t Ev_start, Int_t Ev_end)
     fRootManager->Fill();
   }
   fTask->FinishTask();
+  fTask->PrintStatistics();
   fRootManager->Write();
 
 }
@@ -725,6 +732,7 @@ void FairRunAna::TerminateRun()
 {
   fRootManager->StoreAllWriteoutBufferData();
   fTask->FinishTask();
+  fTask->PrintStatistics();
   gDirectory->SetName(fRootManager->GetOutFile()->GetName());
   //  fRunInfo.WriteInfo(); // CRASHES due to file ownership i guess...
   //   cout << ">>> SlaveTerminate fRootManager->GetInChain()->Print()" << endl;

@@ -17,8 +17,12 @@
 #include "TCollection.h"                // for TIter
 #include "TList.h"                      // for TList
 #include "TObject.h"                    // for TObject
+#include "TROOT.h"
 
 #include <iostream>                     // for cout, endl
+#include <iomanip>                      //
+#include <algorithm>                    // for begin, end
+#include <numeric>                      // for accumulate
 
 using std::cout;
 using std::endl;
@@ -28,7 +32,10 @@ FairTask::FairTask()
   : TTask(),
     fVerbose(0),
     fInputPersistance(-1),
-    fLogger(FairLogger::GetLogger())
+    fLogger(FairLogger::GetLogger()),
+    fStopwatch(),
+    fCpuTime(),
+    fRealTime()
 {
 }
 // -------------------------------------------------------------------------
@@ -40,7 +47,10 @@ FairTask::FairTask(const char* name, Int_t iVerbose)
   : TTask(name, "FairTask"),
     fVerbose(iVerbose),
     fInputPersistance(-1),
-    fLogger(FairLogger::GetLogger())
+    fLogger(FairLogger::GetLogger()),
+    fStopwatch(),
+    fCpuTime(),
+    fRealTime()
 {
 
 }
@@ -122,8 +132,51 @@ void FairTask::SetVerbose(Int_t iVerbose)
 }
 // -------------------------------------------------------------------------
 
+void FairTask::ExecuteTasks(Option_t *option)
+{
+  // Execute all the subtasks of a task.
+  // This is copied from TTask to add functionality to measure runtime
+  // of tasks
+  TIter next(fTasks);
+  FairTask *task;
+  while((task=(FairTask*)next())) {
+    if (fgBreakPoint) return;
+    if (!task->IsActive()) continue;
+    if (task->fHasExecuted) {
+      task->ExecuteTasks(option);
+      continue;
+    }
+    if (task->fBreakin == 1) {
+      printf("Break at entry of task: %s\n",task->GetName());
+      fgBreakPoint = this;
+      task->fBreakin++;
+      return;
+    }
 
+    if (gDebug > 1) {
+      TROOT::IndentLevel();
+      cout<<"Execute task:"<<task->GetName()<<" : "<<task->GetTitle()<<endl;
+      TROOT::IncreaseDirLevel();
+    }
 
+    fStopwatch.Start(kTRUE); // reset the stop watch
+    task->Exec(option);
+    fStopwatch.Stop();
+
+    task->AddCpuTime(fStopwatch.CpuTime());
+    task->AddRealTime(fStopwatch.RealTime());
+
+    task->fHasExecuted = kTRUE;
+    task->ExecuteTasks(option);
+    if (gDebug > 1) TROOT::DecreaseDirLevel();
+    if (task->fBreakout == 1) {
+      printf("Break at exit of task: %s\n",task->GetName());
+      fgBreakPoint = this;
+      task->fBreakout++;
+      return;
+    }
+  }
+}
 
 // -----   Protected method InitTasks   ------------------------------------
 void FairTask::InitTasks()
@@ -177,5 +230,37 @@ void FairTask::FinishEvents()
 }
 // -------------------------------------------------------------------------
 
+void FairTask::PrintStatistics()
+{
+  TIter next(GetListOfTasks());
+  FairTask* task;
+  Ssiz_t length = 9; // length of taskname string
+  while( ( task=dynamic_cast<FairTask*>(next()) ) ) {
+    TString name = task->GetName();
+    if (name.Length() > length) length = name.Length();
+  }
+  LOG(INFO) << std::setw(length) << "Taskname" << " :       CPU Time       :       Real Time " << FairLogger::endl;
+  LOG(INFO) << std::setw(length) << " " << " :  Min  : Mean :  Max  :  Min  : Mean :  Max   " << FairLogger::endl;
+  next = GetListOfTasks();
+  while( ( task=dynamic_cast<FairTask*>(next()) ) ) { task->PrintStatistic(); }
+}
+// -------------------------------------------------------------------------
+
+void FairTask::PrintStatistic()
+{
+  if (fRealTime.size()  > 0) {
+    Double_t max_cpu = *std::max_element(fCpuTime.begin(), fCpuTime.end());
+    Double_t min_cpu = *std::min_element(fCpuTime.begin(), fCpuTime.end());
+    Double_t max_real = *std::max_element(fRealTime.begin(), fRealTime.end());
+    Double_t min_real = *std::min_element(fRealTime.begin(), fRealTime.end());
+    Double_t sum_cpu = std::accumulate(fCpuTime.begin(), fCpuTime.end(), 0.0);
+    Double_t mean_cpu =  sum_cpu / fCpuTime.size();
+    Double_t sum_real = std::accumulate(fRealTime.begin(), fRealTime.end(), 0.0);
+    Double_t mean_real =  sum_real / fRealTime.size();
+    LOG(INFO) << GetName() << " : " << min_cpu << " : " << mean_cpu
+              << " : " << max_cpu << " : " << min_real << " : "
+              << mean_real << " : " << max_real << FairLogger::endl;
+  }
+}
 
 ClassImp(FairTask)

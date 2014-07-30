@@ -28,6 +28,9 @@
 
 #include "Rtypes.h"                     // for Int_t, FairTask::Class, etc
 #include "TString.h"                    // for TString
+#include "TStopwatch.h"
+
+#include <vector>
 
 class FairLogger;
 
@@ -62,9 +65,17 @@ class FairTask : public TTask
     void ReInitTask();
 
 
+    /** Execute the task and all its subtasks
+        This is a copy from TTask which measures the time for
+        the Exec function of the task and stores the information.
+    **/
+    void ExecuteTasks(Option_t* option = "0");
+
+    /** Loop over all tasks and print the measured time **/
+    void PrintStatistics();
+
     /** Set parameters. For this task and all of the subtasks. **/
     void SetParTask();
-
 
     /** Action at end of run. For this task and all of the subtasks. **/
     virtual void FinishTask();
@@ -131,11 +142,21 @@ class FairTask : public TTask
     /** Recursive FinishEvent of subtasks **/
     void FinishEvents();
 
+    void AddCpuTime(Double_t time) { fCpuTime.push_back(time);}
+    void AddRealTime(Double_t time) { fRealTime.push_back(time);}
+
   private:
+    TStopwatch fStopwatch;
+    std::vector<Double_t> fCpuTime;
+    std::vector<Double_t> fRealTime;
+
+    /** Print the measured time for a task**/
+    void PrintStatistic();
+
     FairTask(const FairTask&);
     FairTask& operator=(const FairTask&);
 
-    ClassDef(FairTask,2);
+    ClassDef(FairTask,3);
 
 };
 
