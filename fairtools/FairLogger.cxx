@@ -47,7 +47,7 @@ FairLogger::FairLogger()
   fLevel(INFO),
   fScreenStream(&std::cout),
   fFileStream(NULL),
-  fNullStream(new ostream(0)),
+  fNullStream(new std::ostream(0)),
   fLogFileOpen(kFALSE),
   fIsNewLine(kTRUE)
 {
@@ -223,7 +223,7 @@ void FairLogger::SetLogFileName(const char* name)
 
 void FairLogger::CloseLogFile()
 {
-  dynamic_cast<ofstream*>(fFileStream)->close();
+  dynamic_cast<std::ofstream*>(fFileStream)->close();
 }
 
 void FairLogger::OpenLogFile()

@@ -51,7 +51,7 @@ FairShieldGenerator::FairShieldGenerator(const char* fileName)
   //  fPDG=TDatabasePDG::Instance();
   //  fFileName  = fileName;
   cout << "-I- FairShieldGenerator: Opening input file " << fileName << endl;
-  fInputFile = new ifstream(fFileName);
+  fInputFile = new std::ifstream(fFileName);
   if ( ! fInputFile->is_open() ) {
     Fatal("FairShieldGenerator","Cannot open input file.");
   }
@@ -62,7 +62,7 @@ FairShieldGenerator::FairShieldGenerator(const char* fileName)
   CloseInput();
   cout << "-I- FairShieldGenerator: Reopening input file " << fileName
        << endl;
-  fInputFile = new ifstream(fFileName);
+  fInputFile = new std::ifstream(fFileName);
 }
 // ------------------------------------------------------------------------
 

@@ -66,6 +66,6 @@ class FairDbConfigBuffer
 
 };
 
-ostream& operator<<(ostream& s, const FairDbConfigBuffer& cfStream);
+std::ostream& operator<<(std::ostream& s, const FairDbConfigBuffer& cfStream);
 
 #endif  // FAIRDBCONFIGBUFFER_H

@@ -102,7 +102,7 @@ class FairDbValRecord : public FairDbObjTableMap
 
 };
 
-ostream& operator<<(ostream& s, const FairDbValRecord& vRec);
+std::ostream& operator<<(std::ostream& s, const FairDbValRecord& vRec);
 
 
 #endif  // FAIRDBVALRECORD_H

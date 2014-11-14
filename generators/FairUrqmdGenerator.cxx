@@ -284,7 +284,7 @@ void FairUrqmdGenerator::ReadConversionTable()
 
   TString work      = getenv("VMCWORKDIR");
   TString fileName  = work + "/input/urqmd_pdg.dat";
-  ifstream* pdgconv = new ifstream(fileName.Data());
+  std::ifstream* pdgconv = new std::ifstream(fileName.Data());
 
   Int_t index = 0;
   Int_t pdgId = 0;

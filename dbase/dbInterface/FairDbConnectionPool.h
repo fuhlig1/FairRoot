@@ -24,7 +24,7 @@ class FairDbStatement;
 
 class FairDbConnectionPool
 {
-    friend ostream& operator<<(ostream& s, const FairDbConnectionPool& cascader);
+    friend std::ostream& operator<<(std::ostream& s, const FairDbConnectionPool& cascader);
 
   public:
 

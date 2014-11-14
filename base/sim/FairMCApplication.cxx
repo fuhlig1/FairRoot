@@ -202,10 +202,10 @@ FairMCApplication::~FairMCApplication()
   // the modules are already deleted in FairRunSim
   delete fActDetIter;
   delete fDetectors;
-  delete gMC;
+//  delete gMC;
   delete fModIter;
   delete fDetIter;
-  gMC=0;
+//  gMC=0;
   //   cout<<"Leave Destructor of FairMCApplication"<<endl;
 }
 //_____________________________________________________________________________

@@ -193,7 +193,7 @@ void FairGeoNode::print()
   cout<<"//----------------------------------------------------------\n";
 }
 
-Bool_t FairGeoNode::write(fstream& fout)
+Bool_t FairGeoNode::write(std::fstream& fout)
 {
   // Writes all parameters of a volume to file
   fout<<fName.Data()<<'\n';
