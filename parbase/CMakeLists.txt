@@ -53,15 +53,16 @@ FairParamList.cxx
 FairRtdbRun.cxx  
 FairRuntimeDb.cxx
 ###### Fair DB IO #######
-dbIO/FairParTSQLIo.cxx
-dbIO/FairDetParTSQLIo.cxx
-dbIO/FairGenericParTSQLIo.cxx
+#dbIO/FairParTSQLIo.cxx
+#dbIO/FairDetParTSQLIo.cxx
+#dbIO/FairGenericParTSQLIo.cxx
 )
 
 Set(HEADERS )
 Set(LINKDEF ParBaseLinkDef.h)
 Set(LIBRARY_NAME ParBase)
-Set(DEPENDENCIES FairTools FairDB RIO Core )
+#Set(DEPENDENCIES FairTools FairDB RIO Core )
+Set(DEPENDENCIES FairTools RIO Core )
 
 GENERATE_LIBRARY()
 
