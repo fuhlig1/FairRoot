@@ -47,7 +47,7 @@ FairLogger::FairLogger()
   fLevel(INFO),
   fScreenStream(&std::cout),
   fFileStream(NULL),
-  fNullStream(new ostream(0)),
+  fNullStream(new std::ostream(0)),
   fLogFileOpen(kFALSE),
   fIsNewLine(kTRUE)
 {
