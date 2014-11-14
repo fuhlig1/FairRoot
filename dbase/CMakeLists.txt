@@ -107,7 +107,7 @@ set(HEADERS ${HEADERS} ${CMAKE_SOURCE_DIR}/dbase/dbInterface/FairDbReader.h ${CM
 set(LINKDEF FairDBLinkDef.h)
 set(LIBRARY_NAME FairDB)
 
-set(DEPENDENCIES Net RIO Cint Core)
+set(DEPENDENCIES Net RIO Core)
 
 GENERATE_LIBRARY()
 

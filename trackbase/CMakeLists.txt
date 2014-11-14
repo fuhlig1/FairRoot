@@ -45,7 +45,7 @@ Set(HEADERS )
 Set(LINKDEF TrackBaseLinkDef.h)
 Set(LIBRARY_NAME TrkBase)
 Set(DEPENDENCIES Base)
-#Set(DEPENDENCIES Base Physics Matrix Cint Core)
+#Set(DEPENDENCIES Base Physics Matrix Core)
 
 GENERATE_LIBRARY()
 
