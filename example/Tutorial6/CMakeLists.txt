@@ -13,10 +13,8 @@
 # Instead  those are added only if they have been previously set  
 
 
-set(INCLUDE_DIRECTORIES
+Set(INCLUDE_DIRECTORIES
 ${BASE_INCLUDE_DIRECTORIES}
-${ROOT_INCLUDE_DIR}
-${ZMQ_INCLUDE_DIR}
 ${CMAKE_SOURCE_DIR}/parbase/dbIO
 ${CMAKE_SOURCE_DIR}/fairmq
 ${CMAKE_SOURCE_DIR}/base/MQ
@@ -34,6 +32,11 @@ ${CMAKE_SOURCE_DIR}/example/Tutorial6/db
 ${CMAKE_SOURCE_DIR}/example/Tutorial3/data
 )
 
+Set(SYSTEM_INCLUDE_DIRECTORIES
+${ROOT_INCLUDE_DIR}
+${ZMQ_INCLUDE_DIR}
+)
+
 #if (MYSQL_INCLUDE_DIR)       
 #  set(INCLUDE_DIRECTORIES ${INCLUDE_DIRECTORIES} ${MYSQL_INCLUDE_DIR}) 
 #endif()
@@ -46,7 +49,8 @@ ${CMAKE_SOURCE_DIR}/example/Tutorial3/data
 
 #MESSAGE (" INCLUDES='${INCLUDE_DIRECTORIES}' ")
 
-include_directories(${INCLUDE_DIRECTORIES})
+Include_Directories(${INCLUDE_DIRECTORIES})
+Include_Directories(SYSTEM ${SYSTEM_INCLUDE_DIRECTORIES})
 
 if (Boost_FOUND)
   configure_file( ${CMAKE_SOURCE_DIR}/example/Tutorial6/macros/run_sps_init.sh.in ${CMAKE_BINARY_DIR}/bin/run_sps_init.sh )
