@@ -57,8 +57,13 @@ Check_Compiler()
 set(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/lib")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin")
 
-Option(USE_PATH_INFO "Information from PATH and LD_LIBRARY_PATH are
-used." OFF)
+Option(WITH_DBASE "Switch off the building of FairDB." ON)
+If(WITH_DBASE)
+  Add_Definitions(-DWITH_DBASE)
+EndIf()
+
+Option(USE_PATH_INFO "Information from PATH and LD_LIBRARY_PATH are used." OFF)
+
 If(USE_PATH_INFO)
   Set(PATH $ENV{PATH})
   If (APPLE)
@@ -175,7 +180,7 @@ SET(FAIRROOT_VERSION "${FAIRROOT_MAJOR_VERSION}.${FAIRROOT_MINOR_VERSION}.${FAIR
 SET(FAIRROOT_LIBRARY_PROPERTIES ${FAIRROOT_LIBRARY_PROPERTIES}
     VERSION "${FAIRROOT_VERSION}"
     SOVERSION "${FAIRROOT_MAJOR_VERSION}"
-#    SUFFIX ".so"
+    SUFFIX ".so"
 )
 
 # Load the macro to generate the needed version info at compile time

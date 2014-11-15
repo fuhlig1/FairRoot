@@ -50,6 +50,16 @@ FairRtdbRun.cxx
 FairRuntimeDb.cxx
 )
 
+If(WITH_DBASE)
+  ###### Fair DB IO #######
+  Set(SRCS ${SRCS}
+    dbIO/FairParTSQLIo.cxx
+    dbIO/FairDetParTSQLIo.cxx
+    dbIO/FairGenericParTSQLIo.cxx
+  )
+  Set(DEFINITIONS WITH_DBASE)
+EndIf()
+
 Set(HEADERS )
 Set(LINKDEF ParBaseLinkDef.h)
 Set(LIBRARY_NAME ParBase)
