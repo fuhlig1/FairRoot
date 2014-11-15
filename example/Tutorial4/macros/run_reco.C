@@ -41,7 +41,7 @@ void run_reco( TString mcEngine="TGeant3" )
   paramDir = workDir + "/Tutorial4/parameters/";
 
 //  TObjString tutDetDigiFile = paramDir + "TutorialDet.missallign.par";
-  TObjString tutDetDigiFile = paramDir + "example.par";
+  TObjString tutDetDigiFile = static_cast<TObjString>(paramDir + "example.par");
   parFileList->Add(&tutDetDigiFile);
 
   // -----   Timer   --------------------------------------------------------
