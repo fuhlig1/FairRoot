@@ -5,13 +5,17 @@
  #         GNU Lesser General Public Licence version 3 (LGPL) version 3,        #  
  #                  copied verbatim in the file "LICENSE"                       #
  ################################################################################
-
 Set(INCLUDE_DIRECTORIES
   ${BASE_INCLUDE_DIRECTORIES}
   ${CMAKE_SOURCE_DIR}/base/MQ
   ${CMAKE_SOURCE_DIR}/base/MQ/devices
   ${CMAKE_SOURCE_DIR}/base/MQ/tasks
   ${CMAKE_SOURCE_DIR}/fairmq
+)
+
+Set(SYSTEM_INCLUDE_DIRECTORIES
+  ${Boost_INCLUDE_DIR}
+  ${ROOT_INCLUDE_DIR}
 )
 
 Include_Directories(${INCLUDE_DIRECTORIES})
