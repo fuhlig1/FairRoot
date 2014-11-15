@@ -1167,7 +1167,11 @@ void FairMCApplication::AddDecayModes()
 {
   TString work = getenv("VMCWORKDIR");
   TString work_config=work+"/gconfig/";
+  work_config.ReplaceAll("//","/");
+
   TString config_dir= getenv("CONFIG_DIR");
+  config_dir.ReplaceAll("//","/");
+
   Bool_t AbsPath=kFALSE;
 
   if (!config_dir.EndsWith("/")) {
