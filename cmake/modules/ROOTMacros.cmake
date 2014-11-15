@@ -84,7 +84,6 @@ Macro(ROOT_GENERATE_DICTIONARY_NEW)
     set(EXTRA_DICT_PARAMETERS "")
     set(Int_ROOTMAPFILE ${LIBRARY_OUTPUT_PATH}/lib${Int_LIB}.rootmap)
     set(Int_PCMFILE G__${Int_LIB}Dict_rdict.pcm)
-    Message("Int_PCMFILE: ${Int_PCMFILE}")
     set(OUTPUT_FILES ${OUTPUT_FILES} ${Int_PCMFILE} ${Int_ROOTMAPFILE})
     set(EXTRA_DICT_PARAMETERS ${EXTRA_DICT_PARAMETERS}
         -inlineInputHeader -rmf ${Int_ROOTMAPFILE} 
