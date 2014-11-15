@@ -33,7 +33,7 @@ void run_tutorial4(Int_t nEvents = 10, TString mcEngine="TGeant3")
 
   TString paramDir = dir + "/Tutorial4/parameters/";
 
-  TObjString tutDetDigiFile = paramDir + "example.par";
+  TObjString tutDetDigiFile = static_cast<TObjString>(paramDir + "example.par");
   parFileList->Add(&tutDetDigiFile);
 
 
