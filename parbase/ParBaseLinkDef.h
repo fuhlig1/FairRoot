@@ -36,9 +36,11 @@
 #pragma link C++ class FairRtdbRun+;
 #pragma link C++ class FairRuntimeDb+;
 
+#ifdef WITH_DBASE
 // dbIO
-//#pragma link C++ class FairParTSQLIo+;
-//#pragma link C++ class FairDetParTSQLIo+;
-//#pragma link C++ class FairGenericParTSQLIo+;
+#pragma link C++ class FairParTSQLIo+;
+#pragma link C++ class FairDetParTSQLIo+;
+#pragma link C++ class FairGenericParTSQLIo+;
+#endif
 
 #endif
