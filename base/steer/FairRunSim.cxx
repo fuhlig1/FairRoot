@@ -244,8 +244,12 @@ void FairRunSim::CheckFlukaExec()
   /** Private method for setting FLUKA simulation*/
   TString work = getenv("VMCWORKDIR");
   TString work_config=work+"/gconfig/";
+  work_config.ReplaceAll("//","/");
+
   TString config_dir= getenv("CONFIG_DIR");
+  config_dir.ReplaceAll("//","/");
   if (!config_dir.EndsWith("/")) { config_dir+="/"; }
+
   TString flout;
   if(strcmp(GetName(),"TFluka") == 0 ) {
     TString flexec="run_fluka.sh";
@@ -260,6 +264,7 @@ void FairRunSim::CheckFlukaExec()
     TString macrodir = getenv("PWD");
     cout << macrodir << endl;
     flout = macrodir + "/fluka_out" ;
+    flout.ReplaceAll("//","/");
     gSystem->cd(flout.Data());
   }
 }
@@ -269,12 +274,17 @@ void FairRunSim::SetMCConfig()
   /** Private method for setting simulation and/or Geane configuration and cuts*/
 
   TString work = getenv("VMCWORKDIR");
-  TString Lib_config= getenv("GEANT4VMC_MACRO_DIR");
   TString work_config=work+"/gconfig/";
-  TString config_dir= getenv("CONFIG_DIR");
-  Bool_t AbsPath=kFALSE;
-  if (!config_dir.EndsWith("/")) { config_dir+="/"; }
+  work_config.ReplaceAll("//","/");
+
+  TString Lib_config= getenv("GEANT4VMC_MACRO_DIR");
+  Lib_config.ReplaceAll("//","/");
   if (!Lib_config.EndsWith("/")) { Lib_config+="/"; }
+
+  TString config_dir= getenv("CONFIG_DIR");
+  config_dir.ReplaceAll("//","/");
+
+  Bool_t AbsPath=kFALSE;
 
   TString LibMacro;
   TString LibFunction;
@@ -399,9 +409,11 @@ void FairRunSim::SetMaterials(const char* MatFileName)
 {
   TString Mat="";
   TString work = getenv("GEOMPATH");
+  work.ReplaceAll("//","/");
   if (work.IsNull()) {
     work = getenv("VMCWORKDIR");
     Mat=work+"/geometry/";
+    Mat.ReplaceAll("//","/");
   } else {
     Mat=work;
     if (!Mat.EndsWith("/")) { Mat+="/"; }
