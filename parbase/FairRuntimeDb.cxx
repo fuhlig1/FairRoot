@@ -430,6 +430,7 @@ Bool_t FairRuntimeDb::writeContainer(FairParSet* cont, FairRtdbRun* run, FairRtd
         }
       }
       break;// End of rootfile IO
+#ifdef WITH_DBASE
     case RootTSQLOutput://TSQL
       if (cont->hasChanged()) {
         cv = findOutputVersion(cont);
@@ -442,6 +443,7 @@ Bool_t FairRuntimeDb::writeContainer(FairParSet* cont, FairRtdbRun* run, FairRtd
         }
       }
       break;//End of TSQL IO
+#endif
     case AsciiFileOutput:// might be Ascii I/O
       if(cont->hasChanged()) {
         cv = cont->write(output);
@@ -720,8 +722,10 @@ Bool_t FairRuntimeDb::setOutput(FairParIo* op)
     if (strcmp(output->IsA()->GetName(), "FairParRootFileIo") == 0) {
       ioType = RootFileOutput;
       isRootFileOutput=kTRUE;
+#ifdef WITH_DBASE
     } else if (strcmp(output->IsA()->GetName(), "FairParTSQLIo") == 0) {
       ioType = RootTSQLOutput;
+#endif
     } else { //ASCII
       ioType = AsciiFileOutput;
     }
