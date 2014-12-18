@@ -14,7 +14,6 @@
 #include "TList.h"                      // for TList
 #include "TString.h"                    // for TString
 
-class FairLogger;
 class FairParIo;
 class FairParSet;
 
@@ -30,8 +29,6 @@ class FairContainer : public TNamed
     TList* contexts;
     /** actual context set by the user */
     TString actualContext;
-    /** Fair Logger */
-    FairLogger*  fLogger;//!
   public:
     FairContainer( const char*, const char*, const char*);
     ~FairContainer();
@@ -61,8 +58,6 @@ class FairContFact : public TNamed
     const char* getActualContext(const char* name) {
       return ((FairContainer*)containers->FindObject(name))->getActualContext();
     }
-    /** Fair Logger */
-    FairLogger*  fLogger;//!
     ClassDef(FairContFact,0) // base class of all factories for parameter containers
   private:
     FairContFact(const FairContFact&);

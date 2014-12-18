@@ -15,7 +15,6 @@
 #include "TString.h"                    // for TString
 
 class FairContFact;
-class FairLogger;
 class FairParIo;
 class FairParSet;
 class FairRtdbRun;
@@ -38,8 +37,6 @@ class FairRuntimeDb : public TObject
     TString currentFileName; // Name of current event file
     Bool_t versionsChanged;  // flag for write of list of runs (set kTRUE by each write)
     Bool_t isRootFileOutput; // flag indicating that the output is a ROOT file
-    /** Fair Logger */
-    FairLogger*  fLogger;  //!
 
     /**
      * Select which IO type to use.

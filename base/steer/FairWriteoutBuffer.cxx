@@ -29,8 +29,7 @@ FairWriteoutBuffer::FairWriteoutBuffer(TString branchName, TString className, TS
     fClassName(className),
     fTreeSave(true),
     fActivateBuffering(kTRUE),
-    fVerbose(0),
-    fLogger(FairLogger::GetLogger())
+    fVerbose(0)
 {
   FairRootManager::Instance()->Register(branchName, className, folderName, persistance);
   if (fBranchName == "" || fClassName == "") {

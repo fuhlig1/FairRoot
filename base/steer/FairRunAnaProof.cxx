@@ -87,7 +87,7 @@ void FairRunAnaProof::Init()
   fInFileIsOpen = fRootManager->InitSource();
 
   if (fIsInitialized) {
-    fLogger->Fatal(MESSAGE_ORIGIN,"Error Init is already called before!");
+    gLogger->Fatal(MESSAGE_ORIGIN,"Error Init is already called before!");
     exit(-1);
   } else {
     fIsInitialized=kTRUE;
@@ -101,7 +101,7 @@ void FairRunAnaProof::Init()
     if ( fMixedInput) {
       Bool_t openBKChain = fRootManager->OpenBackgroundChain();
       if (!openBKChain) {
-        fLogger->Fatal(MESSAGE_ORIGIN, "Could not open background Chain!");
+        gLogger->Fatal(MESSAGE_ORIGIN, "Could not open background Chain!");
       }
       fRootManager->OpenSignalChain();
     }
@@ -140,7 +140,7 @@ void FairRunAnaProof::Init()
       }
       //check that the geometry was loaded if not try all connected files!
       if (fLoadGeo && gGeoManager==0) {
-        fLogger->Info(MESSAGE_ORIGIN, "Geometry was not found in the input file we will look in the friends if any!" );
+        gLogger->Info(MESSAGE_ORIGIN, "Geometry was not found in the input file we will look in the friends if any!" );
         TFile* currentfile= gFile;
         TFile* nextfile=0;
         TSeqCollection* fileList=gROOT->GetListOfFiles();
@@ -202,7 +202,7 @@ void FairRunAnaProof::Init()
 
   if (par && fInFileIsOpen) {
 
-    fLogger->Info(MESSAGE_ORIGIN,"Parameter and input file are available, Assure that basic info is there for the run!");
+    gLogger->Info(MESSAGE_ORIGIN,"Parameter and input file are available, Assure that basic info is there for the run!");
     fRootManager->ReadEvent(0);
 
     fEvtHeader = (FairEventHeader*)fRootManager->GetObject("EventHeader.");
@@ -239,7 +239,7 @@ void FairRunAnaProof::Init()
     //  fRootManager->SetBranchNameList(par->GetBranchNameList());
 
   } else if (fMixedInput) {
-    fLogger->Info(MESSAGE_ORIGIN,"Initializing for Mixed input");
+    gLogger->Info(MESSAGE_ORIGIN,"Initializing for Mixed input");
 
     //For mixed input we have to set containers to static becauser of the different run ids
     //fRtdb->setContainersStatic(kTRUE);
@@ -265,12 +265,12 @@ void FairRunAnaProof::Init()
     fRtdb->initContainers(fRunId);
 
     /*   if (gGeoManager==0) {
-         fLogger->Info(MESSAGE_ORIGIN,"Read the Geometry from Parameter file");
+         gLogger->Info(MESSAGE_ORIGIN,"Read the Geometry from Parameter file");
           FairGeoParSet* geopar=dynamic_cast<FairGeoParSet*>(fRtdb->getContainer("FairGeoParSet"));
 
        }
        if (gGeoManager==0) {
-         fLogger->Fatal(MESSAGE_ORIGIN,"Could not Read the Geometry from Parameter file");
+         gLogger->Fatal(MESSAGE_ORIGIN,"Could not Read the Geometry from Parameter file");
        }
 
      */
@@ -278,7 +278,7 @@ void FairRunAnaProof::Init()
     fRtdb->initContainers( fRunId );
 
   } else {
-    fLogger->Info(MESSAGE_ORIGIN,"Initializing without input file or Mixed input");
+    gLogger->Info(MESSAGE_ORIGIN,"Initializing without input file or Mixed input");
     FairEventHeader* evt = GetEventHeader();
     evt->Register();
     FairRunIdGenerator genid;

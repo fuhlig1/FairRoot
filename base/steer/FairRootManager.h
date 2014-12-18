@@ -27,7 +27,6 @@ class FairEventHeader;
 class FairFileHeader;
 class FairGeoNode;
 class FairLink;
-class FairLogger;
 class FairMCEventHeader;
 class FairTSBufferFunctional;
 class FairWriteoutBuffer;
@@ -350,7 +349,6 @@ class FairRootManager : public TObject
     std::map < TString, Int_t>::iterator     fBrPerMapIter;
     /** List of all files added with AddFriend */
     std::list<TString>                      fFriendFileList; //!
-    FairLogger*                         fLogger;//!
     /** Mix all inputs, i.e: read one entry from each input and add them together*/
     Bool_t                              fMixAllInputs;
     /**True if signal and background mixing is used*/
@@ -417,7 +415,7 @@ class FairRootManager : public TObject
     TString fFairLinksBranchName; //!
 
 
-    ClassDef(FairRootManager,7) // Root IO manager
+    ClassDef(FairRootManager,8) // Root IO manager
 };
 
 

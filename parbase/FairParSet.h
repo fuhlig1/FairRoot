@@ -13,7 +13,6 @@
 #include "Rtypes.h"                     // for Int_t, Bool_t, etc
 #include "TString.h"                    // for TString
 
-class FairLogger;
 class FairParIo;
 
 class FairParSet : public FairDbObjTableMap
@@ -29,8 +28,6 @@ class FairParSet : public FairDbObjTableMap
     TString paramContext;    // Context/purpose for parameters and conditions
     TString author;          // Author of parameters
     TString description ;    // Description of parameters
-    /** Fair Logger */
-    FairLogger*  fLogger;  //!
 
   public:
     FairParSet(const char* name="",const char* title="",const char* context="", Bool_t owner=kFALSE);
@@ -93,7 +90,7 @@ class FairParSet : public FairDbObjTableMap
     FairParSet& operator=(const FairParSet&);
     FairParSet(const FairParSet&);
 
-    ClassDef(FairParSet,1) // Base class for all parameter containers
+    ClassDef(FairParSet,2) // Base class for all parameter containers
 };
 
 #endif  /* !FAIRPARSET_H */

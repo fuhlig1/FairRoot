@@ -73,7 +73,6 @@ FairRuntimeDb::FairRuntimeDb(void)
    currentFileName(""),
    versionsChanged(kFALSE),
    isRootFileOutput(kFALSE),
-   fLogger(FairLogger::GetLogger()),
    ioType(UNKNOWN_Type)
 {
   gRtdb=this;
@@ -106,7 +105,7 @@ void FairRuntimeDb::addContFactory(FairContFact* fact)
 {
   // Adds a container factory to the list of factories
   if (!(contFactories.FindObject(fact->GetName()))) {
-    fLogger->Debug( MESSAGE_ORIGIN,"- RTDB container factory %s \n",fact->GetName() );
+    LOG(DEBUG) << "- RTDB container factory " << fact->GetName() << FairLogger::endl;
     contFactories.Add(fact);
   }
 }
@@ -345,7 +344,7 @@ Bool_t FairRuntimeDb::writeContainer(FairParSet* cont, FairRtdbRun* run, FairRtd
   // The output might be suppressed if the changes is due an initialisation from a
   //   ROOT file which serves also as output or if it was already written
   Text_t* c=(char*)cont->GetName();
-  fLogger->Debug( MESSAGE_ORIGIN,"RuntimeDb: write container : %s ", cont->GetName());
+  LOG(DEBUG) << "RuntimeDb: write container : " << cont->GetName() << FairLogger::endl;
   FairParVersion* vers=run->getParVersion(c);
   Bool_t rc=kTRUE;
   Int_t cv=0;
@@ -357,7 +356,7 @@ Bool_t FairRuntimeDb::writeContainer(FairParSet* cont, FairRtdbRun* run, FairRtd
         if (cv==0) {
           cv=cont->write(output);
           if (cv>0) {
-            fLogger->Info(MESSAGE_ORIGIN,"***  %s written to ROOT file   version: %i ", c, cv);
+            LOG(INFO) << "***  " << c << " written to ROOT file   version: " << cv << FairLogger::endl;
           } else if (cv==-1) { return kFALSE; }
           // -1 indicates and error during write
           // 0 is allowed for all containers which have no write function
@@ -403,7 +402,7 @@ Bool_t FairRuntimeDb::writeContainer(FairParSet* cont, FairRtdbRun* run, FairRtd
   // The output might be suppressed if the changes is due an initialisation from a
   //   ROOT file which serves also as output or if it was already written
   Text_t* c = (char*)cont->GetName();
-  fLogger->Debug( MESSAGE_ORIGIN,"RuntimeDb: write container : %s ", cont->GetName());
+  LOG(DEBUG) << "RuntimeDb: write container : " << cont->GetName() << FairLogger::endl;
   FairParVersion* vers = run->getParVersion(c);
   Bool_t rc = kTRUE;
   Int_t cv = 0;
@@ -415,7 +414,7 @@ Bool_t FairRuntimeDb::writeContainer(FairParSet* cont, FairRtdbRun* run, FairRtd
         if (cv == 0) {
           cv = cont->write(output);
           if (cv>0) {
-            fLogger->Info(MESSAGE_ORIGIN,"***  %s written to ROOT file   version: %i ", c, cv);
+            LOG(INFO) << "***  " << c << " written to ROOT file   version: " << cv << FairLogger::endl;
           } else if (cv==-1) {
             return kFALSE;
           }

@@ -22,7 +22,6 @@
 #include "TFile.h"
 class FairFileHeader;
 class TString;
-class FairLogger;
 class FairRuntimeDb;
 class TFolder;
 
@@ -67,8 +66,6 @@ private:
     FairFileHeader*                   fFileHeader; //!
     /** Current Entry number */
     Int_t                             fCurrentEntryNr;  //!
-    /** FairLogger */
-    FairLogger*                       fLogger;
     /** List of all files added with AddFriend */
     std::list<TString>                fFriendFileList; //!
     std::list<TString>                fInputChainList;//!

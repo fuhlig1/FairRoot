@@ -19,7 +19,6 @@
 #include "TSeqCollection.h"             // for TSeqCollection
 #include "TString.h"                    // for TString
 
-class FairLogger;
 class TArrayD;
 class TArrayF;
 class TArrayI;
@@ -78,7 +77,6 @@ class FairParamList : public TObject
 {
   protected:
     TList* paramList;      // List for parameters stored as string
-    FairLogger* fLogger;  // FairRoot logging mechanism
     class FairParamTFile : public TFile
     {
       public:
@@ -129,7 +127,7 @@ class FairParamList : public TObject
     FairParamList(const FairParamList&);
     FairParamList& operator=(const FairParamList&);
 
-    ClassDef(FairParamList,2) // Class for lists of parameters (of type FairParamObj)
+    ClassDef(FairParamList,3) // Class for lists of parameters (of type FairParamObj)
 };
 
 #endif  /* !FAIRPARAMLIST_H */

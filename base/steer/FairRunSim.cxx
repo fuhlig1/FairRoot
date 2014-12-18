@@ -87,15 +87,15 @@ FairRunSim::FairRunSim(Bool_t isMaster)
 //_____________________________________________________________________________
 FairRunSim::~FairRunSim()
 {
-  fLogger->Debug(MESSAGE_ORIGIN," Enter Destructor of FairRunSim ");
+  gLogger->Debug(MESSAGE_ORIGIN," Enter Destructor of FairRunSim ");
   /** List of Modules is filled via AddModule from the macro, but it
    is the responsibility of FairRunSim to call the destructors of
    the modules-
   */
-  fLogger->Debug(MESSAGE_ORIGIN," Start deleting all registered modules");
+  gLogger->Debug(MESSAGE_ORIGIN," Start deleting all registered modules");
   ListOfModules->Delete();
   delete ListOfModules;
-  fLogger->Debug(MESSAGE_ORIGIN," Finish deleting all registered modules");
+  gLogger->Debug(MESSAGE_ORIGIN," Finish deleting all registered modules");
 
   fIons->Delete();
   delete fIons;
@@ -145,7 +145,7 @@ void FairRunSim::Init()
   CheckFlukaExec();
 
 //  fOutFile=fRootManager->OpenOutFile(fOutname);
-  fLogger->Info(MESSAGE_ORIGIN,"==============  FairRunSim: Initialising simulation run ==============");
+  gLogger->Info(MESSAGE_ORIGIN,"==============  FairRunSim: Initialising simulation run ==============");
 
   FairGeoLoader* loader=new FairGeoLoader(fLoaderName->Data(), "Geo Loader");
   FairGeoInterface* GeoInterFace=loader->getGeoInterface();
@@ -192,7 +192,7 @@ void FairRunSim::Init()
   }
   // on/off visualisation
   if( fStoreTraj ) {
-    fLogger->Info(MESSAGE_ORIGIN, "Create visualisation manager ");
+    gLogger->Info(MESSAGE_ORIGIN, "Create visualisation manager ");
     new FairTrajFilter();
   }
   if(fRadLength) {
@@ -250,7 +250,7 @@ void FairRunSim::CheckFlukaExec()
   if(strcmp(GetName(),"TFluka") == 0 ) {
     TString flexec="run_fluka.sh";
     if (TString(gSystem->FindFile(config_dir.Data(),flexec)) != TString("")) {
-      fLogger->Info(MESSAGE_ORIGIN,"---User path for Configuration is used :  %s ", config_dir.Data());
+      gLogger->Info(MESSAGE_ORIGIN,"---User path for Configuration is used :  %s ", config_dir.Data());
     } else {
       flexec=work_config+"run_fluka.sh";
     }
@@ -290,17 +290,17 @@ void FairRunSim::SetMCConfig()
     } else {
       if (fUserConfig.Contains("/")) { AbsPath=kTRUE; }
       g4Macro = fUserConfig;
-      fLogger->Info(MESSAGE_ORIGIN,"---------------User config is used : %s ",g4Macro.Data());
+      gLogger->Info(MESSAGE_ORIGIN,"---------------User config is used : %s ",g4Macro.Data());
     }
     if (TString(gSystem->FindFile(config_dir.Data(),g4LibMacro)) != TString("")) { //be carfull after this call the string g4LibMacro is empty if not found!!!!
-      fLogger->Info(MESSAGE_ORIGIN,"---User path for Configuration (g4libs.C) is used : %s" ,config_dir.Data());
+      gLogger->Info(MESSAGE_ORIGIN,"---User path for Configuration (g4libs.C) is used : %s" ,config_dir.Data());
     } else {
       g4LibMacro=Lib_config+"g4libs.C";
     }
     LibMacro=g4LibMacro;
     LibFunction="g4libs()";
     if (!AbsPath && TString(gSystem->FindFile(config_dir.Data(),g4Macro)) != TString("")) {
-      fLogger->Info(MESSAGE_ORIGIN,"---User path for Configuration (g4Config.C) is used : %s" , config_dir.Data());
+      gLogger->Info(MESSAGE_ORIGIN,"---User path for Configuration (g4Config.C) is used : %s" , config_dir.Data());
       ConfigMacro=g4Macro;
     } else {
       if(AbsPath) { ConfigMacro = fUserConfig; }
@@ -313,21 +313,21 @@ void FairRunSim::SetMCConfig()
     if(fUserConfig.IsNull()) {
       g3Macro="g3Config.C";
       fUserConfig = g3Macro;
-      fLogger->Info(MESSAGE_ORIGIN,"-------------- Standard Config is called ------------------------------------");
+      gLogger->Info(MESSAGE_ORIGIN,"-------------- Standard Config is called ------------------------------------");
     } else {
       if (fUserConfig.Contains("/")) { AbsPath=kTRUE; }
       g3Macro = fUserConfig;
-      fLogger->Info(MESSAGE_ORIGIN,"---------------User config is used :  ", g3Macro.Data());
+      gLogger->Info(MESSAGE_ORIGIN,"---------------User config is used :  ", g3Macro.Data());
     }
     if (TString(gSystem->FindFile(config_dir.Data(),g3LibMacro)) != TString("")) {
-      fLogger->Info(MESSAGE_ORIGIN,"---User path for Configuration (g3libs.C) is used : %s " , config_dir.Data());
+      gLogger->Info(MESSAGE_ORIGIN,"---User path for Configuration (g3libs.C) is used : %s " , config_dir.Data());
     } else {
       g3LibMacro=work_config+"g3libs.C";
     }
     LibMacro=g3LibMacro;
     LibFunction="g3libs()";
     if (!AbsPath && TString(gSystem->FindFile(config_dir.Data(),g3Macro)) != TString("")) {
-      fLogger->Info(MESSAGE_ORIGIN,"---User path for Configuration (g3Config.C) is used : %s", config_dir.Data());
+      gLogger->Info(MESSAGE_ORIGIN,"---User path for Configuration (g3Config.C) is used : %s", config_dir.Data());
       ConfigMacro=g3Macro;
     } else {
       if(AbsPath) { ConfigMacro = fUserConfig; }
@@ -343,17 +343,17 @@ void FairRunSim::SetMCConfig()
     } else {
       if (fUserConfig.Contains("/")) { AbsPath=kTRUE; }
       flMacro = fUserConfig;
-      fLogger->Info(MESSAGE_ORIGIN,"---------------User config is used : %s " , flMacro.Data());
+      gLogger->Info(MESSAGE_ORIGIN,"---------------User config is used : %s " , flMacro.Data());
     }
     if (TString(gSystem->FindFile(config_dir.Data(), flLibMacro)) != TString("")) {
-      fLogger->Info(MESSAGE_ORIGIN,"---User path for Configuration (fllibs.C) is used : %s", config_dir.Data());
+      gLogger->Info(MESSAGE_ORIGIN,"---User path for Configuration (fllibs.C) is used : %s", config_dir.Data());
     } else {
       flLibMacro=work_config+"fllibs.C";
     }
     LibMacro=flLibMacro;
     LibFunction="fllibs()";
     if (!AbsPath && TString(gSystem->FindFile(config_dir.Data(),flMacro)) != TString("")) {
-      fLogger->Info(MESSAGE_ORIGIN, "---User path for Configuration (flConfig.C) is used : %s",  config_dir.Data());
+      gLogger->Info(MESSAGE_ORIGIN, "---User path for Configuration (flConfig.C) is used : %s",  config_dir.Data());
       ConfigMacro=flMacro;
     } else {
       if(AbsPath) { ConfigMacro = fUserConfig; }
@@ -362,7 +362,7 @@ void FairRunSim::SetMCConfig()
   }
   //----------------------------------------------SetCuts------------------------------------------------
   if (TString(gSystem->FindFile(config_dir.Data(),cuts)) != TString("")) {
-    fLogger->Info(MESSAGE_ORIGIN,"---User path for Cuts and Processes  (SetCuts.C) is used : %s", config_dir.Data());
+    gLogger->Info(MESSAGE_ORIGIN,"---User path for Cuts and Processes  (SetCuts.C) is used : %s", config_dir.Data());
   } else {
     cuts =work_config+ fUserCuts;
   }
@@ -407,7 +407,7 @@ void FairRunSim::SetMaterials(const char* MatFileName)
     if (!Mat.EndsWith("/")) { Mat+="/"; }
   }
   MatFname=Mat+MatFileName;
-  fLogger->Info(MESSAGE_ORIGIN,"Media file used : %s ", MatFname.Data());
+  gLogger->Info(MESSAGE_ORIGIN,"Media file used : %s ", MatFname.Data());
 }
 //_____________________________________________________________________________
 void FairRunSim::SetGeoModel( char* name )
@@ -415,10 +415,10 @@ void FairRunSim::SetGeoModel( char* name )
   if ( strncmp(fName,"TGeant3",7) == 0 ) {
     if (fLoaderName) { delete fLoaderName; }
     fLoaderName = new TString(name);
-    fLogger->Info(MESSAGE_ORIGIN,"FairRun::SetGeoModel(): G3 native geometry model used ");
+    gLogger->Info(MESSAGE_ORIGIN,"FairRun::SetGeoModel(): G3 native geometry model used ");
   } else {
-    fLogger->Info(MESSAGE_ORIGIN,"FairRun::SetGeoModel(): Geant3 MC engine only !");
-    fLogger->Info(MESSAGE_ORIGIN,"FairRun::SetGeoModel(): Method skipped ... ");
+    gLogger->Info(MESSAGE_ORIGIN,"FairRun::SetGeoModel(): Geant3 MC engine only !");
+    gLogger->Info(MESSAGE_ORIGIN,"FairRun::SetGeoModel(): Method skipped ... ");
   }
 }
 //_____________________________________________________________________________

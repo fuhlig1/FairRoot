@@ -8,8 +8,6 @@
 #include <set>							// for set of branch types to ignore
 
 
-class FairLogger;
-
 //_____________________________________________________________________
 
 class FairLinkManager : public TObject
@@ -51,10 +49,8 @@ class FairLinkManager : public TObject
     static                FairLinkManager* fgInstance;
 #endif
 
-    FairLogger*                         fLogger;//!
 
-
-    ClassDef(FairLinkManager,1) // Root IO manager
+    ClassDef(FairLinkManager,2) // Root IO manager
 };
 
 #endif //FAIR_ROOT_MANAGER_H

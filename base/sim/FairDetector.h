@@ -12,7 +12,6 @@
 
 #include "Rtypes.h"                     // for Int_t, Bool_t, etc
 
-class FairLogger;
 class FairVolume;
 class TClonesArray;
 
@@ -109,9 +108,8 @@ class FairDetector : public FairModule
     FairDetector& operator= (const FairDetector&);
 
     Int_t fDetId; // Detector Id has to be set from ctr.
-    FairLogger* fLogger;  //! /// FairLogger
 
-    ClassDef(FairDetector,1)
+    ClassDef(FairDetector,2)
 
 };
 #endif //FAIRDETECTOR_H

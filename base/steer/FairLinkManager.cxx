@@ -26,8 +26,7 @@ FairLinkManager* FairLinkManager::Instance()
 FairLinkManager::FairLinkManager()
   : TObject(),
     fIgnoreTypes(),
-    fIgnoreSetting(kTRUE),
-    fLogger(0)
+    fIgnoreSetting(kTRUE)
 {
   if (fgInstance) {
     Fatal("FairLinkManager", "Singleton instance already exists.");
@@ -38,32 +37,31 @@ FairLinkManager::FairLinkManager()
 
   // Logger only on master - TO DO
   if ( FairRun::Instance()->GetIsMaster() ) {
-    fLogger = FairLogger::GetLogger();
   }
 }
 //_____________________________________________________________________________
 FairLinkManager::~FairLinkManager()
 {
 //
-  fLogger->Debug(MESSAGE_ORIGIN,"Enter Destructor of FairLinkManager");
+  gLogger->Debug(MESSAGE_ORIGIN,"Enter Destructor of FairLinkManager");
   fgInstance = 0;
-  fLogger->Debug(MESSAGE_ORIGIN, "Leave Destructor of FairLinkManager");
+  gLogger->Debug(MESSAGE_ORIGIN, "Leave Destructor of FairLinkManager");
 }
 //_____________________________________________________________________________
 
 void FairLinkManager::AddIgnoreType(Int_t type)
 {
 	if (fIgnoreSetting == kFALSE){
-		fLogger->Debug(MESSAGE_ORIGIN, "AddIgnoreType ignored because of IncludeType setting");
+		gLogger->Debug(MESSAGE_ORIGIN, "AddIgnoreType ignored because of IncludeType setting");
 		return;
 	}
-	fLogger->Debug(MESSAGE_ORIGIN, "AddIgnoreType");
+	gLogger->Debug(MESSAGE_ORIGIN, "AddIgnoreType");
 	fIgnoreTypes.insert(type);
 }
 
 void FairLinkManager::AddIncludeType(Int_t type)
 {
-	fLogger->Debug(MESSAGE_ORIGIN, "AddIgnoreType");
+	gLogger->Debug(MESSAGE_ORIGIN, "AddIgnoreType");
 //	std::cout << "-I- FairLinkManager::AddIgnoreType: " << type << std::endl;
 	if (fIgnoreSetting == kTRUE){
 		fIgnoreSetting=kFALSE;

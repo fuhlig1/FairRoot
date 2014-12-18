@@ -16,7 +16,6 @@
 // -----   Default constructor   -------------------------------------------
 FairGenericStack::FairGenericStack()
   : TVirtualMCStack(),
-    fLogger(FairLogger::GetLogger()),
     fDetList(0),
     fDetIter(0),
     fVerbose(1)
@@ -26,7 +25,6 @@ FairGenericStack::FairGenericStack()
 // -----   Constructor with estimated array dimension   --------------------
 FairGenericStack::FairGenericStack(Int_t size)
   : TVirtualMCStack(),
-    fLogger(FairLogger::GetLogger()),
     fDetList(0),
     fDetIter(0),
     fVerbose(1)
@@ -41,7 +39,6 @@ FairGenericStack::~FairGenericStack()
 // -----   Copy constructor   ----------------------------------------------
 FairGenericStack::FairGenericStack(const FairGenericStack& rhs)
   : TVirtualMCStack(rhs),
-    fLogger(0),
     fDetList(0),
     fDetIter(0),
     fVerbose(rhs.fVerbose)
@@ -59,7 +56,6 @@ FairGenericStack& FairGenericStack::operator=(const FairGenericStack& rhs)
   TVirtualMCStack::operator=(rhs);
 
   // assignment oiperator
-  fLogger = 0;
   fDetList = 0;
   fDetIter = 0;
   fVerbose = rhs.fVerbose;

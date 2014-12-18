@@ -26,7 +26,6 @@
 
 #include "Rtypes.h"                     // for Int_t, Double_t, etc
 
-class FairLogger;
 
 class FairIon: public TNamed
 {
@@ -103,13 +102,12 @@ class FairIon: public TNamed
     Int_t    fQ;          /// Electric charge
     Double_t fExcEnergy;  /// Excitation energy [GeV]
     Double_t fMass;       /// Mass [GeV]
-    FairLogger* fLogger;  //! /// FairLogger
     static const Double_t amu; ///  .931494028 Gev/c**2
 
     FairIon(const FairIon&);
     FairIon& operator=(const FairIon&);
 
-    ClassDef(FairIon,2);
+    ClassDef(FairIon,3);
 
 };
 

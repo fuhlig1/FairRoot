@@ -12,15 +12,13 @@
 
 FairMockVirtualMC::FairMockVirtualMC()
   : TVirtualMC(),
-    fMCGeo(new TGeoMCGeometry("MCGeo", "TGeo Implementation of VirtualMCGeometry")),
-    fLogger(FairLogger::GetLogger())
+    fMCGeo(new TGeoMCGeometry("MCGeo", "TGeo Implementation of VirtualMCGeometry"))
 {
 }
 
 FairMockVirtualMC::FairMockVirtualMC(const char* title, Int_t nwgeant)
   : TVirtualMC("FairMockVirtualMC",title, kFALSE),
-    fMCGeo(new TGeoMCGeometry("MCGeo", "TGeo Implementation of VirtualMCGeometry")),
-    fLogger(FairLogger::GetLogger())
+    fMCGeo(new TGeoMCGeometry("MCGeo", "TGeo Implementation of VirtualMCGeometry"))
 {
 }
 
@@ -78,6 +76,6 @@ Int_t FairMockVirtualMC::CurrentVolOffID(Int_t off, Int_t& copy) const
 
 void FairMockVirtualMC::StopExecution() const
 {
-  fLogger->Fatal(MESSAGE_ORIGIN,"This function is not yet implemented.");
+  LOG(FATAL) << "This function is not yet implemented." << FairLogger::endl;
 }
 

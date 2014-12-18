@@ -29,8 +29,6 @@
 #include "Rtypes.h"                     // for Int_t, FairTask::Class, etc
 #include "TString.h"                    // for TString
 
-class FairLogger;
-
 enum InitStatus {kSUCCESS, kERROR, kFATAL};
 
 class FairTask : public TTask
@@ -87,7 +85,6 @@ class FairTask : public TTask
 
     Int_t        fVerbose;  //  Verbosity level
     Int_t        fInputPersistance; ///< Indicates if input branch is persistant
-    FairLogger*  fLogger; //!
 
     /** Intialisation at begin of run. To be implemented in the derived class.
     *@value  Success   If not kSUCCESS, task will be set inactive.
@@ -135,7 +132,7 @@ class FairTask : public TTask
     FairTask(const FairTask&);
     FairTask& operator=(const FairTask&);
 
-    ClassDef(FairTask,2);
+    ClassDef(FairTask,3);
 
 };
 

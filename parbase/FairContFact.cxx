@@ -36,8 +36,7 @@ ClassImp(FairContFact)
 FairContainer::FairContainer()
   :TNamed(),
    contexts(NULL),
-   actualContext(""),
-   fLogger(FairLogger::GetLogger())
+   actualContext("")
 {
 }
 // Default constructor
@@ -46,8 +45,7 @@ FairContainer::FairContainer(const char* name, const char* title,
                              const char* defContext)
   : TNamed(name, title),
     contexts(new TList()),
-    actualContext(""),
-    fLogger(FairLogger::GetLogger())
+    actualContext("")
 {
   // Constructor
   // Arguments:  name       = name of the corresponding parameter container
@@ -142,8 +140,7 @@ const char* FairContainer::getContext()
 
 FairContFact::FairContFact()
   : TNamed(),
-    containers(new TList),
-    fLogger(FairLogger::GetLogger())
+    containers(new TList)
 {
   // Constructor creates a list to store objects of type FairContainer
   //  containers=new TList;

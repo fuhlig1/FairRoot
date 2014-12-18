@@ -139,7 +139,7 @@ void FairRunOnline::Init()
 {
   LOG(INFO)<<"FairRunOnline::Init"<<FairLogger::endl;
   if (fIsInitialized) {
-    fLogger->Fatal(MESSAGE_ORIGIN,"Error Init is already called before!");
+    LOG(FATAL) << "Error Init is already called before!" << FairLogger::endl;
     exit(-1);
   } else {
     fIsInitialized = kTRUE;
@@ -193,7 +193,7 @@ void FairRunOnline::Init()
 
   // Initialize the source
   if(! fSource->Init()) {
-    fLogger->Fatal(MESSAGE_ORIGIN, "Init of the source failed...");
+    LOG(FATAL) << "Init of the source failed..." << FairLogger::endl;
     exit(-1);
   }
 
@@ -468,9 +468,9 @@ void  FairRunOnline::SetContainerStatic(Bool_t tempBool)
 {
   fStatic=tempBool;
   if ( fStatic ) {
-    fLogger->Info(MESSAGE_ORIGIN, "Parameter Cont. initialisation is static");
+    LOG(INFO) << "Parameter Cont. initialisation is static" << FairLogger::endl;
   } else {
-    fLogger->Info(MESSAGE_ORIGIN, "Parameter Cont. initialisation is NOT static");
+    LOG(INFO) << "Parameter Cont. initialisation is NOT static" << FairLogger::endl;
   }
 }
 //_____________________________________________________________________________

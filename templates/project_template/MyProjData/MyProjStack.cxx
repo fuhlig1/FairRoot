@@ -54,8 +54,7 @@ MyProjStack::MyProjStack(Int_t size)
     fStoreSecondaries(kTRUE),
     fMinPoints(1),
     fEnergyCut(0.),
-    fStoreMothers(kTRUE),
-    fLogger(FairLogger::GetLogger())
+    fStoreMothers(kTRUE)
 {
 }
 
@@ -173,16 +172,14 @@ TParticle* MyProjStack::PopPrimaryForTracking(Int_t iPrim)
 
   // Test for index
   if (iPrim < 0 || iPrim >= fNPrimaries) {
-    fLogger->Fatal(MESSAGE_ORIGIN, "MyProjStack: Primary index out of range! %i ", iPrim );
-    Fatal("MyProjStack::PopPrimaryForTracking", "Index out of range");
+    LOG(FATAL) << "MyProjStack: Primary index out of range! " << iPrim << FairLogger::endl;
   }
 
   // Return the iPrim-th TParticle from the fParticle array. This should be
   // a primary.
   TParticle* part = (TParticle*)fParticles->At(iPrim);
   if ( ! (part->GetMother(0) < 0) ) {
-    fLogger->Fatal(MESSAGE_ORIGIN, "MyProjStack:: Not a primary track! %i ",iPrim);
-    Fatal("MyProjStack::PopPrimaryForTracking", "Not a primary track");
+    LOG(FATAL) << "MyProjStack:: Not a primary track! " << iPrim << FairLogger::endl;
   }
 
   return part;
@@ -197,8 +194,7 @@ TParticle* MyProjStack::GetCurrentTrack() const
 {
   TParticle* currentPart = GetParticle(fCurrentTrack);
   if ( ! currentPart) {
-    fLogger->Warning(MESSAGE_ORIGIN,"MyProjStack: Current track not found in stack!");
-    Warning("MyProjStack::GetCurrentTrack", "Track not found in stack");
+    LOG(WARNING) << "MyProjStack: Current track not found in stack!" << FairLogger::endl;
   }
   return currentPart;
 }
@@ -223,7 +219,7 @@ void MyProjStack::AddParticle(TParticle* oldPart)
 void MyProjStack::FillTrackArray()
 {
 
-  fLogger->Debug(MESSAGE_ORIGIN, "MyProjStack: Filling MCTrack array...");
+  LOG(DEBUG) << "MyProjStack: Filling MCTrack array..." << FairLogger::endl;
 
   // --> Reset index map and number of output tracks
   fIndexMap.clear();
@@ -237,9 +233,7 @@ void MyProjStack::FillTrackArray()
 
     fStoreIter = fStoreMap.find(iPart);
     if (fStoreIter == fStoreMap.end() ) {
-      fLogger->Fatal(MESSAGE_ORIGIN, "MyProjStack: Particle %i not found in storage map! ", iPart);
-      Fatal("MyProjStack::FillTrackArray",
-            "Particle not found in storage map.");
+      LOG(FATAL) << "MyProjStack: Particle " << iPart << " not found in storage map! " << FairLogger::endl;
     }
     Bool_t store = (*fStoreIter).second;
 
@@ -272,7 +266,7 @@ void MyProjStack::FillTrackArray()
 void MyProjStack::UpdateTrackIndex(TRefArray* detList)
 {
 
-  fLogger->Debug(MESSAGE_ORIGIN, "MyProjStack: Updating track indizes...");
+  LOG(DEBUG) << "MyProjStack: Updating track indizes..." << FairLogger::endl;
   Int_t nColl = 0;
 
   // First update mother ID in MCTracks
@@ -281,8 +275,7 @@ void MyProjStack::UpdateTrackIndex(TRefArray* detList)
     Int_t iMotherOld = track->GetMotherId();
     fIndexIter = fIndexMap.find(iMotherOld);
     if (fIndexIter == fIndexMap.end()) {
-      fLogger->Fatal(MESSAGE_ORIGIN, "MyProjStack: Particle index %i not found in dex map! ", iMotherOld);
-      Fatal("MyProjStack::UpdateTrackIndex", "Particle index not found in map");
+      LOG(FATAL) << "MyProjStack: Particle index " << iMotherOld << " not found in dex map! " << FairLogger::endl;
     }
     track->SetMotherId( (*fIndexIter).second );
   }
@@ -314,8 +307,7 @@ void MyProjStack::UpdateTrackIndex(TRefArray* detList)
 
         fIndexIter = fIndexMap.find(iTrack);
         if (fIndexIter == fIndexMap.end()) {
-          fLogger->Fatal(MESSAGE_ORIGIN, "MyProjStack: Particle index %i not found in index map! ", iTrack);
-          Fatal("MyProjStack::UpdateTrackIndex", "Particle index not found in map");
+          LOG(FATAL) << "MyProjStack: Particle index " << iTrack << " not found in index map!" << FairLogger::endl;
         }
         point->SetTrackID((*fIndexIter).second);
         point->SetLink(FairLink("MCTrack", (*fIndexIter).second));
@@ -323,7 +315,7 @@ void MyProjStack::UpdateTrackIndex(TRefArray* detList)
 
     }   // Collections of this detector
   }     // List of active detectors
-  fLogger->Debug(MESSAGE_ORIGIN, "...stack and  %i collections updated.", nColl);
+  LOG(DEBUG) << "...stack and  " << nColl << " collections updated." << FairLogger::endl;
 }
 // -------------------------------------------------------------------------
 
@@ -414,8 +406,7 @@ Int_t MyProjStack::GetCurrentParentTrackNumber() const
 TParticle* MyProjStack::GetParticle(Int_t trackID) const
 {
   if (trackID < 0 || trackID >= fNParticles) {
-    fLogger->Debug(MESSAGE_ORIGIN, "MyProjStack: Particle index %i out of range.",trackID);
-    Fatal("MyProjStack::GetParticle", "Index out of range");
+    LOG(FATAL) << "MyProjStack: Particle index " << trackID << " out of range." << FairLogger::endl;
   }
   return (TParticle*)fParticles->At(trackID);
 }

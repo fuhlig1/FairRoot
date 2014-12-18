@@ -28,7 +28,6 @@
 
 #include <stddef.h>                     // for NULL
 
-class FairLogger;
 class TParticle;
 class TRefArray;
 class TIterator;
@@ -164,9 +163,6 @@ class FairGenericStack : public TVirtualMCStack
     /** Assignment operator */
     FairGenericStack& operator=(const FairGenericStack&);
 
-    /** Fair Logger */
-    FairLogger*            fLogger;//!
-
     /** List of detectors registering hits in the simulation */
     TRefArray*  fDetList;  //!
 
@@ -176,8 +172,7 @@ class FairGenericStack : public TVirtualMCStack
     /**Verbosity level*/
     Int_t fVerbose;
 
-    ClassDef(FairGenericStack,1)
-
+    ClassDef(FairGenericStack,2)
 
 };
 

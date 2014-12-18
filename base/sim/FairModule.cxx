@@ -461,10 +461,10 @@ void FairModule::ExpandNodeForGDML(TGeoNode* curNode)
 
 void FairModule::ConstructGDMLGeometry(TGeoMatrix* posrot)
 {
-    gLogger->Error(MESSAGE_ORIGIN," Could not construct magnet geometry from gdml file. ");
-    gLogger->Error(MESSAGE_ORIGIN," The used ROOT version does not support gdml. ");
-    gLogger->Error(MESSAGE_ORIGIN," Please recompile ROOT with gdml support. ");
-    gLogger->Fatal(MESSAGE_ORIGIN," Stop execution at this point. ");
+    LOG(ERROR) << "Could not construct magnet geometry from gdml file." << FairLogger::endl;
+    LOG(ERROR) << "The used ROOT version does not support gdml." << FairLogger::endl;
+    LOG(ERROR) << "Please recompile ROOT with gdml support." << FairLogger::endl;
+    LOG(FATAL) << " Stop execution at this point." << FairLogger::endl;
 }
 
 void FairModule::ExpandNodeForGDML(TGeoNode* curNode)

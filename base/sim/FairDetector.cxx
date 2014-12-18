@@ -30,8 +30,7 @@
 
 FairDetector::FairDetector(const char* Name, Bool_t Active, Int_t DetId )
   :FairModule(Name, "FAIR Detector", Active),
-   fDetId(DetId),
-   fLogger(FairLogger::GetLogger())
+   fDetId(DetId)
 {
   flGeoPar = new TList();
   TString lname( GetName());
@@ -45,8 +44,7 @@ FairDetector::FairDetector(const char* Name, Bool_t Active, Int_t DetId )
 
 FairDetector::FairDetector(const FairDetector& rhs)
   :FairModule(rhs),
-   fDetId(rhs.fDetId),
-   fLogger(rhs.fLogger)
+   fDetId(rhs.fDetId)
 {
 }
 // -------------------------------------------------------------------------
@@ -69,7 +67,6 @@ FairDetector& FairDetector::operator= (const FairDetector& rhs)
 
   // assignment operator
   fDetId = rhs.fDetId;
-  fLogger = rhs.fLogger;
 
   return *this;
 }
@@ -77,8 +74,7 @@ FairDetector& FairDetector::operator= (const FairDetector& rhs)
 // -------------------------------------------------------------------------
 
 FairDetector::FairDetector()
-  :fDetId(0),
-   fLogger(FairLogger::GetLogger())
+  :fDetId(0)
 {
 
 }
@@ -114,7 +110,7 @@ void FairDetector::SaveGeoParams()
 {
 
   if ( ! kGeoSaved  ) {
-    fLogger->Info(MESSAGE_ORIGIN,"Detector: %s Geometry parameters saved ... ", GetName());
+    LOG(INFO) << "Detector: " << GetName() << " Geometry parameters saved ... " << FairLogger::endl;
     TFolder* mf = dynamic_cast<TFolder*>(gROOT->FindObjectAny("cbmroot")) ;
     TFolder* stsf = NULL;
     if (mf ) { stsf = dynamic_cast<TFolder*> (mf->FindObjectAny(GetName())); }

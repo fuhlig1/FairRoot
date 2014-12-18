@@ -10,7 +10,6 @@
 
 #include "TVirtualMC.h"
 #include "TGeoMCGeometry.h"
-#include "FairLogger.h"
 
 class FairMockVirtualMC : public TVirtualMC
 {
@@ -141,8 +140,7 @@ class FairMockVirtualMC : public TVirtualMC
   protected:
     TGeoMCGeometry*  fMCGeo;
     Bool_t           fImportRootGeometry;
-    FairLogger*      fLogger;
-  private:
+
     ClassDef(FairMockVirtualMC,1)  //C++ interface to Geant basic routines
 };
 

@@ -79,7 +79,6 @@ FairMCApplication::FairMCApplication(const char* name, const char* title,
    fDetIter(NULL),
    fDetectors(NULL),
    fDetMap(NULL),
-   fLogger(FairLogger::GetLogger()),
    fModIter(NULL),
    fModules(NULL),
    fNoSenVolumes(0),
@@ -157,7 +156,6 @@ FairMCApplication::FairMCApplication(const FairMCApplication& rhs)
    fDetIter(NULL),
    fDetectors(NULL),
    fDetMap(NULL),
-   fLogger(NULL),
    fModIter(NULL),
    fModules(NULL),
    fNoSenVolumes(0),
@@ -239,7 +237,6 @@ FairMCApplication::FairMCApplication()
    fDetIter(0),
    fDetectors(0),
    fDetMap(0),
-   fLogger(FairLogger::GetLogger()),
    fModIter(0),
    fModules(0),
    fNoSenVolumes(0),
@@ -309,7 +306,6 @@ FairMCApplication& FairMCApplication::operator=(const FairMCApplication& rhs)
   fDetIter = NULL;
   fDetectors = NULL;
   fDetMap = NULL;
-  fLogger = NULL;
   fModIter = NULL;
   fModules = NULL;
   fNoSenVolumes = 0;
@@ -392,7 +388,7 @@ void FairMCApplication::InitMC(const char* setup, const char* cuts)
 // Initialize MC.
 // ---
   fStack = dynamic_cast<FairGenericStack*>(gMC->GetStack()) ;
-  if(fStack==NULL) { fLogger->Fatal(MESSAGE_ORIGIN, "NO Stack defined "); }
+  if(fStack==NULL) { LOG(FATAL) << "No Stack defined" << FairLogger::endl; }
   gMC->SetMagField(fxField);
 
   gMC->Init();
@@ -409,7 +405,8 @@ void FairMCApplication::InitMC(const char* setup, const char* cuts)
   }
   fTrajFilter = FairTrajFilter::Instance();
 
-  fLogger->Info(MESSAGE_ORIGIN, "Monte carlo Engine Initialisation  with : %s  ", MCName.Data());
+  LOG(INFO) << "Monte carlo Engine Initialisation  with : " << MCName.Data()
+            << FairLogger::endl;
 }
 //_____________________________________________________________________________
 void FairMCApplication::RunMC(Int_t nofEvents)
@@ -610,12 +607,8 @@ void FairMCApplication::InitForWorker() const
 
   // if (fRootManager) RegisterStack();
 
-  if (fLogger) {
-    fLogger->Info(MESSAGE_ORIGIN,
-                  "Monte carlo Engine Worker Initialisation  with : %s  ", gMC->GetName());
-  } else {
-    cout <<  "Monte carlo Engine Worker Initialisation  with " << gMC->GetName()  << endl;
-  }
+  LOG(INFO) << "Monte carlo Engine Worker Initialisation  with : " <<gMC->GetName()
+            << FairLogger::endl;
 }
 
 //_____________________________________________________________________________
@@ -736,11 +729,7 @@ void FairMCApplication::StopRun()
     fRootManager->Write();
     fRootManager->CloseOutFile();
   }
-  if (fLogger) {
-    fLogger->Warning(MESSAGE_ORIGIN, "StopRun() exiting not safetly oopps !!!@@@!!!" );
-  } else {
-    cout << "StopRun() exiting not safetly oopps !!!@@@!!!" << endl;
-  }
+  LOG(WARNING) << "StopRun() exiting not safetly oopps !!!@@@!!!" << FairLogger::endl;
   exit(0) ;
 }
 //_____________________________________________________________________________
@@ -795,7 +784,7 @@ void FairMCApplication::FinishEvent()
   // Store information about runtime for one event and memory consuption
   // for later usage.
   // Requires Logger instantiated
-  if (fLogger) fRunInfo.StoreInfo();
+  fRunInfo.StoreInfo();
 
 }
 //_____________________________________________________________________________
@@ -895,7 +884,6 @@ void FairMCApplication::ConstructGeometry()
       TParticlePDG *Particle=0;
       while((Particle=dynamic_cast<TParticlePDG*> (particleIter->Next())) && (Counter <= 256)) {
          TString Name= gGeoManager->GetPdgName(Particle->PdgCode());
-     //    fLogger->Info(MESSAGE_ORIGIN, "%i : Particle name: %s PDG  %i  ", Counter , Name.Data() ,Particle->PdgCode());
          if(Name=="XXX") gGeoManager->SetPdgName(Particle->PdgCode(), Particle->GetName());
          Counter++;
       }
@@ -922,11 +910,7 @@ void FairMCApplication::InitGeometry()
       fStack->Register();
     }
   } else {
-    if (fLogger) {
-      fLogger->Warning(MESSAGE_ORIGIN, "Stack is not registered ");
-    } else {
-      cout << "Stack is not registered " << endl;
-    }
+    LOG(WARNING) << "Stack is not registered " << FairLogger::endl;
   }
   /** Initialize the event generator */
   // if(fEvGen)fEvGen->Init();
@@ -948,11 +932,7 @@ void FairMCApplication::InitGeometry()
   // Get and register EventHeader
   UInt_t runId = FairRunSim::Instance()->GetRunId();
 
-  if (fLogger) {
-    fLogger->Info(MESSAGE_ORIGIN, "Simulation RunID: %i  ", runId);
-  } else {
-    cout << "Simulation RunID: " << runId << endl;
-  }
+  LOG(INFO) << "Simulation RunID: " << runId << FairLogger::endl;
 
   // Get and register the MCEventHeader
   fMCEventHeader = FairRunSim::Instance()->GetMCEventHeader();
@@ -1074,11 +1054,9 @@ void  FairMCApplication::AddIons()
       if(gGeoManager) {
         gGeoManager->SetPdgName(pdgDatabase->GetParticle(ion->GetName())->PdgCode(),ion->GetName() );
       }
-      if (fLogger) {
-        fLogger->Info(MESSAGE_ORIGIN, "Add Ion:  %s  with PDG  %i ", ion->GetName(), pdgDatabase->GetParticle(ion->GetName())->PdgCode());
-      } else {
-        cout << "Add Ion: " << ion->GetName() << " with PDG " <<  pdgDatabase->GetParticle(ion->GetName())->PdgCode() << endl;
-      }
+      LOG(INFO) << "Add Ion: " << ion->GetName() << " with PDG " 
+                << pdgDatabase->GetParticle(ion->GetName())->PdgCode()
+                << FairLogger::endl;
     }
   }
   delete   Iter;
@@ -1277,7 +1255,7 @@ void FairMCApplication::InitTasks()
 
   // Only RTDB init when more than Main Task list
   if(FairRun::Instance()->GetNTasks() >= 1 ) {
-    fLogger->Info(MESSAGE_ORIGIN, "Initialize Tasks--------------------------");
+    LOG(INFO) << "Initialize Tasks--------------------------" << FairLogger::endl;
     fFairTaskList->InitTask();
 
   }

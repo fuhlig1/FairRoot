@@ -37,8 +37,7 @@ FairParSet::FairParSet(const char* name,const char* title,const char* context, B
     owned(owner),
     paramContext(context),
     author(""),
-    description(""),
-    fLogger(FairLogger::GetLogger())
+    description("")
 {
 //  fName = name;
 //  fTitle = title;
@@ -67,7 +66,7 @@ Bool_t FairParSet::init()
     } else { setInputVersion(-1,2); }
   }
   if (allFound) { return kTRUE; }
-  if (fLogger ) { fLogger->Error(MESSAGE_ORIGIN, "init() %s  not initialized",GetName()); }
+  LOG(ERROR) << "init() " << GetName() << "  not initialized" << FairLogger::endl;;
   return kFALSE;
 }
 
@@ -79,7 +78,7 @@ Int_t FairParSet::write()
   // (calls internally the init function in the derived class)
   FairParIo* output=FairRuntimeDb::instance()->getOutput();
   if (output) { return write(output); }
-  if (fLogger) { fLogger->Error(MESSAGE_ORIGIN,"write() %s could not be written to output",GetName()); }
+  LOG(ERROR) << "write() " << GetName() << " could not be written to output" << FairLogger::endl;
   return -1;
 }
 

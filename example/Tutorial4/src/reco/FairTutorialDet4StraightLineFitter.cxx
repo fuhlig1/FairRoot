@@ -27,13 +27,13 @@ FairTutorialDet4StraightLineFitter::FairTutorialDet4StraightLineFitter()
    fTracks(NULL),
    fVersion(2)
 {
-  fLogger->Debug(MESSAGE_ORIGIN,"Defaul Constructor of FairTutorialDet4StraightLineFitter");
+  gLogger->Debug(MESSAGE_ORIGIN,"Defaul Constructor of FairTutorialDet4StraightLineFitter");
 }
 
 // ---- Destructor ----------------------------------------------------
 FairTutorialDet4StraightLineFitter::~FairTutorialDet4StraightLineFitter()
 {
-  fLogger->Debug(MESSAGE_ORIGIN,"Destructor of FairTutorialDet4StraightLineFitter");
+  gLogger->Debug(MESSAGE_ORIGIN,"Destructor of FairTutorialDet4StraightLineFitter");
   if (fTracks) {
     fTracks->Delete();
     delete fTracks;
@@ -43,7 +43,7 @@ FairTutorialDet4StraightLineFitter::~FairTutorialDet4StraightLineFitter()
 // ----  Initialisation  ----------------------------------------------
 void FairTutorialDet4StraightLineFitter::SetParContainers()
 {
-  fLogger->Debug(MESSAGE_ORIGIN,"SetParContainers of FairTutorialDet4StraightLineFitter");
+  gLogger->Debug(MESSAGE_ORIGIN,"SetParContainers of FairTutorialDet4StraightLineFitter");
   // Load all necessary parameter containers from the runtime data base
   /*
   FairRunAna* ana = FairRunAna::Instance();
@@ -57,7 +57,7 @@ void FairTutorialDet4StraightLineFitter::SetParContainers()
 // ---- Init ----------------------------------------------------------
 InitStatus FairTutorialDet4StraightLineFitter::Init()
 {
-  fLogger->Debug(MESSAGE_ORIGIN,"Initilization of FairTutorialDet4StraightLineFitter");
+  gLogger->Debug(MESSAGE_ORIGIN,"Initilization of FairTutorialDet4StraightLineFitter");
 
   // Get a handle from the IO manager
   FairRootManager* ioman = FairRootManager::Instance();
@@ -88,14 +88,14 @@ InitStatus FairTutorialDet4StraightLineFitter::Init()
 // ---- ReInit  -------------------------------------------------------
 InitStatus FairTutorialDet4StraightLineFitter::ReInit()
 {
-  fLogger->Debug(MESSAGE_ORIGIN,"Initilization of FairTutorialDet4StraightLineFitter");
+  gLogger->Debug(MESSAGE_ORIGIN,"Initilization of FairTutorialDet4StraightLineFitter");
   return kSUCCESS;
 }
 
 // ---- Exec ----------------------------------------------------------
 void FairTutorialDet4StraightLineFitter::Exec(Option_t* option)
 {
-  fLogger->Debug(MESSAGE_ORIGIN,"Exec of FairTutorialDet4StraightLineFitter");
+  gLogger->Debug(MESSAGE_ORIGIN,"Exec of FairTutorialDet4StraightLineFitter");
 
   if (!IsGoodEvent()) { return; }
 
@@ -208,7 +208,7 @@ Bool_t FairTutorialDet4StraightLineFitter::IsGoodEvent()
 // ---- Finish --------------------------------------------------------
 void FairTutorialDet4StraightLineFitter::Finish()
 {
-  fLogger->Debug(MESSAGE_ORIGIN,"Finish of FairTutorialDet4StraightLineFitter");
+  gLogger->Debug(MESSAGE_ORIGIN,"Finish of FairTutorialDet4StraightLineFitter");
 }
 
 ClassImp(FairTutorialDet4StraightLineFitter)

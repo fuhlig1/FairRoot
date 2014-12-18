@@ -27,8 +27,7 @@ using std::endl;
 FairTask::FairTask()
   : TTask(),
     fVerbose(0),
-    fInputPersistance(-1),
-    fLogger(FairLogger::GetLogger())
+    fInputPersistance(-1)
 {
 }
 // -------------------------------------------------------------------------
@@ -39,8 +38,7 @@ FairTask::FairTask()
 FairTask::FairTask(const char* name, Int_t iVerbose)
   : TTask(name, "FairTask"),
     fVerbose(iVerbose),
-    fInputPersistance(-1),
-    fLogger(FairLogger::GetLogger())
+    fInputPersistance(-1)
 {
 
 }
@@ -60,7 +58,7 @@ void FairTask::InitTask()
   if ( ! fActive ) { return; }
   InitStatus tStat = Init();
   if ( tStat == kFATAL ) {
-    fLogger->Fatal(MESSAGE_ORIGIN,"Initialization of Task %s failed fatally", fName.Data());
+    gLogger->Fatal(MESSAGE_ORIGIN,"Initialization of Task %s failed fatally", fName.Data());
   }
   if ( tStat == kERROR ) { fActive = kFALSE; }
   InitTasks();
@@ -75,7 +73,7 @@ void FairTask::ReInitTask()
   if ( ! fActive ) { return; }
   InitStatus tStat = ReInit();
   if ( tStat == kFATAL ) {
-    fLogger->Fatal(MESSAGE_ORIGIN,"Reinitialization of Task %s failed fatally", fName.Data());
+    gLogger->Fatal(MESSAGE_ORIGIN,"Reinitialization of Task %s failed fatally", fName.Data());
   }
   if ( tStat == kERROR ) { fActive = kFALSE; }
   ReInitTasks();

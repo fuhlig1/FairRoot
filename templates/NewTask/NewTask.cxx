@@ -11,19 +11,19 @@
 NewTask::NewTask()
   :FairTask("NewTask")
 {
-  fLogger->Debug(MESSAGE_ORIGIN,"Defaul Constructor of NewTask");
+  LOG(DEBUG) << "Default Constructor of NewTask" << FairLogger::endl;
 }
 
 // ---- Destructor ----------------------------------------------------
 NewTask::~NewTask()
 {
-  fLogger->Debug(MESSAGE_ORIGIN,"Destructor of NewTask");
+  LOG(DEBUG) << "Destructor of NewTask" << FairLogger::endl;
 }
 
 // ----  Initialisation  ----------------------------------------------
 void NewTask::SetParContainers()
 {
-  fLogger->Debug(MESSAGE_ORIGIN,"SetParContainers of NewTask");
+  LOG(DEBUG) << "SetParContainers of NewTask" << FairLogger::endl;
   // Load all necessary parameter containers from the runtime data base
   /*
   FairRunAna* ana = FairRunAna::Instance();
@@ -37,7 +37,7 @@ void NewTask::SetParContainers()
 // ---- Init ----------------------------------------------------------
 InitStatus NewTask::Init()
 {
-  fLogger->Debug(MESSAGE_ORIGIN,"Initilization of NewTask");
+  LOG(DEBUG) << "Initilization of NewTask" << FairLogger::endl;
 
   // Get a handle from the IO manager
   FairRootManager* ioman = FairRootManager::Instance();
@@ -46,7 +46,7 @@ InitStatus NewTask::Init()
   /*
     <InputDataLevel> = (TClonesArray*) ioman->GetObject("InputDataLevelName");
     if ( ! <InputLevel> ) {
-    fLogger->Error(MESSAGE_ORIGIN,"No InputDataLevelName array!\n NewTask will be inactive");
+    LOG(ERROR) << "No InputDataLevelName array!\n NewTask will be inactive" << FairLogger::endl;
     return kERROR;
     }
   */
@@ -69,20 +69,20 @@ InitStatus NewTask::Init()
 // ---- ReInit  -------------------------------------------------------
 InitStatus NewTask::ReInit()
 {
-  fLogger->Debug(MESSAGE_ORIGIN,"Initilization of NewTask");
+  LOG(DEBUG) << "Reinitilization of NewTask" << FairLogger::endl;
   return kSUCCESS;
 }
 
 // ---- Exec ----------------------------------------------------------
 void NewTask::Exec(Option_t* option)
 {
-  fLogger->Debug(MESSAGE_ORIGIN,"Exec of NewTask");
+  LOG(DEBUG) << "Exec of NewTask" << FairLogger::endl;
 }
 
 // ---- Finish --------------------------------------------------------
 void NewTask::Finish()
 {
-  fLogger->Debug(MESSAGE_ORIGIN,"Finish of NewTask");
+  LOG(DEBUG) << "Finish of NewTask" << FairLogger::endl;
 }
 
 ClassImp(NewTask)
