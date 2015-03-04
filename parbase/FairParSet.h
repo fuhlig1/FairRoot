@@ -8,14 +8,7 @@
 #ifndef FAIRPARSET_H
 #define FAIRPARSET_H
 
-<<<<<<< HEAD
-=======
-#ifdef WITH_DBASE
-#include "FairDbObjTableMap.h"             // for FairDbObjTableMap
-#else
->>>>>>> Make building of FairDB optional since the generation of the FairDB dictionaries doesn't work with ROOT6. The default setting is to build FairDB.
 #include "TObject.h"             // for FairDbObjTableMap
-#endif
 
 #include "TNamed.h"
 #include "Rtypes.h"                     // for Int_t, Bool_t, etc
@@ -24,14 +17,7 @@
 class FairLogger;
 class FairParIo;
 
-<<<<<<< HEAD
-=======
-#ifdef WITH_DBASE
-class FairParSet : public FairDbObjTableMap
-#else
->>>>>>> Make building of FairDB optional since the generation of the FairDB dictionaries doesn't work with ROOT6. The default setting is to build FairDB.
 class FairParSet : public TObject
-#endif
 {
   protected:
     TString fName;         //
@@ -93,6 +79,7 @@ class FairParSet : public TObject
       author=r.getAuthor();
       description=r.getDescription();
     }
+
 
     virtual void fill(UInt_t rid=0) {};
     virtual void store(UInt_t rid=0) {};

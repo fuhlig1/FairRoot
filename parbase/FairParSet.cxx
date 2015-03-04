@@ -28,7 +28,6 @@ ClassImp(FairParSet)
 
 FairParSet::FairParSet(const char* name,const char* title,const char* context, Bool_t owner)
   : TObject(),
-#endif
     fName(name),
     fTitle(title),
     detName(""),
