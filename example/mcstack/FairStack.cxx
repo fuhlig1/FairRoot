@@ -285,11 +285,8 @@ void FairStack::UpdateTrackIndex(TRefArray* detList)
     if (fIndexIter == fIndexMap.end()) {
       LOG(FATAL) << "Particle index " << iMotherOld << " not found in index map!"
 		<<FairLogger::endl;
-<<<<<<< HEAD
     } else {
       track->SetMotherId( (*fIndexIter).second );
-=======
->>>>>>> Remove data member fLogger. Use new FairLogger interface.
     }
   }
 
@@ -323,15 +320,21 @@ void FairStack::UpdateTrackIndex(TRefArray* detList)
           LOG(FATAL) << "Particle index " << iTrack << " not found in index map!"
 		     << FairLogger::endl;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fix CIDs 10044, 10050.
         } else {
 	  point->SetTrackID((*fIndexIter).second);
 	  point->SetLink(FairLink("MCTrack", (*fIndexIter).second));
 	}
+<<<<<<< HEAD
 =======
         }
         point->SetTrackID((*fIndexIter).second);
         point->SetLink(FairLink("MCTrack", (*fIndexIter).second));
 >>>>>>> Remove data member fLogger. Use new FairLogger interface.
+=======
+>>>>>>> Fix CIDs 10044, 10050.
       }
 
     }   // Collections of this detector
