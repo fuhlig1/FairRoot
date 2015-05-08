@@ -434,6 +434,7 @@ std::ostream&  FairLogger::endl(std::ostream& strm)
   if (gLogger->fLevel == FATAL) {
     flush(strm);
     gLogger->LogFatalMessage(strm);
+    exit(42);
   }
 
   return strm;
