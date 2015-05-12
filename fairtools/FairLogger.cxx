@@ -226,9 +226,9 @@ void FairLogger::SetLogFileName(const char* name)
 
 void FairLogger::CloseLogFile()
 {
-  ofstream* tmp =NULL;
+  std::ofstream* tmp =NULL;
   if (fFileStream) {
-    tmp = dynamic_cast<ofstream*>(fFileStream);
+    tmp = dynamic_cast<std::ofstream*>(fFileStream);
     if (tmp) {
       tmp->close();
     }

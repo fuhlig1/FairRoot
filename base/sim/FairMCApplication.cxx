@@ -285,7 +285,6 @@ FairMCApplication::~FairMCApplication()
   delete fDetectors;
 //  delete gMC;
   delete fModIter;
-  delete fDetIter;
 //  gMC=0;
   //  LOG(DEBUG3) << "Leave Destructor of FairMCApplication"
   //              << FairLogger::endl;
