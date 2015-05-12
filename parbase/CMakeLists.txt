@@ -50,16 +50,6 @@ FairRtdbRun.cxx
 FairRuntimeDb.cxx
 )
 
-If(WITH_DBASE)
-  ###### Fair DB IO #######
-  Set(SRCS ${SRCS}
-    dbIO/FairParTSQLIo.cxx
-    dbIO/FairDetParTSQLIo.cxx
-    dbIO/FairGenericParTSQLIo.cxx
-  )
-  Set(DEFINITIONS WITH_DBASE)
-EndIf()
-
 Set(HEADERS )
 Set(LINKDEF ParBaseLinkDef.h)
 Set(LIBRARY_NAME ParBase)
@@ -69,10 +59,6 @@ Set(DEPENDENCIES FairTools RIO Cint Core )
 else()
 Set(DEPENDENCIES FairTools  RIO Core )
 endif()
-
-If(ROOT_VERSION_MAJOR VERSION_LESS 6 )
-  Set(DEPENDENCIES ${DEPENDENCIES} Cint)
-EndIf()
 
 GENERATE_LIBRARY()
 

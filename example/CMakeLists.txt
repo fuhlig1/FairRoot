@@ -29,11 +29,6 @@ add_subdirectory(Tutorial7)
 EndIf()
 EndIf()
 
-If(WITH_DBASE)
-  add_subdirectory (Tutorial5)
-  add_subdirectory (Tutorial6)
-EndIf()
-
 add_subdirectory (rutherford)
 
 

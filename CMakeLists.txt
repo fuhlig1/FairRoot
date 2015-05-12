@@ -97,12 +97,6 @@ IF(NOT FAIRROOT_MODULAR_BUILD)
   SET(SIMPATH $ENV{SIMPATH})
 endif(NOT FAIRROOT_MODULAR_BUILD)
 
-
-Option(WITH_DBASE "Switch off the building of FairDB." OFF)
-If(WITH_DBASE)
-  Add_Definitions(-DWITH_DBASE)
-EndIf()
-
 # Check if the external packages are installed into a separate install
 # directory
 CHECK_EXTERNAL_PACKAGE_INSTALL_DIR()

@@ -8,8 +8,6 @@
 #ifndef FAIRPARSET_H
 #define FAIRPARSET_H
 
-#include "TObject.h"             // for FairDbObjTableMap
-
 #include "TNamed.h"
 #include "Rtypes.h"                     // for Int_t, Bool_t, etc
 #include "TString.h"                    // for TString
