@@ -57,7 +57,7 @@ Check_Compiler()
 set(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/lib")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin")
 
-Option(WITH_DBASE "Switch off the building of FairDB." ON)
+Option(WITH_DBASE "Switch off the building of FairDB." OFF)
 If(WITH_DBASE)
   Add_Definitions(-DWITH_DBASE)
 EndIf()
