@@ -191,6 +191,7 @@ Generate_Version_Info()
 SetBasicVariables()
 
 # Check C++11 availability
+Message("CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}")
 If(NOT CMAKE_CXX_FLAGS)
   Message(STATUS "No C++11 support found.")
 Else()
