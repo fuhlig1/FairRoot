@@ -112,11 +112,12 @@ if(FAIRROOT_MODULAR_BUILD)
   # Geant3, Geant4 installed via cmake
   find_package(Geant3 REQUIRED)
   FIND_PATH(GEANT3_SYSTEM_DIR NAMES data PATHS
-    ${Geant3_DIR}/share/geant3
+    ${Geant3_DIR}/../../share/geant3
   )
-  Message("Geant3_DIR: ${Geant3_DIR}")
+  Message("Geant3_DIR: ${GEANT3_SYSTEM_DIR}")
   find_package(Geant4 REQUIRED)
-  Message("Geant4: ${Geant4_DIR}/share/$ENV{GEANT4VERSION}/data")
+  Message("Geant4: ${Geant4_DIR}/../../share/$ENV{GEANT4VERSION}/data")
+  MESSAGE("BLA: $ENV{G4LEDATA}")
   set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules_old" ${CMAKE_MODULE_PATH})
   find_package(GEANT4DATA)
 else(FAIRROOT_MODULAR_BUILD)
