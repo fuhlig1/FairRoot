@@ -191,12 +191,10 @@ Generate_Version_Info()
 SetBasicVariables()
 
 # Check C++11 availability
-Message("CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}")
 If(NOT CMAKE_CXX_FLAGS)
-  Message(STATUS "No C++11 support found since no CMAKE_CXX_FLAGS.")
+  Message(STATUS "No C++11 support found since no CMAKE_CXX_FLAGS defined.")
 Else()
   String(FIND "${CMAKE_CXX_FLAGS} " "std=c++11" POS_C++11)
-  Message("POS_C++11 ${POS_C++11}")
   If(POS_C++11)
     Message(STATUS "C++11 support found.")
   Else()
