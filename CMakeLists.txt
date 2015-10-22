@@ -115,6 +115,7 @@ if(FAIRROOT_MODULAR_BUILD)
     ${Geant3_DIR}/share/geant3
   )
   find_package(Geant4 REQUIRED)
+  set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules_old" ${CMAKE_MODULE_PATH})
   find_package(GEANT4DATA)
 else(FAIRROOT_MODULAR_BUILD)
   # For old versions of VMC packages (to be removed)
