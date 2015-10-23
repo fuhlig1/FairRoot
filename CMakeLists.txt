@@ -111,9 +111,21 @@ find_package(Pythia6 REQUIRED)
 if(FAIRROOT_MODULAR_BUILD)
   # Geant3, Geant4 installed via cmake
   find_package(Geant3 REQUIRED)
+  Message("Geant3_INCLUDE_DIRS: ${Geant3_INCLUDE_DIRS}")
+  Message("Geant3_LIBRARIES: ${Geant3_LIBRARIES}")
   FIND_PATH(GEANT3_SYSTEM_DIR NAMES data PATHS
     ${Geant3_DIR}/../../share/geant3
+    NO_DEFAULT_PATH
   )
+  FIND_PATH(GEANT3_INCLUDE_DIR NAMES TGeant3.h PATHS
+    ${Geant3_DIR}/../../include/TGeant3
+    NO_DEFAULT_PATH
+  )
+  FIND_PATH(GEANT3_LIBRARY_DIR NAMES libgeant321.dylib libgeant321.so PATHS
+    ${Geant3_DIR}/..
+    NO_DEFAULT_PATH
+  )
+
   Message("Geant3_DIR: ${GEANT3_SYSTEM_DIR}")
   find_package(Geant4 REQUIRED)
   Message("Geant4: ${Geant4_DIR}/../../share/$ENV{GEANT4VERSION}/data")
