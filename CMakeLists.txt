@@ -283,7 +283,7 @@ If(BUILD_UNITTESTS)
   EndIf(GTEST_FOUND)
 EndIf(BUILD_UNITTESTS)
 
-Install(DIRECTORY example/gconfig example/geometry
+Install(DIRECTORY example/gconfig example/geometry example/input
         DESTINATION share/fairbase/example
         PATTERN ".svn" EXCLUDE)
 
