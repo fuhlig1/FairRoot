@@ -210,6 +210,9 @@ class FairMQChannel
     // this does not hurt much, because mutex is used only during initialization with very low contention
     // possible TODO: improve this
     static boost::mutex fChannelMutex;
+
+    FairMQChannel(const FairMQChannel&);
+    FairMQChannel& operator=(const FairMQChannel&);
 };
 
 #endif /* FAIRMQCHANNEL_H_ */

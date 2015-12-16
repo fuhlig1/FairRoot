@@ -41,7 +41,7 @@ set(CTEST_CUSTOM_WARNING_EXCEPTION
         "base class 'struct boost::mpl"
         "base class 'struct boost::log"
         "base class 'struct std::binary_function"
-        "struct boost::log"
+        "struct boost"
   )
 
 # -----------------------------------------------------------

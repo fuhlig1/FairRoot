@@ -208,8 +208,11 @@ private:
     /**Chain containing the background*/
     TChain*                              fBackgroundChain; //!
     std::map<UInt_t, TChain*>            fSignalTypeList;//!
+
+    FairMixedSource(const FairMixedSource&);
+    FairMixedSource& operator=(const FairMixedSource&);
     
-public:
+  public:
     ClassDef(FairMixedSource, 0)
 };
 
