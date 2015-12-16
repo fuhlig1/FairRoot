@@ -106,11 +106,23 @@ void FairParSet::resetInputVersions()
 }
 
 FairParSet::FairParSet(const FairParSet& from)
+  : TObject(from),
+    fName(from.fName),
+    fTitle(from.fTitle),
+    detName(from.detName),
+    versions(from.versions),
+    status(from.status),
+    changed(from.changed),
+    owned(from.owned),
+    paramContext(from.paramContext),
+    author(from.author),
+    description(from.description),
+    fLogger(from.fLogger)
 {
+/*
  fName    = from.fName;
  fTitle   = from.fTitle;
  detName  = from.detName;
- for (Int_t i=0;i<3;i++) versions[i] = from.versions[i];
  status   = from.status;
  changed  = from.changed;
  owned    = from.owned;
@@ -118,6 +130,8 @@ FairParSet::FairParSet(const FairParSet& from)
  author       = from.author;
  description  = from.description; 
  fLogger      = from.fLogger;
+*/
+ for (Int_t i=0;i<3;i++) versions[i] = from.versions[i];
 }
 
 
