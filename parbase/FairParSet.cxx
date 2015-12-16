@@ -110,7 +110,7 @@ FairParSet::FairParSet(const FairParSet& from)
     fName(from.fName),
     fTitle(from.fTitle),
     detName(from.detName),
-    versions(from.versions),
+    versions(),
     status(from.status),
     changed(from.changed),
     owned(from.owned),
