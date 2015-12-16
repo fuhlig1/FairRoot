@@ -39,7 +39,7 @@ set(CTEST_CUSTOM_WARNING_EXCEPTION
         # boost warnings
         "base class 'struct boost::msm"
         "base class 'struct boost::mpl"
-
+        "base class 'struct boost::log::v2_mt_posix::expressions::keyword_descriptor'"
         "base class 'struct std::binary_function"
   )
 
