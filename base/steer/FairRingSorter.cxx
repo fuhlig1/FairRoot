@@ -103,7 +103,7 @@ void FairRingSorter::WriteOutElement(int index)
 
 int FairRingSorter::CalcIndex(double val)
 {
-  int index = (int)(val / fCellWidth);
+  unsigned int index = static_cast<unsigned int>(val / fCellWidth);
   while (index >= fRingBuffer.size()) {
     index -= fRingBuffer.size();
   }

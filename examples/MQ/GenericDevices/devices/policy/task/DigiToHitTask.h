@@ -64,7 +64,7 @@ class DigiToHitTask_base : public BaseProcessorTaskPolicy< DigiToHitTask_base<T,
     void ExecuteTask(TClonesArray* inputdata)
     {
         fOutputContainer->Delete();
-        for(unsigned int idigi(0);idigi<inputdata->GetEntriesFast();idigi++)
+        for(int idigi(0);idigi<inputdata->GetEntriesFast();idigi++)
         {
             TVector3 pos;
             TVector3 dpos;

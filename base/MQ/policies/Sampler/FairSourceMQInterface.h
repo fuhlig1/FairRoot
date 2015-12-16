@@ -36,8 +36,8 @@ public:
 			fData(nullptr), 
 			fIndex(0),
 			fMaxIndex(-1),
-			fSourceName(),
 			fBranchName(),
+			fSourceName(),
 			fRunAna(nullptr)
 	{
 	}

@@ -229,7 +229,7 @@ template <typename T, typename ManagerType >
     void SaveDataToFile(ManagerType &OutMan, RooDataSet * dataset, bool printval)
     {
         vector<T> DataBunch;
-        for(unsigned int i(0);i<dataset->numEntries();i++)
+        for(int i(0);i<dataset->numEntries();i++)
         {
             T data;
             data.SetTimeStamp( dataset->get(i)->getRealValue("t") );
@@ -255,7 +255,7 @@ template <typename T, typename ManagerType >
     void SavePodDataToFile(ManagerType &OutMan, RooDataSet * dataset, bool printval)
     {
         vector<T> DataBunch;
-        for(unsigned int i(0);i<dataset->numEntries();i++)
+        for(int i(0);i<dataset->numEntries();i++)
         {
             T data;
             data.fTimeStamp =      dataset->get(i)->getRealValue("t");

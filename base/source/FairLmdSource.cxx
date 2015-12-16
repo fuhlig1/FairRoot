@@ -158,7 +158,8 @@ Bool_t FairLmdSource::OpenNextFile(TString fileName)
   LOG(INFO) << "File " << fileName << " opened." << FairLogger::endl;
 
   // Decode File Header
-  Bool_t result = Unpack((Int_t*)fxInfoHeader, sizeof(s_filhe), -4, -4, -4, -4, -4);
+//  Bool_t result = Unpack((Int_t*)fxInfoHeader, sizeof(s_filhe), -4, -4, -4, -4, -4);
+  Unpack((Int_t*)fxInfoHeader, sizeof(s_filhe), -4, -4, -4, -4, -4);
 
   return kTRUE;
 }

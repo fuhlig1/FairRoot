@@ -41,7 +41,7 @@ FairPipe::FairPipe(const char* name, const char* title)
 void FairPipe::ConstructGeometry()
 {
 
-  FairRun* fRun = FairRun::Instance();
+//  FairRun* fRun = FairRun::Instance();
 //  FairRuntimeDb* rtdb= fRun->GetRuntimeDb();
 //  FairGeoPassivePar* par=(FairGeoPassivePar*)(rtdb->getContainer("FairGeoPassivePar"));
 
