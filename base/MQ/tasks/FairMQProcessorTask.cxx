@@ -26,7 +26,7 @@ FairMQProcessorTask::~FairMQProcessorTask()
 {
 }
 
-void FairMQProcessorTask::Exec(Option_t *opt)
+void FairMQProcessorTask::Exec(Option_t*)
 {
 }
 

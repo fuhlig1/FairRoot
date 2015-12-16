@@ -69,7 +69,7 @@ void FairMCObject::AddLink(FairLink link, int index)
   fStage[index].AddLink(link);
 }
 
-void FairMCObject::AdoptSize(int index)
+void FairMCObject::AdoptSize(unsigned int index)
 {
   int start = fStage.size();
   while (fStage.size() < index+1) {

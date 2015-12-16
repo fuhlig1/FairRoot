@@ -100,7 +100,7 @@ void FairMQLmdSampler::Run()
 }
 
 
-void free_buffer (void *data, void *hint)
+void free_buffer (void*, void*)
 {
     LOG(TRACE) << "empty deleter";
 }

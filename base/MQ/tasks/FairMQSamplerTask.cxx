@@ -55,7 +55,7 @@ InitStatus FairMQSamplerTask::Init()
     return kSUCCESS;
 }
 
-void FairMQSamplerTask::Exec(Option_t *opt)
+void FairMQSamplerTask::Exec(Option_t*)
 {
 }
 

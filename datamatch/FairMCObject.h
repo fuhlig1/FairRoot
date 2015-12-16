@@ -123,7 +123,7 @@ class FairMCObject: public TObject
     }
 
   private:
-    void AdoptSize(int index);
+    void AdoptSize(unsigned int index);
     std::vector<FairMCEntry> fStage;
     Int_t fStageId;
 

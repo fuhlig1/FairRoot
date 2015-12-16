@@ -149,7 +149,7 @@ FairGeane::~FairGeane()
 {
 
 }
-void FairGeane::SetField(FairField* field)
+void FairGeane::SetField(FairField*)
 {
 
   cout<< "\033[5m\033[31m -W- FairGeane::SetField  This method is not used anymore, use FairRunAna::SetField instead \033[0m " << endl;

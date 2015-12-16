@@ -110,8 +110,8 @@ void FairTutorialDet4::SetParContainers()
 void FairTutorialDet4::Initialize()
 {
   FairDetector::Initialize();
-  FairRuntimeDb* rtdb= FairRun::Instance()->GetRuntimeDb();
-  FairTutorialDet4GeoPar* par=(FairTutorialDet4GeoPar*)(rtdb->getContainer("FairTutorialDet4GeoPar"));
+//  FairRuntimeDb* rtdb= FairRun::Instance()->GetRuntimeDb();
+//  FairTutorialDet4GeoPar* par=(FairTutorialDet4GeoPar*)(rtdb->getContainer("FairTutorialDet4GeoPar"));
 
   Bool_t isSimulation = kTRUE;
   fGeoHandler->Init(isSimulation);
@@ -130,7 +130,7 @@ void FairTutorialDet4::InitParContainers()
 
 }
 
-Bool_t  FairTutorialDet4::ProcessHits(FairVolume* vol)
+Bool_t  FairTutorialDet4::ProcessHits(FairVolume*)
 {
   /** This method is called from the MC stepping */
 
@@ -290,7 +290,7 @@ void FairTutorialDet4::ModifyGeometry()
     TGeoPNEntry* entry = gGeoManager->GetAlignableEntry(detStr.Data());
     if (entry) {
       LOG(INFO)<<"Misalign using symlinks."<<FairLogger::endl;
-      TGeoPhysicalNode* node = entry->GetPhysicalNode();
+//      TGeoPhysicalNode* node = entry->GetPhysicalNode();
 //    LOG(INFO)<<"Nr of alignable objects: "<<gGeoManager->GetNAlignable()<<FairLogger::endl;
       ModifyGeometryBySymlink();
     } else {
@@ -313,7 +313,7 @@ void FairTutorialDet4::ModifyGeometryByFullPath()
 
     LOG(INFO) << "Path: "<< volPath << FairLogger::endl;
     gGeoManager->cd(volPath);
-    TGeoHMatrix* g3 = gGeoManager->GetCurrentMatrix();
+//    TGeoHMatrix* g3 = gGeoManager->GetCurrentMatrix();
 //      g3->Print();
     TGeoNode* n3 = gGeoManager->GetCurrentNode();
     TGeoMatrix* l3 = n3->GetMatrix();
@@ -337,8 +337,8 @@ void FairTutorialDet4::ModifyGeometryByFullPath()
 
     pn3->Align(nl3);
 
-    TGeoHMatrix* ng3 = pn3->GetMatrix(); //"real" global matrix, what survey sees
-    LOG(DEBUG)<<"*************  The Misaligned Matrix in GRS **************"<<FairLogger::endl;
+//    TGeoHMatrix* ng3 = pn3->GetMatrix(); //"real" global matrix, what survey sees
+//    LOG(DEBUG)<<"*************  The Misaligned Matrix in GRS **************"<<FairLogger::endl;
 //      ng3->Print();
 
 

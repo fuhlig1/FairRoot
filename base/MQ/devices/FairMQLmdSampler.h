@@ -59,7 +59,7 @@ protected:
     void Close();
 private:
      ////////////////////// data members
-    int fCurrentFile;
+    unsigned int fCurrentFile;
     int fNEvent;    
     int fCurrentEvent;
     std::vector<std::string> fFileNames;

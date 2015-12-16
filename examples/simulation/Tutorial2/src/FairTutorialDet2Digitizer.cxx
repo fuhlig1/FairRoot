@@ -38,7 +38,7 @@ FairTutorialDet2Digitizer::FairTutorialDet2Digitizer()
 // --------------------------------------------------------------------
 
 // ---- Constructor ----------------------------------------------------
-FairTutorialDet2Digitizer::FairTutorialDet2Digitizer(const char* name, const char* title)
+FairTutorialDet2Digitizer::FairTutorialDet2Digitizer(const char* name, const char*)
   : FairTask(name, 0),
     fTutorialDetPoints(NULL),
     fDigiPar(NULL)
@@ -127,7 +127,7 @@ InitStatus FairTutorialDet2Digitizer::Init()
 
 
 // ---- Exec ----------------------------------------------------------
-void FairTutorialDet2Digitizer::Exec(Option_t* option)
+void FairTutorialDet2Digitizer::Exec(Option_t*)
 {
 
   // Here we print something

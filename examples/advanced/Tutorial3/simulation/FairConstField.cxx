@@ -162,7 +162,7 @@ Double_t FairConstField::GetBz(Double_t x, Double_t y, Double_t z)
 // -------------------------------------------------------------------------
 
 // -----   Screen output   -------------------------------------------------
-void FairConstField::Print()
+void FairConstField::Print(Option_t*) const
 {
     LOG(INFO) << "======================================================" 
 	      << FairLogger::endl;

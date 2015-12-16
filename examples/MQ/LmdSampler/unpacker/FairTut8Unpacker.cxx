@@ -43,7 +43,7 @@ Bool_t FairTut8Unpacker::DoUnpack(Int_t* data, Int_t size)
 {
     LOG(DEBUG) << "FairTut8Unpacker : Unpacking... size = " << size ;
 
-    UInt_t l_i = 0;
+    Int_t l_i = 0;
 
     Int_t n17 = 0;
 
@@ -64,7 +64,7 @@ Bool_t FairTut8Unpacker::DoUnpack(Int_t* data, Int_t size)
 
         p1 = (UInt_t*)(data + l_i);
 
-        for (Int_t i1 = 0; i1 < l_da_siz; i1 += 2)
+        for (UInt_t i1 = 0; i1 < l_da_siz; i1 += 2)
         {
             UInt_t tac_addr;
             UInt_t tac_ch;

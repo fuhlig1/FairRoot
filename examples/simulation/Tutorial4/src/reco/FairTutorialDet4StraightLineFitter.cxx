@@ -98,7 +98,7 @@ InitStatus FairTutorialDet4StraightLineFitter::ReInit()
 }
 
 // ---- Exec ----------------------------------------------------------
-void FairTutorialDet4StraightLineFitter::Exec(Option_t* option)
+void FairTutorialDet4StraightLineFitter::Exec(Option_t*)
 {
   LOG(DEBUG) << "Exec of FairTutorialDet4StraightLineFitter"
 	     << FairLogger::endl;
@@ -107,10 +107,10 @@ void FairTutorialDet4StraightLineFitter::Exec(Option_t* option)
 
   // Declare some variables
   FairTutorialDet4Hit* hit = NULL;
-  Int_t detID   = 0;        // Detector ID
+//  Int_t detID   = 0;        // Detector ID
   Int_t trackID = 0;        // Track index
-  Double_t x, y, z;         // Position
-  Double_t dx = 0.1;        // Position error
+//  Double_t x, y, z;         // Position
+//  Double_t dx = 0.1;        // Position error
   Double_t tof = 0.;        // Time of flight
   TVector3 pos, dpos;       // Position and error vectors
 

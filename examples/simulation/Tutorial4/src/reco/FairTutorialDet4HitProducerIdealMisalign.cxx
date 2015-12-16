@@ -126,7 +126,7 @@ InitStatus FairTutorialDet4HitProducerIdealMisalign::Init()
 
 }
 // -----   Public method Exec   --------------------------------------------
-void FairTutorialDet4HitProducerIdealMisalign::Exec(Option_t* opt)
+void FairTutorialDet4HitProducerIdealMisalign::Exec(Option_t*)
 {
 
   fHitArray->Clear();
