@@ -211,8 +211,6 @@ class FairMQChannel
     // possible TODO: improve this
     static boost::mutex fChannelMutex;
 
-    FairMQChannel(const FairMQChannel&);
-    FairMQChannel& operator=(const FairMQChannel&);
 };
 
 #endif /* FAIRMQCHANNEL_H_ */
