@@ -21,7 +21,7 @@
 #include "FairMQTransportFactoryZMQ.h"
 #endif
 
-int main(int argc, char** argv)
+int main(int, char**)
 {
     FairMQTestPull testPull;
     testPull.CatchSignals();

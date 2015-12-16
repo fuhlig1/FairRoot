@@ -40,7 +40,7 @@ void FairMQExample4Sampler::Run()
 
         if (fChannels.at("data-out").size() > 1)
         {
-            for (int i = 1; i < fChannels.at("data-out").size(); ++i)
+            for (unsigned int i = 1; i < fChannels.at("data-out").size(); ++i)
             {
                 std::unique_ptr<FairMQMessage> msgCopy(fTransportFactory->CreateMessage());
                 msgCopy->Copy(msg);

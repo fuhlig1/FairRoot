@@ -120,7 +120,7 @@ void FairMCMatchLoaderTask::SetParContainers()
 
 
 // -----   Public method Exec   --------------------------------------------
-void FairMCMatchLoaderTask::Exec(Option_t* opt)
+void FairMCMatchLoaderTask::Exec(Option_t*)
 {
 
   if (!fMCLink) { Fatal("Exec", "No fMCLink"); }

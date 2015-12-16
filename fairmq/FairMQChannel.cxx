@@ -24,13 +24,13 @@ using namespace std;
 boost::mutex FairMQChannel::fChannelMutex;
 
 FairMQChannel::FairMQChannel()
-    : fType("unspecified")
+    : fSocket(nullptr)
+    , fType("unspecified")
     , fMethod("unspecified")
     , fAddress("unspecified")
     , fSndBufSize(1000)
     , fRcvBufSize(1000)
     , fRateLogging(1)
-    , fSocket(nullptr)
     , fChannelName("")
     , fIsValid(false)
     , fPoller(nullptr)

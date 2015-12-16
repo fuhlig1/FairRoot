@@ -105,7 +105,7 @@ InitStatus FairBoxSetDraw::Init()
   return kSUCCESS;
 }
 // -------------------------------------------------------------------------
-void FairBoxSetDraw::Exec(Option_t* option)
+void FairBoxSetDraw::Exec(Option_t*)
 {
   if(IsActive()) {
     TObject* p;
@@ -150,7 +150,7 @@ void FairBoxSetDraw::AddBoxes(FairBoxSet* set, TObject* obj, Int_t i)
 }
 
 
-Int_t FairBoxSetDraw::GetValue(TObject* obj, Int_t i)
+Int_t FairBoxSetDraw::GetValue(TObject*, Int_t i)
 {
   return i;
 }

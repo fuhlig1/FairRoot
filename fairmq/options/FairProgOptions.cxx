@@ -21,8 +21,8 @@ using namespace std;
 FairProgOptions::FairProgOptions() : 
                         fGenericDesc("Generic options description"),
                         fConfigDesc("Configuration options description"),
-                        fHiddenDesc("Hidden options description"),
                         fEnvironmentDesc("Environment Variables"),
+                        fHiddenDesc("Hidden options description"),
                         fCmdLineOptions("Command line options"),
                         fConfigFileOptions("Configuration file options"),
                         fVisibleOptions("Visible options"),

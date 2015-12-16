@@ -101,7 +101,7 @@ void FairMCMatchCreatorTask::SetParContainers()
 }
 
 // -----   Public method Exec   --------------------------------------------
-void FairMCMatchCreatorTask::Exec(Option_t* opt)
+void FairMCMatchCreatorTask::Exec(Option_t*)
 {
   if (!fMCLink) { Fatal("Exec", "No fMCLinkDet"); }
   fMCLink->Delete();

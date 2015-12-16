@@ -29,7 +29,7 @@ FairMQExample5Client::~FairMQExample5Client()
 {
 }
 
-void FairMQExample5Client::CustomCleanup(void *data, void *hint)
+void FairMQExample5Client::CustomCleanup(void*, void* hint)
 {
     delete (string*)hint;
 }

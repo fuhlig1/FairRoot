@@ -77,7 +77,7 @@ InitStatus FairPointSetDraw::Init()
   return kSUCCESS;
 }
 // -------------------------------------------------------------------------
-void FairPointSetDraw::Exec(Option_t* option)
+void FairPointSetDraw::Exec(Option_t*)
 {
   if (IsActive()) {
     Int_t npoints=fPointList->GetEntriesFast();
@@ -103,7 +103,7 @@ void FairPointSetDraw::Exec(Option_t* option)
 
 }
 
-TObject* FairPointSetDraw::GetValue(TObject* obj,Int_t i)
+TObject* FairPointSetDraw::GetValue(TObject*,Int_t i)
 {
   return new TNamed(Form("Point %d", i),"");
 }

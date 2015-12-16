@@ -84,7 +84,7 @@ InitStatus FairMCTracks::Init()
   else { return kERROR; }
 }
 // -------------------------------------------------------------------------
-void FairMCTracks::Exec(Option_t* option)
+void FairMCTracks::Exec(Option_t*)
 {
 
   if (IsActive()) {

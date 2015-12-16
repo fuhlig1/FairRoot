@@ -96,7 +96,7 @@ void FairMCMatchSelectorTask::SetParContainers()
 
 
 // -----   Public method Exec   --------------------------------------------
-void FairMCMatchSelectorTask::Exec(Option_t* opt)
+void FairMCMatchSelectorTask::Exec(Option_t*)
 {
   std::cout << "Output Selector: " << std::endl;
   SetWeights();
@@ -108,7 +108,7 @@ void FairMCMatchSelectorTask::Exec(Option_t* opt)
 void FairMCMatchSelectorTask::SetWeights()
 {
   fMCMatch->SetCommonWeightStages(fCommonWeight);
-  for (int i = 0; i < fStageWeights.size(); i++) {
+  for (unsigned int i = 0; i < fStageWeights.size(); i++) {
     fMCMatch->GetMCStageType(fStageWeights[i].first)->SetWeight(fStageWeights[i].second);
   }
 }

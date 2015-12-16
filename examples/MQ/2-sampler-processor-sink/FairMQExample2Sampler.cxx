@@ -25,7 +25,7 @@ FairMQExample2Sampler::FairMQExample2Sampler()
 {
 }
 
-void FairMQExample2Sampler::CustomCleanup(void *data, void *object)
+void FairMQExample2Sampler::CustomCleanup(void*, void* object)
 {
     delete (string*)object;
 }
