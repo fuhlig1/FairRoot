@@ -102,7 +102,7 @@ FairMCTrack::~FairMCTrack() { }
 
 
 // -----   Public method Print   -------------------------------------------
-void FairMCTrack::Print(Int_t trackId) const
+void FairMCTrack::PrintTrack(Int_t trackId) const
 {
   LOG(DEBUG) << "Track " << trackId << ", mother : " << fMotherId << ", Type "
              << fPdgCode << ", momentum (" << fPx << ", " << fPy << ", "

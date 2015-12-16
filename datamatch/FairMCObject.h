@@ -70,7 +70,7 @@ class FairMCObject: public TObject
     void SetEntry(FairMCEntry link);
 
     void SetStage(std::vector<FairMCEntry> stage) {fStage = stage;}
-    void SetLink(FairLink link, int index);
+    void SetLink(FairLink link, unsigned int index);
     void AddLink(FairLink link, int index);
 
     FairMCEntry GetEntry(int index) const {return fStage[index];}

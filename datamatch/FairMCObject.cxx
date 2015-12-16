@@ -42,7 +42,7 @@ void FairMCObject::SetEntry(std::vector<Int_t> type, std::vector<Int_t> link, in
   FairMCEntry myEntry;
   myEntry.SetPos(index);
   myEntry.SetPersistanceCheck(kFALSE);
-  for (int i = 0; i < type.size(); i++) {
+  for (unsigned int i = 0; i < type.size(); i++) {
     myEntry.AddLink(FairLink(type[i],link[i]));
   }
   SetEntry(myEntry);
@@ -54,7 +54,7 @@ void FairMCObject::SetEntry(FairMultiLinkedData* data, int index)
   fStage[index].SetLinks(data->GetLinks());
 }
 
-void FairMCObject::SetLink(FairLink link, int index)
+void FairMCObject::SetLink(FairLink link, unsigned int index)
 {
   if (index < fStage.size()) {
     fStage[index].ResetLinks();
@@ -86,7 +86,7 @@ FairMultiLinkedData FairMCObject::PosInList(FairLink link)
 {
   FairMultiLinkedData result;
   result.SetPersistanceCheck(kFALSE);
-  for (int i = 0; i < fStage.size(); i++) {
+  for (unsigned int i = 0; i < fStage.size(); i++) {
     if (fStage[i].IsLinkInList(link.GetType(), link.GetIndex())) {
       result.AddLink(FairLink(GetStageId(), i));
     }
@@ -96,7 +96,7 @@ FairMultiLinkedData FairMCObject::PosInList(FairLink link)
 
 void FairMCObject::RemoveType(Int_t type)
 {
-  for (int i = 0; i < fStage.size(); i++) {
+  for (unsigned int i = 0; i < fStage.size(); i++) {
     fStage[i].RemoveType(type);
   }
 }

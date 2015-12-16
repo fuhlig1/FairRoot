@@ -99,7 +99,7 @@ void FairStack::PushTrack(Int_t toBeDone, Int_t parentId, Int_t pdgCode,
                           Double_t e, Double_t vx, Double_t vy, Double_t vz,
                           Double_t time, Double_t polx, Double_t poly,
                           Double_t polz, TMCProcess proc, Int_t& ntr,
-                          Double_t weight, Int_t is, Int_t secondparentID)
+                          Double_t weight, Int_t, Int_t)
 {
 
   // --> Get TParticle array
@@ -359,7 +359,7 @@ void FairStack::Register()
 
 
 // -----   Public method Print  --------------------------------------------
-void FairStack::Print(Int_t iVerbose) const
+void FairStack::Print(Option_t*) const
 {
   LOG(INFO) << "FairStack: Number of primaries        = "
 	    << fNPrimaries << FairLogger::endl;
@@ -369,7 +369,7 @@ void FairStack::Print(Int_t iVerbose) const
 	    << fNTracks << FairLogger::endl;
   if (gLogger->IsLogNeeded(DEBUG1)) {
     for (Int_t iTrack=0; iTrack<fNTracks; iTrack++) {
-      ((FairMCTrack*) fTracks->At(iTrack))->Print(iTrack);
+      ((FairMCTrack*) fTracks->At(iTrack))->PrintTrack(iTrack);
     }
   }
 }
