@@ -73,7 +73,7 @@ InitStatus FairTestDetectorRecoTask::Init()
 }
 
 // -----   Public method Exec   --------------------------------------------
-void FairTestDetectorRecoTask::Exec(Option_t* opt)
+void FairTestDetectorRecoTask::Exec(Option_t*)
 {
 
     fHitArray->Delete();

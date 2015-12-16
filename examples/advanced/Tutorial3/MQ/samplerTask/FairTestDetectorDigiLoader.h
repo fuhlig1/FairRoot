@@ -65,7 +65,7 @@ class FairTestDetectorDigiLoader : public FairMQSamplerTask
     virtual void Exec(Option_t* opt);
 
     template <class Archive>
-    void serialize(Archive& ar, const unsigned int version)
+    void serialize(Archive& ar, const unsigned int)
     {
         ar& fDigiVector;
     }

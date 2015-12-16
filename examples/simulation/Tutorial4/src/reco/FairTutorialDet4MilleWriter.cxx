@@ -96,11 +96,11 @@ InitStatus FairTutorialDet4MilleWriter::ReInit()
 }
 
 // ---- Exec ----------------------------------------------------------
-void FairTutorialDet4MilleWriter::Exec(Option_t* option)
+void FairTutorialDet4MilleWriter::Exec(Option_t*)
 {
   if (IsGoodEvent()) {
-    if (1 == fVersion) { StraightLineShiftX(option); }
-    if (2 == fVersion) { StraightLineShiftXY(option); }
+    if (1 == fVersion) { StraightLineShiftX(); }
+    if (2 == fVersion) { StraightLineShiftXY(); }
   }
 }
 
@@ -131,7 +131,7 @@ Bool_t FairTutorialDet4MilleWriter::IsGoodEvent()
   return kTRUE;
 }
 
-void FairTutorialDet4MilleWriter::StraightLineShiftX(Option_t* option)
+void FairTutorialDet4MilleWriter::StraightLineShiftX()
 {
 
   const Int_t nLC = 2; // number of local parameters
@@ -200,7 +200,7 @@ void FairTutorialDet4MilleWriter::StraightLineShiftX(Option_t* option)
 }
 
 // ---- Exec ----------------------------------------------------------
-void FairTutorialDet4MilleWriter::StraightLineShiftXY(Option_t* option)
+void FairTutorialDet4MilleWriter::StraightLineShiftXY()
 {
 
   const Int_t nLC = 4; // number of local parameters

@@ -220,7 +220,7 @@ class BoostSerializer : public BaseSerializationPolicy<BoostSerializer<DataType,
     /// Diverse
 
     template <class Archive>
-    void serialize(Archive& ar, const unsigned int version)
+    void serialize(Archive& ar, const unsigned int)
     {
         ar& fDataVector;
     }
@@ -385,7 +385,7 @@ class BoostDeSerializer : public BaseSerializationPolicy<BoostDeSerializer<DataT
     /// Diverse
 
     template <class Archive>
-    void serialize(Archive& ar, const unsigned int version)
+    void serialize(Archive& ar, const unsigned int)
     {
         ar& fDataVector;
     }

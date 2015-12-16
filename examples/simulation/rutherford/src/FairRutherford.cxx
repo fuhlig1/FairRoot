@@ -71,8 +71,8 @@ FairRutherford::~FairRutherford()
 void FairRutherford::Initialize()
 {
   FairDetector::Initialize();
-  FairRuntimeDb* rtdb= FairRun::Instance()->GetRuntimeDb();
-  FairRutherfordGeoPar* par=(FairRutherfordGeoPar*)(rtdb->getContainer("FairRutherfordGeoPar"));
+//  FairRuntimeDb* rtdb= FairRun::Instance()->GetRuntimeDb();
+//  FairRutherfordGeoPar* par=(FairRutherfordGeoPar*)(rtdb->getContainer("FairRutherfordGeoPar"));
 }
 
 Bool_t  FairRutherford::ProcessHits(FairVolume* vol)

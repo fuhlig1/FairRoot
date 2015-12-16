@@ -7,7 +7,7 @@
 
 // Default implementation of FairTestDetectorDigiLoader::Exec() with Boost transport data format
 template <typename T1, typename T2>
-void FairTestDetectorDigiLoader<T1, T2>::Exec(Option_t* opt)
+void FairTestDetectorDigiLoader<T1, T2>::Exec(Option_t*)
 {
     // Default implementation of the base template Exec function using boost
     // the condition check if the input class has a function member with name

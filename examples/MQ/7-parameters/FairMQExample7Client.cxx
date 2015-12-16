@@ -25,7 +25,7 @@
 using namespace std;
 
 FairMQExample7Client::FairMQExample7Client() :
-    fRunId(0),
+//    fRunId(0),
     fParameterName()
 {
 }
@@ -34,7 +34,7 @@ FairMQExample7Client::~FairMQExample7Client()
 {
 }
 
-void FairMQExample7Client::CustomCleanup(void *data, void *hint)
+void FairMQExample7Client::CustomCleanup(void*, void* hint)
 {
     delete (string*)hint;
 }

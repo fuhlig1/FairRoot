@@ -41,7 +41,7 @@ class FairMQExample7Client : public FairMQDevice
     virtual void Run();
 
   private:
-    int fRunId;
+//    int fRunId;
     std::string fParameterName;
 };
 

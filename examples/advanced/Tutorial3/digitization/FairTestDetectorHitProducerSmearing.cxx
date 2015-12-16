@@ -91,7 +91,7 @@ InitStatus FairTestDetectorHitProducerSmearing::ReInit()
 }
 
 // ---- Exec ----------------------------------------------------------
-void FairTestDetectorHitProducerSmearing::Exec(Option_t* option)
+void FairTestDetectorHitProducerSmearing::Exec(Option_t*)
 {
   LOG(DEBUG) << "Exec of FairTestDetectorHitProducerSmearing"
 	     << FairLogger::endl;

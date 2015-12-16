@@ -11,7 +11,7 @@
 #include "FairTestDetectorPayload.pb.h"
 
 // helper function to clean up the object holding the data after it is transported.
-void free_string (void *data, void *hint)
+void free_string (void*, void* hint)
 {
     delete (string*)hint;
 }

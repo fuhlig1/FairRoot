@@ -67,7 +67,7 @@ InitStatus FairTestDetectorTimeDigiTask::Init()
 }
 
 // -----   Public method Exec   --------------------------------------------
-void FairTestDetectorTimeDigiTask::Exec(Option_t* opt)
+void FairTestDetectorTimeDigiTask::Exec(Option_t*)
 {
 
     // fDigiArray->Delete();

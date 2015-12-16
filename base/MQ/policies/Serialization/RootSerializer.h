@@ -29,7 +29,7 @@ class FairTMessage : public TMessage
 
 
 // helper function to clean up the object holding the data after it is transported.
-void free_tmessage (void *data, void *hint)
+void free_tmessage (void*, void* hint)
 {
     delete (TMessage*)hint;
 }

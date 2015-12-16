@@ -191,7 +191,7 @@ void FairConstField::FillParContainer()
     //            << FairLogger::endl;
     FairRun* fRun = FairRun::Instance();
     FairRuntimeDb* rtdb = fRun->GetRuntimeDb();
-    Bool_t kParameterMerged = kTRUE;
+//    Bool_t kParameterMerged = kTRUE;
     FairConstPar* Par = (FairConstPar*)rtdb->getContainer("FairConstPar");
     Par->SetParameters(this);
     Par->setInputVersion(fRun->GetRunId(), 1);

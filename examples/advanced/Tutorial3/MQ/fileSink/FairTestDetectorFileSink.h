@@ -99,7 +99,7 @@ class FairTestDetectorFileSink : public FairMQDevice
     }
 
     template <class Archive>
-    void serialize(Archive& ar, const unsigned int version)
+    void serialize(Archive& ar, const unsigned int)
     {
         ar& fHitVector;
     }

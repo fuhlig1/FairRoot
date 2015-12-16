@@ -48,9 +48,9 @@ class FairTestDetectorMQRecoTask : public FairMQProcessorTask
     /** Default constructor **/
     FairTestDetectorMQRecoTask()
         : fRecoTask(NULL)
+        , fHasBoostSerialization(false)
         , fDigiVector()
         , fHitVector()
-        , fHasBoostSerialization(false)
     {
         using namespace baseMQ::tools::resolve;
         bool checkInputClass = false;
@@ -78,11 +78,11 @@ class FairTestDetectorMQRecoTask : public FairMQProcessorTask
         }
     }
 
-    FairTestDetectorMQRecoTask(Int_t verbose)
+    FairTestDetectorMQRecoTask(Int_t)
         : fRecoTask(NULL)
+        , fHasBoostSerialization(false)
         , fDigiVector()
         , fHitVector()
-        , fHasBoostSerialization(false)
     {
         using namespace baseMQ::tools::resolve;
         bool checkInputClass = false;
@@ -161,7 +161,7 @@ class FairTestDetectorMQRecoTask : public FairMQProcessorTask
 
     // boost serialize function
     template <class Archive>
-    void serialize(Archive& ar, const unsigned int version)
+    void serialize(Archive& ar, const unsigned int)
     {
         ar& fDigiVector;
         ar& fHitVector;

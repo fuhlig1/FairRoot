@@ -42,7 +42,7 @@ void FairPipe::ConstructGeometry()
 {
 
   FairRun* fRun = FairRun::Instance();
-  FairRuntimeDb* rtdb= fRun->GetRuntimeDb();
+//  FairRuntimeDb* rtdb= fRun->GetRuntimeDb();
 //  FairGeoPassivePar* par=(FairGeoPassivePar*)(rtdb->getContainer("FairGeoPassivePar"));
 
   FairGeoLoader* loader=FairGeoLoader::Instance();
