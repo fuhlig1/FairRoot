@@ -69,7 +69,6 @@ FairRunOnline::FairRunOnline()
   :FairRun(),
    fAutomaticFinish(kTRUE),
    fIsInitialized(kFALSE),
-   fEvtHeader(0),
    fStatic(kFALSE),
    fField(0),
    fFolder(new TFolder("HISTO", "HISTO")),
@@ -89,7 +88,6 @@ FairRunOnline::FairRunOnline(FairSource* source)
   :FairRun(),
    fAutomaticFinish(kTRUE),
    fIsInitialized(kFALSE),
-   fEvtHeader(0),
    fStatic(kFALSE),
    fField(0),
    fFolder(new TFolder("HISTO", "HISTO")),
@@ -516,15 +514,6 @@ void FairRunOnline::WriteObjects()
 }
 //_____________________________________________________________________________
 
-//_____________________________________________________________________________
-FairEventHeader* FairRunOnline::GetEventHeader()
-{
-  //  fEvtHeader = fRootManager->GetEventHeader();
-  if ( NULL == fEvtHeader ) {
-    fEvtHeader = new FairEventHeader();
-  }
-  return fEvtHeader;
-}
 //_____________________________________________________________________________
 
 
