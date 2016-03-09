@@ -23,7 +23,8 @@ FairMbsSource::FairMbsSource() : FairOnlineSource() {}
 FairMbsSource::FairMbsSource(const FairMbsSource &source)
     : FairOnlineSource(source) {}
 
-FairMbsSource::~FairMbsSource() {
+FairMbsSource::~FairMbsSource() 
+{
 }
 
 Bool_t FairMbsSource::Unpack(Int_t *data, Int_t size, Short_t type,
@@ -39,7 +40,7 @@ Bool_t FairMbsSource::Unpack(Int_t *data, Int_t size, Short_t type,
   FairUnpack *unpack;
   Bool_t seen = kFALSE;
   for (Int_t i = 0; i < fUnpackers->GetEntriesFast(); i++) {
-    unpack = (FairUnpack *)fUnpackers->At(i);
+    unpack = static_cast<FairUnpack*>(fUnpackers->At(i));
 
     if (unpack->GetSubCrate() < 0) { // All sub-crates
       if (type != unpack->GetType() || subType != unpack->GetSubType() ||
