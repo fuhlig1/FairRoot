@@ -1,3 +1,5 @@
+#!/bin/csh
+
 setenv Linux_Flavour_ "@_linux_flavour@"
 setenv System_ "@_system@"
 source @_BINDIR@/check_system.csh
