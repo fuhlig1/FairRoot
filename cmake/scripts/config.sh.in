@@ -3,7 +3,7 @@
 export Linux_Flavour_="@_linux_flavour@"
 export System_="@_system@"
 . @_BINDIR@/check_system.sh
-if [ "$same_system" == "1" ]; then
+if [ $same_system -eq 1 ]; then
   export SIMPATH="@SIMPATH@"
   export ROOTSYS="@ROOTSYS@"
   export FAIRROOTPATH="@FAIRROOTPATH@"
