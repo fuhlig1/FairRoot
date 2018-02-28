@@ -125,6 +125,11 @@ void FairRunSim::AddModule (FairModule* Mod)
   Mod->SetModId(count++);
 }
 //_____________________________________________________________________________
+void FairRunSim::AddModule (std::unique_ptr<FairModule> Mod)
+{
+  AddModule(Mod.release());
+}
+//_____________________________________________________________________________
 void FairRunSim::AddMesh (FairMesh* Mesh)
 {
   Mesh->print();
@@ -441,6 +446,11 @@ void FairRunSim::SetField(FairField* field)
 void FairRunSim::SetGenerator(FairPrimaryGenerator* Gen)
 {
   fGen=Gen;
+}
+//_____________________________________________________________________________
+void FairRunSim::SetGenerator(std::unique_ptr<FairPrimaryGenerator> Gen)
+{
+  SetGenerator(Gen.release());
 }
 //_____________________________________________________________________________
 void FairRunSim::SetMaterials(const char* MatFileName)

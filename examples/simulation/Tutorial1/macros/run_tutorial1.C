@@ -8,6 +8,14 @@
 void run_tutorial1(Int_t nEvents = 10, TString mcEngine = "TGeant3")
 {
   
+  FairLogger *logger = FairLogger::GetLogger();
+  logger->SetLogToScreen(kTRUE);
+//  logger->SetLogVerbosityLevel("HIGH");
+  logger->SetLogScreenLevel("DEBUG");
+//  logger->SetLogScreenLevel("INFO");
+
+
+
   TString dir = getenv("VMCWORKDIR");
   TString tutdir = dir + "/simulation/Tutorial1";
 
@@ -70,28 +78,30 @@ void run_tutorial1(Int_t nEvents = 10, TString mcEngine = "TGeant3")
   
   // -----   Create geometry   ----------------------------------------------
 
-  FairModule* cave= new FairCave("CAVE");
-  cave->SetGeometryFileName("cave_vacuum.geo"); 
-  run->AddModule(cave);
 
-  FairDetector* tutdet = new FairTutorialDet1("TUTDET", kTRUE);
-  tutdet->SetGeometryFileName("double_sector.geo"); 
-  run->AddModule(tutdet);
+  std::unique_ptr<FairModule> cave {new FairCave("CAVE")};
+  cave.get()->SetGeometryFileName("cave_vacuum.geo"); 
+  run->AddModule(std::move(cave));
+
+  std::unique_ptr<FairDetector> tutdet {new FairTutorialDet1("TUTDET", kTRUE)};
+  tutdet.get()->SetGeometryFileName("double_sector.geo"); 
+  run->AddModule(std::move(tutdet));
   // ------------------------------------------------------------------------
 
   // -----   Create PrimaryGenerator   --------------------------------------
-  FairPrimaryGenerator* primGen = new FairPrimaryGenerator();
-  FairBoxGenerator* boxGen = new FairBoxGenerator(partPdgC[chosenPart], 1);
+  std::unique_ptr<FairPrimaryGenerator> primGen {new FairPrimaryGenerator()};
 
-  boxGen->SetThetaRange (   theta,   theta+0.01);
-  boxGen->SetPRange     (momentum,momentum+0.01);
-  boxGen->SetPhiRange   (0.,360.);
-  boxGen->SetDebug(kTRUE);
+  std::unique_ptr<FairBoxGenerator> boxGen {new FairBoxGenerator(partPdgC[chosenPart],1)};
 
-  primGen->AddGenerator(boxGen);
+  boxGen.get()->SetThetaRange (   theta,   theta+0.01);
+  boxGen.get()->SetPRange     (momentum,momentum+0.01);
+  boxGen.get()->SetPhiRange   (0.,360.);
+  boxGen.get()->SetDebug(kTRUE);
+
+  primGen->AddGenerator(std::move(boxGen));
 
   
-  run->SetGenerator(primGen);
+  run->SetGenerator(std::move(primGen));
   // ------------------------------------------------------------------------
 
   // -----   Initialize simulation run   ------------------------------------
@@ -101,9 +111,9 @@ void run_tutorial1(Int_t nEvents = 10, TString mcEngine = "TGeant3")
   // -----   Runtime database   ---------------------------------------------
 
   Bool_t kParameterMerged = kTRUE;
-  FairParRootFileIo* parOut = new FairParRootFileIo(kParameterMerged);
+  std::unique_ptr<FairParRootFileIo> parOut {new FairParRootFileIo(kParameterMerged)};
   parOut->open(parFile.Data());
-  rtdb->setOutput(parOut);
+  rtdb->setOutput(std::move(parOut));
   rtdb->saveOutput();
   rtdb->print();
   // ------------------------------------------------------------------------
@@ -142,6 +152,7 @@ void run_tutorial1(Int_t nEvents = 10, TString mcEngine = "TGeant3")
   cout << "Macro finished successfully." << endl;
 
   // ------------------------------------------------------------------------
+  delete run;
 }
 
 

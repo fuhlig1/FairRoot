@@ -1,9 +1,9 @@
 /********************************************************************************
- *    Copyright (C) 2014 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH *
+ *    Copyright (C) 2014 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH    *
  *                                                                              *
- *              This software is distributed under the terms of the *
- *              GNU Lesser General Public Licence (LGPL) version 3,             *    
- *                  copied verbatim in the file "LICENSE" *
+ *              This software is distributed under the terms of the             *
+ *              GNU Lesser General Public Licence (LGPL) version 3,             *
+ *                  copied verbatim in the file "LICENSE"                       *
  ********************************************************************************/
 
 /** FairPrimaryGenerator.h
@@ -62,6 +62,11 @@ public:
       return;
     }
     fGenList->Add(generator);
+  }
+
+  /** Register a generator derived from FairGenerator.  **/
+  void AddGenerator(std::unique_ptr<FairGenerator> generator) {
+    AddGenerator(generator.release());
   }
 
   /** Public method GenerateEvent

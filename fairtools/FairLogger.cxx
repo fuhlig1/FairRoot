@@ -21,7 +21,7 @@
 #include <stdio.h>      // for fclose, freopen, remove, etc
 #include <iostream>     // for cout, cerr
 
-FairLogger* FairLogger::instance = nullptr;
+//FairLogger* FairLogger::instance = nullptr;
 
 FairLogger::FairLogger()
     : fLogFileName()
@@ -37,12 +37,16 @@ FairLogger::FairLogger()
 
 FairLogger* FairLogger::GetLogger()
 {
+  static thread_local FairLogger instance;
+  return &instance;
+/*
     if (!instance)
     {
         instance = new FairLogger();
     }
 
     return instance;
+*/
 }
 
 void FairLogger::Fatal(const char* file, const char* line, const char* func, const char* format, ...)

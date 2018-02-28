@@ -104,7 +104,7 @@ class FairLogger
     }
 
   private:
-    static FairLogger* instance;
+//    static FairLogger* instance;
 
     FairLogger();
     FairLogger(const FairLogger&);

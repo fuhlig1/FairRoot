@@ -96,6 +96,10 @@ class FairRuntimeDb : public TObject
     Bool_t setFirstInput(FairParIo*);
     Bool_t setSecondInput(FairParIo*);
     Bool_t setOutput(FairParIo*);
+    Bool_t setOutput(std::unique_ptr<FairParIo> op)
+    {
+      return setOutput(op.release());
+    }
     FairParIo* getFirstInput(void);
     FairParIo* getSecondInput(void);
     FairParIo* getOutput(void);

@@ -74,6 +74,8 @@ namespace {
   TMCMutex deleteMutex = TMCMUTEX_INITIALIZER;
 }
 
+TMCThreadLocal FairRootManager* FairRootManager::fgInstance = 0;
+
 //_____________________________________________________________________________
 Int_t   FairRootManager::fgCounter = 0;
 
@@ -82,8 +84,10 @@ FairRootManager* FairRootManager::Instance()
 {
 // Returns singleton instance.
 // ---
-    static thread_local FairRootManager instance;
-    return &instance;
+ if (!fgInstance) fgInstance = new FairRootManager;
+ return fgInstance;
+//    static thread_local FairRootManager instance;
+//    return &instance;
 }
 
 //_____________________________________________________________________________
@@ -141,6 +145,8 @@ FairRootManager::FairRootManager()
 
   LOG(debug) << "Released lock and done FairRootManager::FairRootManager in "
     << fId << " " << this;
+//  fBranchNameList->SetOwner();
+  LOG(debug) << "Counter: " << fgCounter;
 }
 
 //_____________________________________________________________________________
@@ -148,21 +154,26 @@ FairRootManager::~FairRootManager()
 {
 //
   LOG(debug) << "Enter Destructor of FairRootManager";
+  LOG(debug) << "Counter: " << fgCounter;
+//  if (0 == fgCounter) {
 
-  // delete fOutTree;
-  if(fOutFile) {
-    // the following line lead to a segfault:
-    // CloseOutFile();
-  } else {
-    // if fOutFile exists, fOutTree is deleted with the file
-    delete fOutTree;
-  }
-  delete[] fObj2;
-  fBranchNameList->Delete();
-  delete fBranchNameList;
-  LOG(debug) << "Leave Destructor of FairRootManager";
-  delete fEventHeader;
-  delete fSourceChain;
+    fBranchNameList->Dump();
+  //  fBranchNameList->Delete();
+  //  delete fBranchNameList;
+    // delete fOutTree;
+    if(fOutFile) {
+      // the following line lead to a segfault:
+      // CloseOutFile();
+    } else {
+      // if fOutFile exists, fOutTree is deleted with the file
+      delete fOutTree;
+    }
+    delete[] fObj2;
+    LOG(debug) << "Leave Destructor of FairRootManager";
+    delete fEventHeader;
+    delete fSourceChain;
+
+//  }
 
   // Global cleanup
   TMCAutoLock lk(&deleteMutex);

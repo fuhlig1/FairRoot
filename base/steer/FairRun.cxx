@@ -68,6 +68,7 @@ FairRun::~FairRun()
   // but this should be independent
   delete fRtdb;  // who is responsible for the RuntimeDataBase
   delete fEvtHeader;
+  delete fRootManager;
   LOG(debug) << "Leave Destructor of FairRun";
 }
 //_____________________________________________________________________________

@@ -45,6 +45,7 @@ class FairRunSim : public FairRun
      *       Add a module to the simulation (e.g. PIPE, Magnet, ..etc)
     */
     void        AddModule  (FairModule* Mod);
+    void        AddModule  (std::unique_ptr<FairModule> Mod);
     /**
      *       Add a user defined ion to the simulation
     */
@@ -78,6 +79,7 @@ class FairRunSim : public FairRun
      *       Set the event generator that has to be used for simulation field
     */
     void        SetGenerator(FairPrimaryGenerator* Gen);
+    void        SetGenerator(std::unique_ptr<FairPrimaryGenerator> Gen);
 
     /**
      *       Set the experiment dependent event header
