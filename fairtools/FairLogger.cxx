@@ -188,6 +188,7 @@ bool FairLogger::IsLogNeeded(FairLogLevel level)
     return fair::Logger::Logging(ConvertLogLevelToString(level));
 }
 
+// coverity[+kill]
 void FairLogger::LogFatalMessage()
 {
     // Since Fatal indicates a fatal error it is maybe usefull to have
