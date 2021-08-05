@@ -32,20 +32,12 @@ void run_tutorial4(Int_t nEvents = 10, TString mcEngine = "TGeant3", Bool_t doAl
         parFile = "testparams_align_";
     } else {
         outFile = "testrun_";
-        geoFile = "geoFile";
+        geoFile = "geoFile_";
         parFile = "testparams_";
     }
     outFile = outDir + outFile + mcEngine + ".root";
     geoFile = outDir + geoFile + mcEngine + ".root";
     parFile = outDir + parFile + mcEngine + ".root";
-
-    TList* parFileList = new TList();
-
-    TString paramDir = dir + "/simulation/Tutorial4/parameters/";
-    TString paramFile = paramDir + "example.par";
-
-    TObjString* tutDetDigiFile = new TObjString(paramFile);
-    parFileList->Add(tutDetDigiFile);
 
     // In general, the following parts need not be touched
     // ========================================================================
@@ -70,6 +62,31 @@ void run_tutorial4(Int_t nEvents = 10, TString mcEngine = "TGeant3", Bool_t doAl
     FairRuntimeDb* rtdb = run->GetRuntimeDb();
     // ------------------------------------------------------------------------
 
+    if (doAlign) {
+      // read matrices from disk
+      std::map<std::string, TGeoHMatrix>* matrices{nullptr};
+
+      TString matrix_filename{"matrices.root"};
+      matrix_filename = dir + "/simulation/Tutorial4/parameters/" + matrix_filename;
+      LOG(info) << "Filename: " << matrix_filename.Data();
+
+      TFile *misalignmentMatrixRootfile = new TFile(matrix_filename.Data(), "READ");
+      if (misalignmentMatrixRootfile->IsOpen()) {
+        gDirectory->GetObject("MisalignMatrices", matrices);
+        misalignmentMatrixRootfile->Close();
+      } else {
+       LOG(error) << "Could not open file " << matrix_filename << "\n Exiting";
+       exit(1);
+      }
+      if (matrices) {
+        run->AddAlignmentMatrices(*matrices);
+      } else {
+       LOG(error) << "Alignment required but no matrices found." <<  "\n Exiting";
+       exit(1);
+      }
+
+    }
+
     // -----   Create media   -------------------------------------------------
     run->SetMaterials("media.geo");   // Materials
     // ------------------------------------------------------------------------
@@ -81,7 +98,6 @@ void run_tutorial4(Int_t nEvents = 10, TString mcEngine = "TGeant3", Bool_t doAl
 
     FairTutorialDet4* tutdet = new FairTutorialDet4("TUTDET", kTRUE);
     tutdet->SetGeometryFileName("tutorial4.root");
-    tutdet->SetModifyGeometry(doAlign);
 
     run->AddModule(tutdet);
     // ------------------------------------------------------------------------
@@ -110,10 +126,7 @@ void run_tutorial4(Int_t nEvents = 10, TString mcEngine = "TGeant3", Bool_t doAl
 
     Bool_t kParameterMerged = kTRUE;
     FairParRootFileIo* parOut = new FairParRootFileIo(kParameterMerged);
-    FairParAsciiFileIo* parIn = new FairParAsciiFileIo();
     parOut->open(parFile.Data());
-    parIn->open(parFileList, "in");
-    rtdb->setFirstInput(parIn);
     rtdb->setOutput(parOut);
     // ------------------------------------------------------------------------
 
@@ -136,10 +149,14 @@ void run_tutorial4(Int_t nEvents = 10, TString mcEngine = "TGeant3", Bool_t doAl
     // ------------------------------------------------------------------------
 
     // -----   Start run   ----------------------------------------------------
-    // run->CreateGeometryFile(geoFile); //misaligned geometry
+    // run->CreateGeometryFile(geoFile); // misaligned geometry
     run->Run(nEvents);
     // run->CreateGeometryFile(geoFile); // original geometry
     // ------------------------------------------------------------------------
+
+    // Stored in the parameter file is always the unmodified geometry
+    // -> If transport and digitization are executed in different runs
+    //    the misalignment matrices have to be loaded for both runs
 
     rtdb->saveOutput();
     rtdb->print();
