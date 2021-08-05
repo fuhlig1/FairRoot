@@ -20,7 +20,6 @@
 
 class FairTutorialDet4Point;
 class FairTutorialDet4GeoHandler;
-class FairTutorialDet4MisalignPar;
 class FairTutorialDet4Geo;
 class FairVolume;
 class FairModule;
@@ -86,14 +85,7 @@ class FairTutorialDet4 : public FairDetector
     virtual void PreTrack() {}
     virtual void BeginEvent() {}
 
-    void SetModifyGeometry(Bool_t val) { fModifyGeometry = val; }
-    void SetGlobalCoordinates(Bool_t val) { fGlobalCoordinates = val; }
-
     virtual FairModule* CloneModule() const;
-
-    std::map<std::string, TGeoHMatrix> getMisalignmentMatrices();
-
-    virtual void RegisterAlignmentMatrices();
 
     virtual Bool_t IsSensitive(const std::string& name);
 
@@ -117,19 +109,6 @@ class FairTutorialDet4 : public FairDetector
 
     FairTutorialDet4GeoHandler* fGeoHandler;
 
-    FairTutorialDet4MisalignPar* fMisalignPar;
-
-    Int_t fNrOfDetectors;
-    TArrayD fShiftX;
-    TArrayD fShiftY;
-    TArrayD fShiftZ;
-    TArrayD fRotX;
-    TArrayD fRotY;
-    TArrayD fRotZ;
-
-    Bool_t fModifyGeometry;
-
-    Bool_t fGlobalCoordinates;
     /** Method to construct the ascii geometry
      **
      **/

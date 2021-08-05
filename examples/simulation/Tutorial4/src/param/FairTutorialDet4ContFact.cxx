@@ -9,7 +9,6 @@
 
 #include "FairRuntimeDb.h"            // for FairRuntimeDb
 #include "FairTutorialDet4GeoPar.h"   // for FairTutorialDet4GeoPar
-#include "FairTutorialDet4MisalignPar.h"
 
 #include <TList.h>     // for TList
 #include <TString.h>   // for TString
@@ -43,12 +42,6 @@ void FairTutorialDet4ContFact::setAllContainers()
     p->addContext("TestNonDefaultContext");
 
     containers->Add(p);
-
-    FairContainer* p1 = new FairContainer(
-        "FairTutorialDet4MissallignPar", "FairTutorialDet4 Missallignment Parameters", "TestDefaultContext");
-    p1->addContext("TestNonDefaultContext");
-
-    containers->Add(p1);
 }
 
 FairParSet* FairTutorialDet4ContFact::createContainer(FairContainer* c)
@@ -62,9 +55,6 @@ FairParSet* FairTutorialDet4ContFact::createContainer(FairContainer* c)
     FairParSet* p = nullptr;
     if (strcmp(name, "FairTutorialDet4GeoPar") == 0) {
         p = new FairTutorialDet4GeoPar(c->getConcatName().Data(), c->GetTitle(), c->getContext());
-    }
-    if (strcmp(name, "FairTutorialDet4MissallignPar") == 0) {
-        p = new FairTutorialDet4MisalignPar(c->getConcatName().Data(), c->GetTitle(), c->getContext());
     }
     return p;
 }

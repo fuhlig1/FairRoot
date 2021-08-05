@@ -29,7 +29,6 @@
 #include <Rtypes.h>    // for Bool_t, Double_t, etc
 #include <TArrayD.h>   // for TArrayD
 
-class FairTutorialDet4MisalignPar;
 class FairTutorialDet4GeoPar;
 class FairTutorialDet4GeoHandler;
 class TClonesArray;
@@ -54,8 +53,6 @@ class FairTutorialDet4HitProducerIdealMisalign : public FairTask
     /** Virtual method Exec **/
     virtual void Exec(Option_t* opt);
 
-    void DoMisalignment(Bool_t val) { fDoMisalignment = val; }
-
   private:
     /** Input array of CbmTofPoints **/
     TClonesArray* fPointArray;   //!
@@ -63,18 +60,10 @@ class FairTutorialDet4HitProducerIdealMisalign : public FairTask
     /** Output array of CbmTofHits **/
     TClonesArray* fHitArray;   //!
 
-    TArrayD fShiftX;
-    TArrayD fShiftY;
-    TArrayD fShiftZ;
-    TArrayD fRotX;
-    TArrayD fRotY;
-    TArrayD fRotZ;
-
-    FairTutorialDet4MisalignPar* fDigiPar;
     FairTutorialDet4GeoHandler* fGeoHandler;
     FairTutorialDet4GeoPar* fGeoPar;
 
-    Bool_t fDoMisalignment;
+//    Bool_t fDoMisalignment;
 
   private:
     Double_t GetHitErr(Double_t sigma);

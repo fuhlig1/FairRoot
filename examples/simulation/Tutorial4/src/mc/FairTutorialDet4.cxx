@@ -17,7 +17,6 @@
 #include "FairTutorialDet4Geo.h"          // for FairTutorialDet4Geo
 #include "FairTutorialDet4GeoHandler.h"   // for FairTutorialDet4GeoHandler
 #include "FairTutorialDet4GeoPar.h"       // for FairTutorialDet4GeoPar
-#include "FairTutorialDet4MisalignPar.h"
 #include "FairTutorialDet4Point.h"   // for FairTutorialDet4Point
 
 #include <TGeoMatrix.h>        // for TGeoHMatrix, TGeoCombiTrans, etc
@@ -38,16 +37,6 @@ FairTutorialDet4::FairTutorialDet4()
     , fELoss(-1)
     , fFairTutorialDet4PointCollection(new TClonesArray("FairTutorialDet4Point"))
     , fGeoHandler(new FairTutorialDet4GeoHandler())
-    , fMisalignPar(nullptr)
-    , fNrOfDetectors(-1)
-    , fShiftX()
-    , fShiftY()
-    , fShiftZ()
-    , fRotX()
-    , fRotY()
-    , fRotZ()
-    , fModifyGeometry(kFALSE)
-    , fGlobalCoordinates(kFALSE)
 {}
 
 FairTutorialDet4::FairTutorialDet4(const char* name, Bool_t active)
@@ -61,16 +50,6 @@ FairTutorialDet4::FairTutorialDet4(const char* name, Bool_t active)
     , fELoss(-1)
     , fFairTutorialDet4PointCollection(new TClonesArray("FairTutorialDet4Point"))
     , fGeoHandler(new FairTutorialDet4GeoHandler())
-    , fMisalignPar(nullptr)
-    , fNrOfDetectors(-1)
-    , fShiftX()
-    , fShiftY()
-    , fShiftZ()
-    , fRotX()
-    , fRotY()
-    , fRotZ()
-    , fModifyGeometry(kFALSE)
-    , fGlobalCoordinates(kFALSE)
 {}
 
 FairTutorialDet4::FairTutorialDet4(const FairTutorialDet4& rhs)
@@ -84,16 +63,6 @@ FairTutorialDet4::FairTutorialDet4(const FairTutorialDet4& rhs)
     , fELoss(-1)
     , fFairTutorialDet4PointCollection(new TClonesArray("FairTutorialDet4Point"))
     , fGeoHandler(new FairTutorialDet4GeoHandler())
-    , fMisalignPar(nullptr)
-    , fNrOfDetectors(-1)
-    , fShiftX()
-    , fShiftY()
-    , fShiftZ()
-    , fRotX()
-    , fRotY()
-    , fRotZ()
-    , fModifyGeometry(kFALSE)
-    , fGlobalCoordinates(kFALSE)
 {}
 
 FairTutorialDet4::~FairTutorialDet4()
@@ -108,50 +77,16 @@ FairTutorialDet4::~FairTutorialDet4()
 
 void FairTutorialDet4::SetParContainers()
 {
-
-    LOG(info) << "Set tutdet missallign parameters";
-    // Get Base Container
-    FairRun* sim = FairRun::Instance();
-    LOG_IF(FATAL, !sim) << "No run object";
-    FairRuntimeDb* rtdb = sim->GetRuntimeDb();
-    LOG_IF(FATAL, !rtdb) << "No runtime database";
-
-    fMisalignPar = static_cast<FairTutorialDet4MisalignPar*>(rtdb->getContainer("FairTutorialDet4MissallignPar"));
 }
 
 void FairTutorialDet4::Initialize()
 {
-    FairDetector::Initialize();
-    FairRuntimeDb* rtdb = FairRun::Instance()->GetRuntimeDb();
-    FairTutorialDet4GeoPar* par = static_cast<FairTutorialDet4GeoPar*>(rtdb->getContainer("FairTutorialDet4GeoPar"));
-
-    if (fModifyGeometry) {
-        if (fGlobalCoordinates) {
-            LOG(warn) << "Storing MCPoints in global coordinates and modifying the geometry was set.";
-            LOG(warn) << "When modifying the geometry is set the MCPoints has to be stored in local coordinates.";
-            LOG(warn) << "Store MCPoints in local coordinate system.";
-            fGlobalCoordinates = kFALSE;
-        }
-    }
-
-    par->SetGlobalCoordinates(fGlobalCoordinates);
-    par->setChanged();
-    par->setInputVersion(FairRun::Instance()->GetRunId(), 1);
-
     Bool_t isSimulation = kTRUE;
     fGeoHandler->Init(isSimulation);
 }
 
 void FairTutorialDet4::InitParContainers()
 {
-    LOG(info) << "Initialize tutdet missallign parameters";
-    fNrOfDetectors = fMisalignPar->GetNrOfDetectors();
-    fShiftX = fMisalignPar->GetShiftX();
-    fShiftY = fMisalignPar->GetShiftY();
-    fShiftZ = fMisalignPar->GetShiftZ();
-    fRotX = fMisalignPar->GetRotX();
-    fRotY = fMisalignPar->GetRotY();
-    fRotZ = fMisalignPar->GetRotZ();
 }
 
 Bool_t FairTutorialDet4::ProcessHits(FairVolume* /*vol*/)
@@ -180,29 +115,13 @@ Bool_t FairTutorialDet4::ProcessHits(FairVolume* /*vol*/)
             return kFALSE;
         }
 
-        if (!fGlobalCoordinates) {
-            // Save positions in local coordinate system, so transform the
-            // global coordinates into local ones.
-            Double_t master[3] = {fPos.X(), fPos.Y(), fPos.Z()};
-            Double_t local[3];
-
-            TVirtualMC::GetMC()->Gmtod(master, local, 1);
-            AddHit(fTrackID,
-                   fVolumeID,
-                   TVector3(local[0], local[1], local[2]),
-                   TVector3(fMom.Px(), fMom.Py(), fMom.Pz()),
-                   fTime,
-                   fLength,
-                   fELoss);
-        } else {
-            AddHit(fTrackID,
-                   fVolumeID,
-                   TVector3(fPos.X(), fPos.Y(), fPos.Z()),
-                   TVector3(fMom.Px(), fMom.Py(), fMom.Pz()),
-                   fTime,
-                   fLength,
-                   fELoss);
-        }
+        AddHit(fTrackID,
+               fVolumeID,
+               TVector3(fPos.X(), fPos.Y(), fPos.Z()),
+               TVector3(fMom.Px(), fMom.Py(), fMom.Pz()),
+               fTime,
+               fLength,
+               fELoss);
 
         // Increment number of tutorial det points in TParticle
         FairStack* stack = static_cast<FairStack*>(TVirtualMC::GetMC()->GetStack());
@@ -265,79 +184,6 @@ void FairTutorialDet4::ConstructASCIIGeometry()
       implement here you own way of constructing the geometry. */
 
     FairModule::ConstructASCIIGeometry<FairTutorialDet4Geo, FairTutorialDet4GeoPar>(fgGeo, "FairTutorialDet4GeoPar");
-}
-
-std::map<std::string, TGeoHMatrix> FairTutorialDet4::getMisalignmentMatrices()
-{
-    TString volPath;
-    TString volStr = "/cave_1/tutorial4_0/tut4_det_";
-
-    std::map<std::string, TGeoHMatrix> matrices;
-
-    for (Int_t iDet = 0; iDet < fNrOfDetectors; ++iDet) {
-        LOG(debug) << "Create Matrix for detector nr " << iDet;
-        volPath = volStr;
-        volPath += iDet;
-
-        LOG(debug) << "Path: " << volPath;
-
-        // we have to express the displacements as regards the old local RS (non misaligned BTOF)
-        Double_t dx = fShiftX[iDet];
-        Double_t dy = fShiftY[iDet];
-        Double_t dz = fShiftZ[iDet];
-        Double_t dphi = fRotX[iDet];
-        Double_t dtheta = fRotY[iDet];
-        Double_t dpsi = fRotZ[iDet];
-
-        TGeoRotation* rrot = new TGeoRotation("rot", dphi, dtheta, dpsi);
-        TGeoCombiTrans localdelta = *(new TGeoCombiTrans(dx, dy, dz, rrot));
-        TGeoHMatrix ldm = TGeoHMatrix(localdelta);
-
-        std::string thisPath(volPath.Data());
-        matrices[thisPath] = ldm;
-    }
-
-    LOG(info) << fNrOfDetectors << " misalignment matrices created!";
-
-    return matrices;
-}
-
-void FairTutorialDet4::RegisterAlignmentMatrices()
-{
-    if (fModifyGeometry) {
-        TString volPath;
-        TString volStr = "/cave_1/tutorial4_0/tut4_det_";
-
-        std::map<std::string, TGeoHMatrix> matrices;
-
-        for (Int_t iDet = 0; iDet < fNrOfDetectors; ++iDet) {
-            LOG(debug) << "Create Matrix for detector nr " << iDet;
-            volPath = volStr;
-            volPath += iDet;
-
-            LOG(debug) << "Path: " << volPath;
-
-            // we have to express the displacements as regards the old local RS (non misaligned BTOF)
-            Double_t dx = fShiftX[iDet];
-            Double_t dy = fShiftY[iDet];
-            Double_t dz = fShiftZ[iDet];
-            Double_t dphi = fRotX[iDet];
-            Double_t dtheta = fRotY[iDet];
-            Double_t dpsi = fRotZ[iDet];
-
-            TGeoRotation* rrot = new TGeoRotation("rot", dphi, dtheta, dpsi);
-            TGeoCombiTrans localdelta = *(new TGeoCombiTrans(dx, dy, dz, rrot));
-            TGeoHMatrix ldm = TGeoHMatrix(localdelta);
-
-            std::string thisPath(volPath.Data());
-            matrices[thisPath] = ldm;
-        }
-
-        LOG(info) << fNrOfDetectors << " misalignment matrices created!";
-
-        FairRun* run = FairRun::Instance();
-        run->AddAlignmentMatrices(matrices);
-    }
 }
 
 FairTutorialDet4Point* FairTutorialDet4::AddHit(Int_t trackID,

@@ -18,7 +18,6 @@
 #include "FairTutorialDet4GeoHandler.h"   // for FairTutorialDet4GeoHandler
 #include "FairTutorialDet4GeoPar.h"
 #include "FairTutorialDet4Hit.h"   // for FairTutorialDet4Hit
-#include "FairTutorialDet4MisalignPar.h"
 #include "FairTutorialDet4Point.h"   // for FairTutorialDet4Point
 
 #include <TClonesArray.h>   // for TClonesArray
@@ -31,16 +30,8 @@ FairTutorialDet4HitProducerIdealMisalign::FairTutorialDet4HitProducerIdealMisali
     : FairTask("Missallign Hit Producer for the TutorialDet")
     , fPointArray(nullptr)
     , fHitArray(nullptr)
-    , fShiftX()
-    , fShiftY()
-    , fShiftZ()
-    , fRotX()
-    , fRotY()
-    , fRotZ()
-    , fDigiPar(nullptr)
     , fGeoHandler(new FairTutorialDet4GeoHandler)
     , fGeoPar(nullptr)
-    , fDoMisalignment(kFALSE)
 {}
 
 void FairTutorialDet4HitProducerIdealMisalign::SetParContainers()
@@ -51,25 +42,11 @@ void FairTutorialDet4HitProducerIdealMisalign::SetParContainers()
     FairRunAna* ana = FairRunAna::Instance();
     FairRuntimeDb* rtdb = ana->GetRuntimeDb();
 
-    fDigiPar = static_cast<FairTutorialDet4MisalignPar*>(rtdb->getContainer("FairTutorialDet4MissallignPar"));
     fGeoPar = static_cast<FairTutorialDet4GeoPar*>(rtdb->getContainer("FairTutorialDet4GeoPar"));
 }
 
 InitStatus FairTutorialDet4HitProducerIdealMisalign::ReInit()
 {
-    // Get Base Container
-    FairRunAna* ana = FairRunAna::Instance();
-    FairRuntimeDb* rtdb = ana->GetRuntimeDb();
-
-    fDigiPar = static_cast<FairTutorialDet4MisalignPar*>(rtdb->getContainer("FairTutorialDet4MissallignPar"));
-
-    fShiftX = fDigiPar->GetShiftX();
-    fShiftY = fDigiPar->GetShiftY();
-    fShiftZ = fDigiPar->GetShiftZ();
-    fRotX = fDigiPar->GetRotX();
-    fRotY = fDigiPar->GetRotY();
-    fRotZ = fDigiPar->GetRotZ();
-
     return kSUCCESS;
 }
 
@@ -95,25 +72,11 @@ InitStatus FairTutorialDet4HitProducerIdealMisalign::Init()
 
     LOG(info) << "HitProducerIdealMissallign: Initialisation successfull";
 
-    fShiftX = fDigiPar->GetShiftX();
-    fShiftY = fDigiPar->GetShiftY();
-    fShiftZ = fDigiPar->GetShiftZ();
-    fRotX = fDigiPar->GetRotX();
-    fRotY = fDigiPar->GetRotY();
-    fRotZ = fDigiPar->GetRotZ();
-
     Bool_t isGlobalCoordinateSystem = fGeoPar->IsGlobalCoordinateSystem();
     if (isGlobalCoordinateSystem) {
         LOG(fatal) << "Task can only work with local coordinates.";
     }
-    /*
-    Int_t num = fDigiPar->GetNrOfDetectors();
-    Int_t size = fShiftX.GetSize();
-    LOG(info)<<"Array has a size of "<< size << "elements";
-    for (Int_t i=0; i< num; ++i) {
-      LOG(info)<< i <<": "<<fShiftX.At(i);
-    }
-  */
+
     return kSUCCESS;
 }
 
@@ -145,62 +108,34 @@ void FairTutorialDet4HitProducerIdealMisalign::Exec(Option_t* /*opt*/)
         // MCTrack ID
         // trackID = point->GetTrackID();
 
-        if (fDoMisalignment) {
+        // Determine hit position
+        x = point->GetX();
+        y = point->GetY();
+        z = point->GetZ();
 
-            Float_t cosAlpha = TMath::Cos(fRotZ.At(detID));
-            Float_t sinAlpha = TMath::Sin(fRotZ.At(detID));
+        LOG(info) << "Position: " << x << ", " << y << ", " << z;
 
-            // Determine hit position
-            x = (point->GetX() * cosAlpha + point->GetY() * sinAlpha) - fShiftX.At(detID);
-            y = (-point->GetX() * sinAlpha + point->GetY() * cosAlpha) - fShiftY.At(detID);
-            z = point->GetZ();
+/*
+        Double_t local[3] = {x, y, z};
+        Double_t global[3];
 
-            LOG(debug) << "Pos before misalignment: " << point->GetX() << ", " << point->GetY() << ", "
-                       << point->GetZ();
-            LOG(debug) << "Pos after misalignment: " << x << ", " << y << ", " << z;
+        fGeoHandler->LocalToGlobal(local, global, detID);
 
-            x = x + GetHitErr(0.1);
-            y = y + GetHitErr(0.1);
+        x = global[0] + GetHitErr(0.1);
+        y = global[1] + GetHitErr(0.1);
+        z = global[2];
+*/
 
-            LOG(debug2) << "Missallign hit by " << fShiftX.At(detID) << " cm in x- and " << fShiftY.At(detID)
-                        << " cm in y-direction.";
+        LOG(info) << "Position: " << x << ", " << y << ", " << z;
+        LOG(info) << "****";
+        // Time of flight
+        // tof = point->GetTime();
 
-            // Time of flight
-            // tof = point->GetTime();
-
-            // Create new hit
-            pos.SetXYZ(x, y, z);
-            dpos.SetXYZ(dx, dx, 0.);
-            new ((*fHitArray)[nHits]) FairTutorialDet4Hit(detID, iPoint, pos, dpos);
-            nHits++;
-        } else {
-            // Determine hit position
-            x = point->GetX();
-            y = point->GetY();
-            z = point->GetZ();
-
-            LOG(info) << "Position: " << x << ", " << y << ", " << z;
-
-            Double_t local[3] = {x, y, z};
-            Double_t global[3];
-
-            fGeoHandler->LocalToGlobal(local, global, detID);
-
-            x = global[0] + GetHitErr(0.1);
-            y = global[1] + GetHitErr(0.1);
-            z = global[2];
-
-            LOG(info) << "Position: " << x << ", " << y << ", " << z;
-            LOG(info) << "****";
-            // Time of flight
-            // tof = point->GetTime();
-
-            // Create new hit
-            pos.SetXYZ(x, y, z);
-            dpos.SetXYZ(dx, dx, 0.);
-            new ((*fHitArray)[nHits]) FairTutorialDet4Hit(detID, iPoint, pos, dpos);
-            nHits++;
-        }
+        // Create new hit
+        pos.SetXYZ(x, y, z);
+        dpos.SetXYZ(dx, dx, 0.);
+        new ((*fHitArray)[nHits]) FairTutorialDet4Hit(detID, iPoint, pos, dpos);
+        nHits++;
     }
     // Event summary
     LOG(debug) << "Create " << nHits << " TutorialDetHits out of " << nPoints << " TutorilaDetPoints created.";
