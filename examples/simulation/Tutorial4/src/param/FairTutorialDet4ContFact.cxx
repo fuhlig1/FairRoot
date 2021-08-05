@@ -8,7 +8,6 @@
 #include "FairTutorialDet4ContFact.h"
 
 #include "FairRuntimeDb.h"            // for FairRuntimeDb
-#include "FairTutorialDet4GeoPar.h"   // for FairTutorialDet4GeoPar
 
 #include <TList.h>     // for TList
 #include <TString.h>   // for TString
@@ -37,11 +36,13 @@ void FairTutorialDet4ContFact::setAllContainers()
       the list of containers for the Tutorial1 library.
   */
 
+/*
     FairContainer* p =
         new FairContainer("FairTutorialDet4GeoPar", "FairTutorialDet4 Geometry Parameters", "TestDefaultContext");
     p->addContext("TestNonDefaultContext");
 
     containers->Add(p);
+*/
 }
 
 FairParSet* FairTutorialDet4ContFact::createContainer(FairContainer* c)
@@ -53,8 +54,10 @@ FairParSet* FairTutorialDet4ContFact::createContainer(FairContainer* c)
   */
     const char* name = c->GetName();
     FairParSet* p = nullptr;
+/*
     if (strcmp(name, "FairTutorialDet4GeoPar") == 0) {
         p = new FairTutorialDet4GeoPar(c->getConcatName().Data(), c->GetTitle(), c->getContext());
     }
+*/
     return p;
 }

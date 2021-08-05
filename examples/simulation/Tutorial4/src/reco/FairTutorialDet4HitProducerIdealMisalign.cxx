@@ -16,7 +16,6 @@
 #include "FairRunAna.h"                   // for FairRunAna
 #include "FairRuntimeDb.h"                // for FairRuntimeDb
 #include "FairTutorialDet4GeoHandler.h"   // for FairTutorialDet4GeoHandler
-#include "FairTutorialDet4GeoPar.h"
 #include "FairTutorialDet4Hit.h"   // for FairTutorialDet4Hit
 #include "FairTutorialDet4Point.h"   // for FairTutorialDet4Point
 
@@ -31,18 +30,10 @@ FairTutorialDet4HitProducerIdealMisalign::FairTutorialDet4HitProducerIdealMisali
     , fPointArray(nullptr)
     , fHitArray(nullptr)
     , fGeoHandler(new FairTutorialDet4GeoHandler)
-    , fGeoPar(nullptr)
 {}
 
 void FairTutorialDet4HitProducerIdealMisalign::SetParContainers()
 {
-
-    LOG(info) << "Set tutdet missallign parameters";
-    // Get Base Container
-    FairRunAna* ana = FairRunAna::Instance();
-    FairRuntimeDb* rtdb = ana->GetRuntimeDb();
-
-    fGeoPar = static_cast<FairTutorialDet4GeoPar*>(rtdb->getContainer("FairTutorialDet4GeoPar"));
 }
 
 InitStatus FairTutorialDet4HitProducerIdealMisalign::ReInit()
@@ -71,11 +62,6 @@ InitStatus FairTutorialDet4HitProducerIdealMisalign::Init()
     ioman->Register("TutorialDetHit", "TutorialDet", fHitArray, kTRUE);
 
     LOG(info) << "HitProducerIdealMissallign: Initialisation successfull";
-
-    Bool_t isGlobalCoordinateSystem = fGeoPar->IsGlobalCoordinateSystem();
-    if (isGlobalCoordinateSystem) {
-        LOG(fatal) << "Task can only work with local coordinates.";
-    }
 
     return kSUCCESS;
 }

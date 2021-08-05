@@ -18,8 +18,6 @@
 
 #include <Rtypes.h>   // for Bool_t, Int_t, etc
 
-class FairTutorialDet4GeoPar;
-class FairTutorialDet4DigiPar;
 class FairEventManager;
 class FairTutorialDet4GeoHandler;
 
@@ -53,7 +51,6 @@ class FairTutorialDet4PointDraw : public FairTask
 
   private:
     TClonesArray* fPointList;                  //!
-    FairTutorialDet4GeoPar* fGeoPar;           //!
     FairEventManager* fEventManager;           //!
     TEvePointSet* fq;                          //!
     Color_t fColor;                            //!

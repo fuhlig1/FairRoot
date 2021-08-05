@@ -29,7 +29,6 @@
 #include <Rtypes.h>    // for Bool_t, Double_t, etc
 #include <TArrayD.h>   // for TArrayD
 
-class FairTutorialDet4GeoPar;
 class FairTutorialDet4GeoHandler;
 class TClonesArray;
 
@@ -61,7 +60,6 @@ class FairTutorialDet4HitProducerIdealMisalign : public FairTask
     TClonesArray* fHitArray;   //!
 
     FairTutorialDet4GeoHandler* fGeoHandler;
-    FairTutorialDet4GeoPar* fGeoPar;
 
 //    Bool_t fDoMisalignment;
 
