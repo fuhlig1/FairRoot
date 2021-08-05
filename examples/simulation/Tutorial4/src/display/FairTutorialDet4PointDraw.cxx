@@ -11,7 +11,6 @@
 #include "FairRun.h"           // for FairRunAna
 #include "FairRuntimeDb.h"     // for FairRuntimeDb
 #include "FairTutorialDet4GeoHandler.h"
-#include "FairTutorialDet4GeoPar.h"
 #include "FairTutorialDet4Point.h"
 
 #include <TClonesArray.h>   // for TClonesArray
@@ -21,7 +20,6 @@
 FairTutorialDet4PointDraw::FairTutorialDet4PointDraw()
     : FairTask("FairTutorialDet4PointDraw")
     , fPointList(nullptr)
-    , fGeoPar(nullptr)
     , fEventManager(nullptr)
     , fq(nullptr)
     , fColor()
@@ -33,7 +31,6 @@ FairTutorialDet4PointDraw::FairTutorialDet4PointDraw()
 FairTutorialDet4PointDraw::FairTutorialDet4PointDraw(const char* name, Color_t color, Style_t mystyle)
     : FairTask(name)
     , fPointList(nullptr)
-    , fGeoPar(nullptr)
     , fEventManager(nullptr)
     , fq(nullptr)
     , fColor(color)
@@ -44,11 +41,6 @@ FairTutorialDet4PointDraw::FairTutorialDet4PointDraw(const char* name, Color_t c
 
 void FairTutorialDet4PointDraw::SetParContainers()
 {
-    // Get Base Container
-    FairRun* run = FairRun::Instance();
-    FairRuntimeDb* rtdb = run->GetRuntimeDb();
-
-    fGeoPar = static_cast<FairTutorialDet4GeoPar*>(rtdb->getContainer("FairTutorialDet4GeoPar"));
 }
 
 InitStatus FairTutorialDet4PointDraw::Init()
@@ -62,8 +54,6 @@ InitStatus FairTutorialDet4PointDraw::Init()
     }
     fEventManager = FairEventManager::Instance();
     fq = 0;
-
-    fGlobalCoordinates = fGeoPar->IsGlobalCoordinateSystem();
 
     return kSUCCESS;
 }
@@ -99,16 +89,6 @@ void FairTutorialDet4PointDraw::Exec(Option_t* /*option*/)
             Double_t y = point->GetY();
             Double_t z = point->GetZ();
 
-            if (!fGlobalCoordinates) {
-                Double_t local[3] = {x, y, z};
-                Double_t global[3];
-
-                fGeoHandler->LocalToGlobal(local, global, detID);
-
-                x = global[0];
-                y = global[1];
-                z = global[2];
-            }
             q->SetNextPoint(x, y, z);
             // q->SetPointId(GetValue(p, i));
         }

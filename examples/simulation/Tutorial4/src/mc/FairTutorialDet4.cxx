@@ -15,7 +15,6 @@
 #include "FairRuntimeDb.h"                // for FairRuntimeDb
 #include "FairStack.h"                    // for FairStack
 #include "FairTutorialDet4GeoHandler.h"   // for FairTutorialDet4GeoHandler
-#include "FairTutorialDet4GeoPar.h"       // for FairTutorialDet4GeoPar
 #include "FairTutorialDet4Point.h"   // for FairTutorialDet4Point
 
 #include <TString.h>           // for TString, operator<<, Form
