@@ -13,7 +13,6 @@ set(sources
   data/FairTutorialDet4Hit.cxx
 
   mc/FairTutorialDet4.cxx
-  mc/FairTutorialDet4Geo.cxx
 
   param/FairTutorialDet4ContFact.cxx
   param/FairTutorialDet4GeoPar.cxx
