@@ -11,8 +11,10 @@ set(target ExSimulation4)
 set(sources
   data/FairTutorialDet4Point.cxx
   data/FairTutorialDet4Hit.cxx
+  data/FairTutorialDet4Digi.cxx
 
   mc/FairTutorialDet4.cxx
+  mc/FairTutorialDet4Digitizer.cxx
 
   param/FairTutorialDet4ContFact.cxx
 
