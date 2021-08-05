@@ -13,8 +13,10 @@
 
 #pragma link C++ class FairTutorialDet4ContFact;
 #pragma link C++ class FairTutorialDet4;
+#pragma link C++ class FairTutorialDet4Digitizer;
 #pragma link C++ class FairTutorialDet4Point+;
 #pragma link C++ class FairTutorialDet4Hit+;
+#pragma link C++ class FairTutorialDet4Digi+;
 #pragma link C++ class FairTutorialDet4HitProducerIdealMisalign+;
 #pragma link C++ class FairTutorialDet4GeoHandler+;
 #pragma link C++ class FairTutorialDet4StraightLineFitter+;
