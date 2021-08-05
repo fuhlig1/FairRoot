@@ -14,17 +14,13 @@
 #include "FairRun.h"                      // for FairRun
 #include "FairRuntimeDb.h"                // for FairRuntimeDb
 #include "FairStack.h"                    // for FairStack
-#include "FairTutorialDet4Geo.h"          // for FairTutorialDet4Geo
 #include "FairTutorialDet4GeoHandler.h"   // for FairTutorialDet4GeoHandler
 #include "FairTutorialDet4GeoPar.h"       // for FairTutorialDet4GeoPar
 #include "FairTutorialDet4Point.h"   // for FairTutorialDet4Point
 
-#include <TGeoMatrix.h>        // for TGeoHMatrix, TGeoCombiTrans, etc
 #include <TString.h>           // for TString, operator<<, Form
 #include <TVirtualMC.h>        // for TVirtualMC
 #include <TVirtualMCStack.h>   // for TVirtualMCStack
-
-FairTutorialDet4Geo* FairTutorialDet4::fgGeo;   //!
 
 FairTutorialDet4::FairTutorialDet4()
     : FairDetector("TutorialDet", kTRUE, kTutDet)
@@ -159,8 +155,9 @@ void FairTutorialDet4::ConstructGeometry()
 {
     TString fileName = GetGeometryFileName();
     if (fileName.EndsWith(".geo")) {
-        LOG(info) << "Constructing Tutorial4 geometry from ASCII file " << fileName;
-        ConstructASCIIGeometry();
+        LOG(fatal) << "Constructing of Tutorial4 geometry from ASCII file not supported";
+        LOG(fatal) << "Exiting.";
+        exit(1);
     } else if (fileName.EndsWith(".root")) {
         LOG(info) << "Constructing Tutorial4 geometry from ROOT file " << fileName;
         ConstructRootGeometry();
@@ -175,15 +172,6 @@ Bool_t FairTutorialDet4::IsSensitive(const std::string& name)
         return kTRUE;
     }
     return kFALSE;
-}
-
-void FairTutorialDet4::ConstructASCIIGeometry()
-{
-    /** If you are using the standard ASCII input for the geometry
-      just copy this and use it for your detector, otherwise you can
-      implement here you own way of constructing the geometry. */
-
-    FairModule::ConstructASCIIGeometry<FairTutorialDet4Geo, FairTutorialDet4GeoPar>(fgGeo, "FairTutorialDet4GeoPar");
 }
 
 FairTutorialDet4Point* FairTutorialDet4::AddHit(Int_t trackID,

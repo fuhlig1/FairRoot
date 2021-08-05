@@ -20,10 +20,8 @@
 
 class FairTutorialDet4Point;
 class FairTutorialDet4GeoHandler;
-class FairTutorialDet4Geo;
 class FairVolume;
 class FairModule;
-class TGeoHMatrix;
 
 class FairTutorialDet4 : public FairDetector
 {
@@ -74,8 +72,6 @@ class FairTutorialDet4 : public FairDetector
     /** The following methods can be implemented if you need to make
      *  any optional action in your detector during the transport.
      */
-
-    // virtual void CopyClones(TClonesArray* cl1,  TClonesArray* cl2 , Int_t offset) {}
     virtual void SetSpecialPhysicsCuts() {}
     virtual void EndOfEvent();
     virtual void FinishPrimary() {}
@@ -90,7 +86,6 @@ class FairTutorialDet4 : public FairDetector
     virtual Bool_t IsSensitive(const std::string& name);
 
   private:
-    static FairTutorialDet4Geo* fgGeo;   //!
 
     /** Track information to be stored until the track leaves the
     active volume.
@@ -104,15 +99,9 @@ class FairTutorialDet4 : public FairDetector
     Double32_t fELoss;     //!  energy loss
 
     /** container for data points */
-
     TClonesArray* fFairTutorialDet4PointCollection;
 
     FairTutorialDet4GeoHandler* fGeoHandler;
-
-    /** Method to construct the ascii geometry
-     **
-     **/
-    void ConstructASCIIGeometry();
 
     FairTutorialDet4(const FairTutorialDet4&);
     FairTutorialDet4& operator=(const FairTutorialDet4&);
