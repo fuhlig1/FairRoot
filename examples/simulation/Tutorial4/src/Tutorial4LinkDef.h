@@ -14,7 +14,6 @@
 #pragma link C++ class FairTutorialDet4ContFact;
 #pragma link C++ class FairTutorialDet4Geo;
 #pragma link C++ class FairTutorialDet4GeoPar;
-#pragma link C++ class FairTutorialDet4MisalignPar;
 #pragma link C++ class FairTutorialDet4;
 #pragma link C++ class FairTutorialDet4Point+;
 #pragma link C++ class FairTutorialDet4Hit+;

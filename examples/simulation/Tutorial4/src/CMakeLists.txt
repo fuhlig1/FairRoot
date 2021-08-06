@@ -17,7 +17,6 @@ set(sources
 
   param/FairTutorialDet4ContFact.cxx
   param/FairTutorialDet4GeoPar.cxx
-  param/FairTutorialDet4MisalignPar.cxx
 
   reco/FairTutorialDet4HitProducerIdealMisalign.cxx
   reco/FairTutorialDet4StraightLineFitter.cxx
