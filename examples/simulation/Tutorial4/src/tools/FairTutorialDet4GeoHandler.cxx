@@ -45,8 +45,44 @@ Int_t FairTutorialDet4GeoHandler::Init(Bool_t isSimulation)
 void FairTutorialDet4GeoHandler::LocalToGlobal(Double_t* local, Double_t* global, Int_t detID)
 {
     TString path = ConstructFullPathFromDetID(detID);
-    NavigateTo(path);
+    if (fGeoPathHash != path.Hash()) { NavigateTo(path); }
     gGeoManager->LocalToMaster(local, global);
+}
+
+void FairTutorialDet4GeoHandler::GlobalToLocal(Double_t* global, Double_t* local, Int_t detID)
+{
+    TString path = ConstructFullPathFromDetID(detID);
+    if (fGeoPathHash != path.Hash()) { NavigateTo(path); }
+    gGeoManager->MasterToLocal(global, local);
+}
+
+Float_t FairTutorialDet4GeoHandler::GetSizeX(TString volName)
+{
+  if (fGeoPathHash != volName.Hash()) { NavigateTo(volName); }
+  Float_t sizex = fVolumeShape->GetDX();
+  return sizex;
+}
+
+Float_t FairTutorialDet4GeoHandler::GetSizeY(TString volName)
+{
+  if (fGeoPathHash != volName.Hash()) { NavigateTo(volName); }
+  Float_t sizey = fVolumeShape->GetDY();
+  return sizey;
+}
+
+Float_t FairTutorialDet4GeoHandler::GetSizeZ(TString volName)
+{
+  if (fGeoPathHash != volName.Hash()) { NavigateTo(volName); }
+  Float_t sizez = fVolumeShape->GetDZ();
+  return sizez;
+}
+
+void FairTutorialDet4GeoHandler::GetDetectorSize(Int_t detID, Double_t* detSize)
+{
+    TString path = ConstructFullPathFromDetID(detID);
+    detSize[0] = GetSizeX(path);
+    detSize[1] = GetSizeY(path);
+    detSize[2] = GetSizeZ(path);
 }
 
 TString FairTutorialDet4GeoHandler::ConstructFullPathFromDetID(Int_t detID)
@@ -195,10 +231,6 @@ void FairTutorialDet4GeoHandler::NavigateTo(TString volName)
         fGeoPathHash = volName.Hash();
         fCurrentVolume = gGeoManager->GetCurrentVolume();
         fVolumeShape = static_cast<TGeoBBox*>(fCurrentVolume->GetShape());
-        Double_t local[3] = {0., 0., 0.};   // Local centre of volume
-        gGeoManager->LocalToMaster(local, fGlobal);
-        LOG(debug2) << "Pos: " << fGlobal[0] << " , " << fGlobal[1] << " , " << fGlobal[2];
-        //    fGlobalMatrix = gGeoManager->GetCurrentMatrix();
     }
 }
 

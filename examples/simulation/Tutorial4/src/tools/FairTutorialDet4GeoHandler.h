@@ -45,7 +45,6 @@ class FairTutorialDet4GeoHandler : public TObject
     Int_t Init(Bool_t isSimulation = kFALSE);
 
     void FillDetectorInfoArray(Int_t uniqueId);
-    void NavigateTo(TString volName);
 
     // Implement Interface functions to the TGeoManager to be
     // the same as for the VMC
@@ -57,8 +56,9 @@ class FairTutorialDet4GeoHandler : public TObject
     const char* CurrentVolOffName(Int_t off) const;
 
     void LocalToGlobal(Double_t* local, Double_t* global, Int_t detID);
+    void GlobalToLocal(Double_t* global, Double_t* local, Int_t detID);
 
-    // Int_t CheckGeometryVersion();
+    void GetDetectorSize(Int_t detID, Double_t* detSize);
 
   private:
     Bool_t fIsSimulation;   //!
@@ -72,6 +72,11 @@ class FairTutorialDet4GeoHandler : public TObject
     TGeoHMatrix* fGlobalMatrix;   //!
 
     TString ConstructFullPathFromDetID(Int_t detID);
+    void NavigateTo(TString volName);
+
+    Float_t GetSizeX(TString volName);
+    Float_t GetSizeY(TString volName);
+    Float_t GetSizeZ(TString volName);
 
     FairTutorialDet4GeoHandler(const FairTutorialDet4GeoHandler&);
     FairTutorialDet4GeoHandler operator=(const FairTutorialDet4GeoHandler&);
