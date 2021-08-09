@@ -56,6 +56,8 @@ class FairTutorialDet4Digitizer : public FairTask
     /** Output array to  new data level**/
     //  TClonesArray* <OutputDataLevel>;
 
+    void CalculatePixel(Double_t* local, Int_t detID);
+
     FairTutorialDet4Digitizer(const FairTutorialDet4Digitizer&);
     FairTutorialDet4Digitizer operator=(const FairTutorialDet4Digitizer&);
 

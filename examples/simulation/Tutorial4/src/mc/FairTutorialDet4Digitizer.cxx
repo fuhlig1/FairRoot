@@ -16,6 +16,7 @@
 // ---- Default constructor -------------------------------------------
 FairTutorialDet4Digitizer::FairTutorialDet4Digitizer()
     : FairTask("FairTutorialDet4Digitizer")
+    , fGeoHandler(new FairTutorialDet4GeoHandler())
 {
     LOG(debug) << "Defaul Constructor of FairTutorialDet4Digitizer";
 }
@@ -98,25 +99,29 @@ void FairTutorialDet4Digitizer::Exec(Option_t* /*option*/)
         y = point->GetY();
         z = point->GetZ();
 
-        LOG(info) << "Position: " << x << ", " << y << ", " << z;
+        Double_t global[3] = {x, y, z};
+        Double_t local[3];
+
+        LOG(info) << "Detector ID" << detID;
+        fGeoHandler->GlobalToLocal(global, local, detID);
+
+        LOG(info) << "Position(global): " << global[0] << ", " << global[1] << ", " << global[2];
+        LOG(info) << "Position(local): "  << local[0]  << ", " << local[1]  << ", " << local[2];
+
+//        CalculatePixel(local, detID);
     }
-/*
-        Double_t local[3] = {x, y, z};
-        Double_t global[3];
+}
 
-        fGeoHandler->LocalToGlobal(local, global, detID);
+void FairTutorialDet4Digitizer::CalculatePixel(Double_t* local, Int_t detID)
+{
+   // Calculate the pixel from the lowel left corner of the detector
+   Double_t pixelSizeX=0.1; // 1mm, 0.1cm
+   Double_t pixelSizeY=0.1; // 1mm, 0.1cm
 
-        x = global[0] + GetHitErr(0.1);
-        y = global[1] + GetHitErr(0.1);
-        z = global[2];
-*/
+   Double_t detSize[3];
 
-/*
-        LOG(info) << "Position: " << x << ", " << y << ", " << z;
-        LOG(info) << "****";
-        // Time of flight
-        // tof = point->GetTime();
-*/
+   fGeoHandler->GetDetectorSize(detID, detSize);
+  
 }
 
 // ---- Finish --------------------------------------------------------
