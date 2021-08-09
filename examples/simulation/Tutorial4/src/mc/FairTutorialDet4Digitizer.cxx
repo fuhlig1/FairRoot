@@ -8,10 +8,13 @@
 #include "FairTutorialDet4Digitizer.h"
 
 #include "FairTutorialDet4Point.h"
+#include "FairTutorialDet4Digi.h"
 #include "FairRootManager.h"
 
 #include <TClonesArray.h>
 #include <TVector3.h>
+
+#include <utility>         // for std::pair
 
 // ---- Default constructor -------------------------------------------
 FairTutorialDet4Digitizer::FairTutorialDet4Digitizer()
@@ -82,7 +85,7 @@ void FairTutorialDet4Digitizer::Exec(Option_t* /*option*/)
     TVector3 pos, dpos;   // Position and error vectors
 
     // Loop over TutorialDerPoints
-    Int_t nHits = 0;
+    Int_t nDigis = 0;
     Int_t nPoints = fPointArray->GetEntriesFast();
     LOG(info) << "Number of points: " << nPoints;
     for (Int_t iPoint = 0; iPoint < nPoints; iPoint++) {
@@ -100,28 +103,21 @@ void FairTutorialDet4Digitizer::Exec(Option_t* /*option*/)
         z = point->GetZ();
 
         Double_t global[3] = {x, y, z};
-        Double_t local[3];
 
-        LOG(info) << "Detector ID" << detID;
-        fGeoHandler->GlobalToLocal(global, local, detID);
+        std::pair<UShort_t, UShort_t> pixels = fGeoHandler->CalculatePixelFromGlobalPos(global, detID);
 
-        LOG(info) << "Position(global): " << global[0] << ", " << global[1] << ", " << global[2];
-        LOG(info) << "Position(local): "  << local[0]  << ", " << local[1]  << ", " << local[2];
+        LOG(info) << "Pixel(column(x), row(y)): "  << pixels.first  << ", " << pixels.second;
 
-//        CalculatePixel(local, detID);
+        new ((*fDigiArray)[nDigis])  FairTutorialDet4Digi(detID,
+                                                          pixels.second,
+                                                          pixels.first,
+                                                          point->GetTime(),
+                                                          point->GetEnergyLoss()
+                                                         );
+
+        nDigis++;
+
     }
-}
-
-void FairTutorialDet4Digitizer::CalculatePixel(Double_t* local, Int_t detID)
-{
-   // Calculate the pixel from the lowel left corner of the detector
-   Double_t pixelSizeX=0.1; // 1mm, 0.1cm
-   Double_t pixelSizeY=0.1; // 1mm, 0.1cm
-
-   Double_t detSize[3];
-
-   fGeoHandler->GetDetectorSize(detID, detSize);
-  
 }
 
 // ---- Finish --------------------------------------------------------

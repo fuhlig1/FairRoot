@@ -24,6 +24,8 @@
 #include <TObject.h>   // for TObject
 #include <TString.h>   // for TString
 
+#include <utility>    // for std::pair, std::make_pair
+
 class TGeoBBox;
 class TGeoVolume;
 class TGeoHMatrix;
@@ -58,8 +60,7 @@ class FairTutorialDet4GeoHandler : public TObject
     void LocalToGlobal(Double_t* local, Double_t* global, Int_t detID);
     void GlobalToLocal(Double_t* global, Double_t* local, Int_t detID);
 
-    void GetDetectorSize(Int_t detID, Double_t* detSize);
-
+    std::pair<UShort_t, UShort_t> CalculatePixelFromGlobalPos(Double_t* global, Int_t detID);
   private:
     Bool_t fIsSimulation;   //!
 
@@ -77,6 +78,8 @@ class FairTutorialDet4GeoHandler : public TObject
     Float_t GetSizeX(TString volName);
     Float_t GetSizeY(TString volName);
     Float_t GetSizeZ(TString volName);
+//    void GetDetectorSize(Int_t detID, Double_t* detSize);
+    std::pair<UShort_t, UShort_t> CalculatePixel(Double_t* local, Int_t detID);
 
     FairTutorialDet4GeoHandler(const FairTutorialDet4GeoHandler&);
     FairTutorialDet4GeoHandler operator=(const FairTutorialDet4GeoHandler&);

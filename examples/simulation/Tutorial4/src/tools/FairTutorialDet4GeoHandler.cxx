@@ -21,6 +21,7 @@
 #include <TVirtualMC.h>    // for TVirtualMC
 #include <cstdio>          // for printf
 #include <cstring>         // for strlen, strncpy
+#include <utility>         // for std::pair, std::make_pair
 
 FairTutorialDet4GeoHandler::FairTutorialDet4GeoHandler()
     : TObject()
@@ -56,6 +57,45 @@ void FairTutorialDet4GeoHandler::GlobalToLocal(Double_t* global, Double_t* local
     gGeoManager->MasterToLocal(global, local);
 }
 
+
+std::pair<UShort_t, UShort_t> FairTutorialDet4GeoHandler::CalculatePixelFromGlobalPos(Double_t* global, Int_t detID)
+{
+        Double_t local[3] = {0.,0.,0.};
+
+        LOG(info) << "Detector ID" << detID;
+        GlobalToLocal(global, local, detID);
+
+        LOG(info) << "Position(global): " << global[0] << ", " << global[1] << ", " << global[2];
+        LOG(info) << "Position(local): "  << local[0]  << ", " << local[1]  << ", " << local[2];
+
+        return CalculatePixel(local, detID);
+}
+
+std::pair<UShort_t, UShort_t> FairTutorialDet4GeoHandler::CalculatePixel(Double_t* local, Int_t detID)
+{
+
+   // Calculate the pixel from the lowel left corner of the detector
+   Double_t pixelSizeX=0.1; // 1mm, 0.1cm
+   Double_t pixelSizeY=0.1; // 1mm, 0.1cm
+
+   // Transform to local coordinate system with the origin in the
+   // lower left corner of the detector
+   TString path = ConstructFullPathFromDetID(detID);
+   Double_t localX = local[0] + GetSizeX(path);
+   Double_t localY = local[1] + GetSizeY(path);
+
+   LOG(info) << "Position(local lower left): "  << localX  << ", " << localY  << ", " << local[2];
+
+   // Calculate the pixel from the local position
+   // The pixel is defined by row and columnn number
+   UShort_t column = static_cast<UShort_t>( std::floor(localX/pixelSizeX) ) + 1;
+   UShort_t row    = static_cast<UShort_t>( std::floor(localY/pixelSizeY) ) + 1;
+
+   LOG(info) << "Pixel(column(x), row(y)): "  << column  << ", " << row;
+
+   return std::make_pair(column, row);
+}
+
 Float_t FairTutorialDet4GeoHandler::GetSizeX(TString volName)
 {
   if (fGeoPathHash != volName.Hash()) { NavigateTo(volName); }
@@ -75,14 +115,6 @@ Float_t FairTutorialDet4GeoHandler::GetSizeZ(TString volName)
   if (fGeoPathHash != volName.Hash()) { NavigateTo(volName); }
   Float_t sizez = fVolumeShape->GetDZ();
   return sizez;
-}
-
-void FairTutorialDet4GeoHandler::GetDetectorSize(Int_t detID, Double_t* detSize)
-{
-    TString path = ConstructFullPathFromDetID(detID);
-    detSize[0] = GetSizeX(path);
-    detSize[1] = GetSizeY(path);
-    detSize[2] = GetSizeZ(path);
 }
 
 TString FairTutorialDet4GeoHandler::ConstructFullPathFromDetID(Int_t detID)
