@@ -29,7 +29,7 @@ void run_digi(TString mcEngine = "TGeant3", Bool_t AlignDone = true)
     inFile = InDir + inFile + Align + mcEngine + ".root";
 
     // Output file name
-    TString outFile = "testreco_";
+    TString outFile = "testdigi_";
     outFile = InDir + outFile + Align + mcEngine + ".root";
 
     // Parameter file

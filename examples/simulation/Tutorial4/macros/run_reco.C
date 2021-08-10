@@ -25,7 +25,7 @@ void run_reco(TString mcEngine = "TGeant3", Bool_t AlignDone = true)
     }
     TString InDir = "./data/";
     // Input file (MC Events)
-    TString inFile = "testrun_";
+    TString inFile = "testdigi_";
     inFile = InDir + inFile + Align + mcEngine + ".root";
 
     // Output file name
@@ -40,16 +40,6 @@ void run_reco(TString mcEngine = "TGeant3", Bool_t AlignDone = true)
     TString milleFile = "testmille_";
     milleFile = InDir + milleFile + Align + mcEngine;
 
-    TList* parFileList = new TList();
-
-    TString workDir = gSystem->Getenv("VMCWORKDIR");
-    TString paramDir = workDir + "/simulation/Tutorial4/parameters/";
-    TString paramFile = paramDir + "example.par";
-
-    TObjString tutDetDigiFile;
-    tutDetDigiFile.SetString(paramFile);
-    parFileList->Add(&tutDetDigiFile);
-
     // -----   Timer   --------------------------------------------------------
     TStopwatch timer;
 
@@ -61,20 +51,16 @@ void run_reco(TString mcEngine = "TGeant3", Bool_t AlignDone = true)
 
     FairRuntimeDb* rtdb = fRun->GetRuntimeDb();
     FairParRootFileIo* parInput1 = new FairParRootFileIo();
-    FairParAsciiFileIo* parIo2 = new FairParAsciiFileIo();
-    parIo2->open(parFileList, "in");
     parInput1->open(parFile.Data());
-    parIo2->open(parFileList, "in");
     rtdb->setFirstInput(parInput1);
-    rtdb->setSecondInput(parIo2);
     rtdb->setOutput(parInput1);
     rtdb->saveOutput();
 
     // -----   TorinoDetector hit  producers   ---------------------------------
-    FairTutorialDet4HitProducerIdealMisalign* hitProducer = new FairTutorialDet4HitProducerIdealMisalign();
-    hitProducer->DoMisalignment(kFALSE);
+    FairTutorialDet4HitProducer* hitProducer = new FairTutorialDet4HitProducer();
     fRun->AddTask(hitProducer);
 
+/*
     FairTutorialDet4StraightLineFitter* fitter = new FairTutorialDet4StraightLineFitter();
     fitter->SetVersion(2);
     fRun->AddTask(fitter);
@@ -84,6 +70,7 @@ void run_reco(TString mcEngine = "TGeant3", Bool_t AlignDone = true)
     writer->SetVersion(2);
     writer->SetFileName(milleFile);
     fRun->AddTask(writer);
+*/
 
     fRun->Init();
 
