@@ -19,6 +19,7 @@ set(sources
   param/FairTutorialDet4ContFact.cxx
 
   reco/FairTutorialDet4HitProducerIdealMisalign.cxx
+  reco/FairTutorialDet4HitProducer.cxx
   reco/FairTutorialDet4StraightLineFitter.cxx
   reco/FairTutorialDet4MilleWriter.cxx
 

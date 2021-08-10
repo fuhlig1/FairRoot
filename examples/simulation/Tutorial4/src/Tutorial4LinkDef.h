@@ -18,6 +18,7 @@
 #pragma link C++ class FairTutorialDet4Hit+;
 #pragma link C++ class FairTutorialDet4Digi+;
 #pragma link C++ class FairTutorialDet4HitProducerIdealMisalign+;
+#pragma link C++ class FairTutorialDet4HitProducer+;
 #pragma link C++ class FairTutorialDet4GeoHandler+;
 #pragma link C++ class FairTutorialDet4StraightLineFitter+;
 #pragma link C++ class FairTutorialDet4MilleWriter+;
