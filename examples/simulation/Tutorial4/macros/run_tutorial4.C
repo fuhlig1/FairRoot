@@ -5,7 +5,8 @@
  *              GNU Lesser General Public Licence (LGPL) version 3,             *
  *                  copied verbatim in the file "LICENSE"                       *
  ********************************************************************************/
-void run_tutorial4(Int_t nEvents = 10, TString mcEngine = "TGeant3", Bool_t doAlign = true, Bool_t isMT = false)
+void run_tutorial4(Int_t nEvents = 10, TString mcEngine = "TGeant3", Bool_t doAlign = true,
+                   Bool_t pointGenerator = false, Bool_t isMT = false)
 {
 
     TString dir = getenv("VMCWORKDIR");
@@ -106,12 +107,15 @@ void run_tutorial4(Int_t nEvents = 10, TString mcEngine = "TGeant3", Bool_t doAl
     FairPrimaryGenerator* primGen = new FairPrimaryGenerator();
     FairBoxGenerator* boxGen = new FairBoxGenerator(2212, 1);
 
-    boxGen->SetThetaRange(theta, theta + 0.1);
-    //  boxGen->SetThetaRange (  0.,  0.);
+    if (pointGenerator) {
+      boxGen->SetThetaRange (  0.,  0.);
+      boxGen->SetBoxXYZ (0.,0.,0.,0., 0.);
+    } else {
+      boxGen->SetThetaRange(theta, theta + 0.1);
+      boxGen->SetBoxXYZ(-20., -20., 20., 20., 0.);
+    }
     boxGen->SetPRange(momentum, momentum + 0.01);
     boxGen->SetPhiRange(0., 360.);
-    boxGen->SetBoxXYZ(-20., -20., 20., 20., 0.);
-    //  boxGen->SetBoxXYZ (0.,0.,0.,0., 0.);
 
     //  boxGen->SetDebug(kTRUE);
 
