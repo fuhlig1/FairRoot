@@ -23,6 +23,7 @@
 #include <Rtypes.h>    // for Int_t, Double_t, Bool_t, etc
 #include <TObject.h>   // for TObject
 #include <TString.h>   // for TString
+#include <TVector3.h>  // for TVector3
 
 #include <utility>    // for std::pair, std::make_pair
 
@@ -61,16 +62,19 @@ class FairTutorialDet4GeoHandler : public TObject
     void GlobalToLocal(Double_t* global, Double_t* local, Int_t detID);
 
     std::pair<UShort_t, UShort_t> CalculatePixelFromGlobalPos(Double_t* global, Int_t detID);
+    std::pair<TVector3, TVector3> CalculateGlobalPosFromPixel(UShort_t column, UShort_t row, Int_t detID);
   private:
-    Bool_t fIsSimulation;   //!
+    Bool_t fIsSimulation{kFALSE};   //!
 
-    Int_t fLastUsedDetectorID;   //!
+    Int_t fLastUsedDetectorID{0};   //!
 
-    UInt_t fGeoPathHash;          //!
-    TGeoVolume* fCurrentVolume;   //!
-    TGeoBBox* fVolumeShape;       //!
-    Double_t fGlobal[3];          //! Global centre of volume
-    TGeoHMatrix* fGlobalMatrix;   //!
+    Double_t fpixelSizeX{0.1};      //! 1mm, 0.1cm
+    Double_t fpixelSizeY{0.1};      //! 1mm, 0.1cm
+
+    UInt_t fGeoPathHash{0};                //!
+    TGeoVolume* fCurrentVolume{nullptr};   //!
+    TGeoBBox* fVolumeShape{nullptr};       //!
+
 
     TString ConstructFullPathFromDetID(Int_t detID);
     void NavigateTo(TString volName);

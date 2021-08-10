@@ -19,6 +19,9 @@
 #include <TGeoNode.h>      // for TGeoNode
 #include <TGeoVolume.h>    // for TGeoVolume
 #include <TVirtualMC.h>    // for TVirtualMC
+#include <TVector.h>       // for TVector3
+#include <TRandom.h>       // for gRandom
+
 #include <cstdio>          // for printf
 #include <cstring>         // for strlen, strncpy
 #include <utility>         // for std::pair, std::make_pair
@@ -30,8 +33,6 @@ FairTutorialDet4GeoHandler::FairTutorialDet4GeoHandler()
     , fGeoPathHash(0)
     , fCurrentVolume(nullptr)
     , fVolumeShape(nullptr)
-    , fGlobal()
-    , fGlobalMatrix(nullptr)
 {}
 
 Int_t FairTutorialDet4GeoHandler::Init(Bool_t isSimulation)
@@ -57,6 +58,38 @@ void FairTutorialDet4GeoHandler::GlobalToLocal(Double_t* global, Double_t* local
     gGeoManager->MasterToLocal(global, local);
 }
 
+std::pair<TVector3, TVector3> FairTutorialDet4GeoHandler::CalculateGlobalPosFromPixel(UShort_t column, UShort_t row, Int_t detID)
+{
+  // Calculate the position in a system with the origin in
+  // the lower left corner of the detector
+  // The position is always in the middle of the pixel
+  Double_t x = fpixelSizeX * column;
+  Double_t y = fpixelSizeY * row;
+
+  // Random value inside the a pixel
+  Double_t xshift = fpixelSizeX * (gRandom->Uniform() - 0.5);
+  Double_t yshift = fpixelSizeY * (gRandom->Uniform() - 0.5);
+
+   // Transform to local coordinate system with the origin in the
+   // center of the detector
+   // Randomize position within the pixel
+   TString path = ConstructFullPathFromDetID(detID);
+   Double_t localX = x + xshift - GetSizeX(path);
+   Double_t localY = y + yshift - GetSizeY(path);
+   Double_t localZ = 0.;
+
+   Double_t global[3] = {0.,0.,0.};
+   Double_t local[3]  = {localX, localY, localZ};
+
+   LocalToGlobal(local, global, detID);
+
+  TVector3 pos{global[0], global[1], global[2]};
+  TVector3 dpos{fpixelSizeX/TMath::Sqrt(12), fpixelSizeY/TMath::Sqrt(12), 0};
+
+  return std::make_pair(pos,dpos);
+
+}
+
 
 std::pair<UShort_t, UShort_t> FairTutorialDet4GeoHandler::CalculatePixelFromGlobalPos(Double_t* global, Int_t detID)
 {
@@ -75,8 +108,6 @@ std::pair<UShort_t, UShort_t> FairTutorialDet4GeoHandler::CalculatePixel(Double_
 {
 
    // Calculate the pixel from the lowel left corner of the detector
-   Double_t pixelSizeX=0.1; // 1mm, 0.1cm
-   Double_t pixelSizeY=0.1; // 1mm, 0.1cm
 
    // Transform to local coordinate system with the origin in the
    // lower left corner of the detector
@@ -88,8 +119,8 @@ std::pair<UShort_t, UShort_t> FairTutorialDet4GeoHandler::CalculatePixel(Double_
 
    // Calculate the pixel from the local position
    // The pixel is defined by row and columnn number
-   UShort_t column = static_cast<UShort_t>( std::floor(localX/pixelSizeX) ) + 1;
-   UShort_t row    = static_cast<UShort_t>( std::floor(localY/pixelSizeY) ) + 1;
+   UShort_t column = static_cast<UShort_t>( std::floor(localX/fpixelSizeX) ) + 1;
+   UShort_t row    = static_cast<UShort_t>( std::floor(localY/fpixelSizeY) ) + 1;
 
    LOG(info) << "Pixel(column(x), row(y)): "  << column  << ", " << row;
 
