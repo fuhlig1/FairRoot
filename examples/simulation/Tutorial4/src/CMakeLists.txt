@@ -18,6 +18,8 @@ set(sources
 
   param/FairTutorialDet4ContFact.cxx
 
+  qa/FairTutorialDet4HitProducerQa.cxx
+
   reco/FairTutorialDet4HitProducerIdealMisalign.cxx
   reco/FairTutorialDet4HitProducer.cxx
   reco/FairTutorialDet4StraightLineFitter.cxx

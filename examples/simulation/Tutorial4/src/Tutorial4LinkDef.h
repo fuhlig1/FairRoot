@@ -23,4 +23,5 @@
 #pragma link C++ class FairTutorialDet4StraightLineFitter+;
 #pragma link C++ class FairTutorialDet4MilleWriter+;
 #pragma link C++ class FairTutorialDet4PointDraw;
+#pragma link C++ class FairTutorialDet4HitProducerQa;
 #endif
