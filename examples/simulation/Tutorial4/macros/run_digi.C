@@ -1,5 +1,5 @@
 /********************************************************************************
- *    Copyright (C) 2014 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH    *
+ *    Copyright (C) 2021 GSI Helmholtzzentrum fuer Schwerionenforschung GmbH    *
  *                                                                              *
  *              This software is distributed under the terms of the             *
  *              GNU Lesser General Public Licence (LGPL) version 3,             *
@@ -18,6 +18,8 @@ void run_digi(TString mcEngine = "TGeant3", Bool_t AlignDone = true)
 
     // Verbosity level (0=quiet, 1=event level, 2=track level, 3=debug)
     Int_t iVerbose = 0;   // just forget about it, for the moment
+
+    TString dir = getenv("VMCWORKDIR");
 
     TString Align = "";
     if (AlignDone) {
@@ -52,6 +54,32 @@ void run_digi(TString mcEngine = "TGeant3", Bool_t AlignDone = true)
     rtdb->setFirstInput(parInput1);
     rtdb->setOutput(parInput1);
     rtdb->saveOutput();
+
+
+   if (AlignDone) {
+      // read matrices from disk
+      std::map<std::string, TGeoHMatrix>* matrices{nullptr};
+
+      TString matrix_filename{"matrices.root"};
+      matrix_filename = dir + "/simulation/Tutorial4/parameters/" + matrix_filename;
+      LOG(info) << "Filename: " << matrix_filename.Data();
+
+      TFile *misalignmentMatrixRootfile = new TFile(matrix_filename.Data(), "READ");
+      if (misalignmentMatrixRootfile->IsOpen()) {
+        gDirectory->GetObject("MisalignMatrices", matrices);
+        misalignmentMatrixRootfile->Close();
+      } else {
+       LOG(error) << "Could not open file " << matrix_filename << "\n Exiting";
+       exit(1);
+      }
+      if (matrices) {
+        fRun->AddAlignmentMatrices(*matrices);
+      } else {
+       LOG(error) << "Alignment required but no matrices found." <<  "\n Exiting";
+       exit(1);
+      }
+
+    }
 
     // -----   TorinoDetector hit  producers   ---------------------------------
     FairTutorialDet4Digitizer* digitizer = new FairTutorialDet4Digitizer();
