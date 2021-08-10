@@ -112,7 +112,8 @@ void FairTutorialDet4Digitizer::Exec(Option_t* /*option*/)
                                                           pixels.second,
                                                           pixels.first,
                                                           point->GetTime(),
-                                                          point->GetEnergyLoss()
+                                                          point->GetEnergyLoss(),
+                                                          iPoint
                                                          );
 
         nDigis++;

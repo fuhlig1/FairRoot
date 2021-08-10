@@ -30,12 +30,14 @@ public:
    ** @param  time     Measurement time [ns]
    ** @param  charge   Charge [ADC units]
    **/
-  FairTutorialDet4Digi(Int_t address, UShort_t row, UShort_t column, Double_t time, Double_t charge)
+  FairTutorialDet4Digi(Int_t address, UShort_t row, UShort_t column,
+                       Double_t time, Double_t charge, Int_t mcindex)
     : fTime(time)
     , fAddress(address)
     , fRow(row)
     , fColumn(column)
     , fCharge(charge)
+    , fMCIndex(mcindex)
   {
   }
 
@@ -74,6 +76,11 @@ public:
    **/
   Double_t GetTime() const { return fTime; }
 
+  /** Monte Carlo index
+   ** @value mcIndex [ns]
+   **/
+  Double_t GetMCIndex() const { return fMCIndex; }
+
 
   /** String output **/
   std::string ToString() const;
@@ -86,7 +93,7 @@ private:
   UShort_t fRow{0};    ///< Row number
   UShort_t fColumn{0}; ///< Column number
   Double_t fCharge{0}; ///< Charge 
-
+  Int_t fMCIndex{-1};  ///< MC Index
 
   ClassDef(FairTutorialDet4Digi, 1);
 };
