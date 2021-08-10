@@ -49,6 +49,8 @@ public:
    **/
   Int_t GetAddress() const { return fAddress; }
 
+  Int_t GetDetectorID() const { return fAddress; }
+
 
   /** @brief row number in module 
    ** @value row number
