@@ -73,11 +73,8 @@ void FairTutorialDet4HitProducer::Exec(Option_t* /*opt*/)
     // Declare some variables
     FairTutorialDet4Digi* digi = nullptr;
     Int_t detID = 0;   // Detector ID
-    // Int_t trackID = 0;        // Track index
-    Double_t x, y, z;    // Position
-    Double_t dx = 0.1;   // Position error
-    // Double_t tof = 0.;        // Time of flight
-    TVector3 pos, dpos;   // Position and error vectors
+    Double_t row;
+    Double_t column;
 
     // Loop over TofDigis
     Int_t nHits = 0;
@@ -89,43 +86,21 @@ void FairTutorialDet4HitProducer::Exec(Option_t* /*opt*/)
         }
 
         // Detector ID
-        detID = digi->GetDetectorID();
+        detID  = digi->GetDetectorID();
+        row    = digi->GetRowNumber();
+        column = digi->GetColumnNumber();
 
-        LOG(info) << "Detector(culumn, row): " << detID << "(" << digi->GetColumnNumber() << ", " << digi->GetRowNumber() << ")"; 
+        LOG(info) << "Detector(culumn, row): " << detID << "(" << column << ", " << row << ")";
 
-        // Determine hit position
-/*
-        x = point->GetX();
-        y = point->GetY();
-        z = point->GetZ();
+        std::pair<TVector3, TVector3> position = fGeoHandler->CalculateGlobalPosFromPixel(column , row, detID);
 
-        LOG(info) << "Position: " << x << ", " << y << ", " << z;
-*/
-
-/*
-        Double_t local[3] = {x, y, z};
-        Double_t global[3];
-
-        fGeoHandler->LocalToGlobal(local, global, detID);
-
-        x = global[0] + GetHitErr(0.1);
-        y = global[1] + GetHitErr(0.1);
-        z = global[2];
-*/
-
-/*
-        LOG(info) << "Position: " << x << ", " << y << ", " << z;
-        LOG(info) << "****";
-*/
-        // Time of flight
-        // tof = point->GetTime();
+        LOG(info) << "Position: " << position.first.X()
+                  << ", " << position.first.Y()
+                  << ", " << position.first.Z();
 
         // Create new hit
-/*        pos.SetXYZ(x, y, z);
-        dpos.SetXYZ(dx, dx, 0.);
-        new ((*fHitArray)[nHits]) FairTutorialDet4Hit(detID, iPoint, pos, dpos);
+        new ((*fHitArray)[nHits]) FairTutorialDet4Hit(detID, digi->GetMCIndex(), position.first, position.second);
         nHits++;
-*/
     }
     // Event summary
     LOG(debug) << "Create " << nHits << " TutorialDetHits out of " << nDigis << " TutorilaDetDigis created.";
