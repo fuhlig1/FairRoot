@@ -31,8 +31,8 @@ FairTutorialDet4HitProducerQa::FairTutorialDet4HitProducerQa(const char* name, c
   , fPointArray{nullptr}
   , fPullX{new TH1F("fPullX", "", 500, -10, 10)}
   , fPullY{new TH1F("fPullY", "", 500, -10, 10)}
-  , fResX{new TH1F("fResX", "", 500, -10, 10)}
-  , fResY{new TH1F("fResY", "", 500, -10, 10)}
+  , fResX{new TH1F("fResX", "", 1000, -5., 5.)}
+  , fResY{new TH1F("fResY", "", 1000, -5., 5.)}
 {
 }
 // --------------------------------------------------------------------------
@@ -95,7 +95,7 @@ void FairTutorialDet4HitProducerQa::Exec(Option_t*)
 
     Int_t detID = hit->GetDetectorID();
 
-    if (detID == 1) {
+//    if (detID == 1) {
 
       // compute the residulas and pulls for X and Y coordinate
       Double_t hitPosX = hit->GetX();
@@ -113,7 +113,7 @@ void FairTutorialDet4HitProducerQa::Exec(Option_t*)
       fResY->Fill(resY);
       fPullX->Fill(pullX);
       fPullY->Fill(pullY);
-    }
+//    }
   }
 }
 

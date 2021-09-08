@@ -60,17 +60,15 @@ void run_reco(TString mcEngine = "TGeant3", Bool_t AlignDone = true)
     FairTutorialDet4HitProducer* hitProducer = new FairTutorialDet4HitProducer();
     fRun->AddTask(hitProducer);
 
-/*
     FairTutorialDet4StraightLineFitter* fitter = new FairTutorialDet4StraightLineFitter();
     fitter->SetVersion(2);
     fRun->AddTask(fitter);
 
     FairTutorialDet4MilleWriter* writer = new FairTutorialDet4MilleWriter();
-    //  writer->SetWriteAscii(kTRUE);
+    writer->SetWriteAscii(kTRUE);
     writer->SetVersion(2);
     writer->SetFileName(milleFile);
     fRun->AddTask(writer);
-*/
 
     fRun->Init();
 

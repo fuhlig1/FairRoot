@@ -90,11 +90,11 @@ void FairTutorialDet4HitProducer::Exec(Option_t* /*opt*/)
         row    = digi->GetRowNumber();
         column = digi->GetColumnNumber();
 
-        LOG(info) << "Detector(culumn, row): " << detID << "(" << column << ", " << row << ")";
+        LOG(debug) << "Detector(culumn, row): " << detID << "(" << column << ", " << row << ")";
 
         std::pair<TVector3, TVector3> position = fGeoHandler->CalculateGlobalPosFromPixel(column , row, detID);
 
-        LOG(info) << "Position: " << position.first.X()
+        LOG(debug) << "Position: " << position.first.X()
                   << ", " << position.first.Y()
                   << ", " << position.first.Z();
 

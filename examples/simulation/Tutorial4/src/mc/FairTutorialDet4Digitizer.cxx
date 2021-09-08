@@ -87,7 +87,7 @@ void FairTutorialDet4Digitizer::Exec(Option_t* /*option*/)
     // Loop over TutorialDerPoints
     Int_t nDigis = 0;
     Int_t nPoints = fPointArray->GetEntriesFast();
-    LOG(info) << "Number of points: " << nPoints;
+    LOG(debug) << "Number of points: " << nPoints;
     for (Int_t iPoint = 0; iPoint < nPoints; iPoint++) {
         point = static_cast<FairTutorialDet4Point*>(fPointArray->At(iPoint));
         if (!point) {
@@ -106,7 +106,7 @@ void FairTutorialDet4Digitizer::Exec(Option_t* /*option*/)
 
         std::pair<UShort_t, UShort_t> pixels = fGeoHandler->CalculatePixelFromGlobalPos(global, detID);
 
-        LOG(info) << "Pixel(column(x), row(y)): "  << pixels.first  << ", " << pixels.second;
+        LOG(debug) << "Pixel(column(x), row(y)): "  << pixels.first  << ", " << pixels.second;
 
         new ((*fDigiArray)[nDigis])  FairTutorialDet4Digi(detID,
                                                           pixels.second,

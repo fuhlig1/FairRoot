@@ -60,23 +60,46 @@ void FairTutorialDet4GeoHandler::GlobalToLocal(Double_t* global, Double_t* local
 
 std::pair<TVector3, TVector3> FairTutorialDet4GeoHandler::CalculateGlobalPosFromPixel(UShort_t column, UShort_t row, Int_t detID)
 {
+   TString path = ConstructFullPathFromDetID(detID);
+   Double_t sizex = GetSizeX(path);
+   Double_t sizey = GetSizeY(path);
+
   // Calculate the position in a system with the origin in
   // the lower left corner of the detector
   // The position is always in the middle of the pixel
-  Double_t x = fpixelSizeX * column;
-  Double_t y = fpixelSizeY * row;
+  // column and row start at 0 so we have to shift the
+  // position by half a pixel size to be in the center
+  Double_t x = fpixelSizeX * column + fpixelSizeX/2;
+  Double_t y = fpixelSizeY * row + fpixelSizeY/2;
+
+  if ( x <= 0.  || x >= 2*sizex ||
+       y <= 0.  || y >= 2*sizey) {
+     LOG(error) << "Out of bounds (x,y): (" << x << ", " << y <<")"; 
+  }
 
   // Random value inside the a pixel
   Double_t xshift = fpixelSizeX * (gRandom->Uniform() - 0.5);
   Double_t yshift = fpixelSizeY * (gRandom->Uniform() - 0.5);
 
+  if ( xshift <= -0.05 || xshift >= 0.05 ||
+       yshift <= -0.05 || yshift >= 0.05) {
+     LOG(error) << "shifts of bounds (x,y): (" << xshift << ", " << yshift <<")"; 
+  }
+
+
    // Transform to local coordinate system with the origin in the
    // center of the detector
    // Randomize position within the pixel
-   TString path = ConstructFullPathFromDetID(detID);
-   Double_t localX = x + xshift - GetSizeX(path);
-   Double_t localY = y + yshift - GetSizeY(path);
+//   Double_t localX = x - sizex - fpixelSizeX/2;
+//   Double_t localY = y - sizey - fpixelSizeY/2;
+   Double_t localX = x + xshift - sizex;
+   Double_t localY = y + yshift - sizey;
    Double_t localZ = 0.;
+
+  if ( TMath::Abs(localX) > sizex  || 
+       TMath::Abs(localY) > sizey ) {
+     LOG(error) << "Out of bounds (x,y): (" << localX << ", " << localY <<")"; 
+  }
 
    Double_t global[3] = {0.,0.,0.};
    Double_t local[3]  = {localX, localY, localZ};
@@ -95,11 +118,11 @@ std::pair<UShort_t, UShort_t> FairTutorialDet4GeoHandler::CalculatePixelFromGlob
 {
         Double_t local[3] = {0.,0.,0.};
 
-        LOG(info) << "Detector ID" << detID;
+        LOG(debug) << "Detector ID" << detID;
         GlobalToLocal(global, local, detID);
 
-        LOG(info) << "Position(global): " << global[0] << ", " << global[1] << ", " << global[2];
-        LOG(info) << "Position(local): "  << local[0]  << ", " << local[1]  << ", " << local[2];
+        LOG(debug) << "Position(global): " << global[0] << ", " << global[1] << ", " << global[2];
+        LOG(debug) << "Position(local): "  << local[0]  << ", " << local[1]  << ", " << local[2];
 
         return CalculatePixel(local, detID);
 }
@@ -112,17 +135,36 @@ std::pair<UShort_t, UShort_t> FairTutorialDet4GeoHandler::CalculatePixel(Double_
    // Transform to local coordinate system with the origin in the
    // lower left corner of the detector
    TString path = ConstructFullPathFromDetID(detID);
+   Double_t sizex = GetSizeX(path);
+   Double_t sizey = GetSizeY(path);
+   if ( TMath::Abs(local[0]) >= sizex || TMath::Abs(local[1]) >= sizey ) {
+     LOG(error) << "Out of bounds (x,y): (" << local[0] << ", " << local[1] <<")"; 
+   }
+
+
    Double_t localX = local[0] + GetSizeX(path);
    Double_t localY = local[1] + GetSizeY(path);
 
-   LOG(info) << "Position(local lower left): "  << localX  << ", " << localY  << ", " << local[2];
+   if ( localX <= 0. || localX >= 2*sizex ||
+        localY <= 0. || localY >= 2*sizey ) {
+     LOG(error) << "Out of bounds (x,y): (" << localX << ", " << localY <<")"; 
+   }
+
+   LOG(debug) << "Position(local lower left): "  << localX  << ", " << localY  << ", " << local[2];
 
    // Calculate the pixel from the local position
    // The pixel is defined by row and columnn number
-   UShort_t column = static_cast<UShort_t>( std::floor(localX/fpixelSizeX) ) + 1;
-   UShort_t row    = static_cast<UShort_t>( std::floor(localY/fpixelSizeY) ) + 1;
+   
+   UShort_t column = static_cast<UShort_t>( std::floor(localX/fpixelSizeX) );
+   UShort_t row    = static_cast<UShort_t>( std::floor(localY/fpixelSizeY) );
 
-   LOG(info) << "Pixel(column(x), row(y)): "  << column  << ", " << row;
+   if ( column < 0 || column > 799 ||
+        row < 0 || row > 799 ) {
+     LOG(error) << "Pixel out of bounds (x,y): (" << column << ", " << row <<")"; 
+   }
+
+
+   LOG(debug) << "Pixel(column(x), row(y)): "  << column  << ", " << row;
 
    return std::make_pair(column, row);
 }
