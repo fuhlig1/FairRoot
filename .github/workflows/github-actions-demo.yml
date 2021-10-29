@@ -1,8 +1,10 @@
 name: Rebase Nightly Branches
-on: [push]
-#  schedule:
-#    # * is a special character in YAML so you have to quote this string
-#    - cron:  '30 5,17 * * *'
+#on: [push]
+on:
+  schedule:
+     # timezone is UTC
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '10 10 * * *'
 jobs:
   Rebase-Actions:
     runs-on: ubuntu-latest
