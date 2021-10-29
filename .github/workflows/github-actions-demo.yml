@@ -14,14 +14,13 @@ jobs:
       - run: echo " The ${{ github.repository }} repository has been cloned to the runner."
       - run: echo "️ The workflow is now ready to test your code on the runner."
       - name: List files in the repository
-        run: |
-          cd ${{ github.workspace }}
-          ls ${{ github.workspace }}
-          git branch -a
-      - name: Switch to different branch
+      - name: Rebase the nightly_master and nightly_dev branches
         run: |
           cd  ${{ github.workspace }}
           git checkout nightly_master
           git rebase origin/master
           git push origin nightly_master
+          git checkout nightly_dev
+          git rebase origin/dev
+          git push origin nightly_dev
       - run: echo " This job's status is ${{ job.status }}."
