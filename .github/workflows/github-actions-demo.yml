@@ -1,7 +1,10 @@
-name: GitHub Actions Demo
+name: Rebase Nightly Branches
 on: [push]
+#  schedule:
+#    # * is a special character in YAML so you have to quote this string
+#    - cron:  '30 5,17 * * *'
 jobs:
-  Explore-GitHub-Actions:
+  Rebase-Actions:
     runs-on: ubuntu-latest
     steps:
       - run: echo " The job was automatically triggered by a ${{ github.event_name }} event."
@@ -12,15 +15,17 @@ jobs:
         with:
           fetch-depth: 0
       - run: echo " The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "️ The workflow is now ready to test your code on the runner."
+      - run: echo "️ The workflow is now ready to rebase your code on the runner."
       - name: Rebase the nightly_master branch
         run: |
+          date
           cd  ${{ github.workspace }}
           git checkout nightly_master
           git rebase origin/master
           git push origin nightly_master
       - name: Rebase the nightly_dev branch
         run: |
+          date
           cd  ${{ github.workspace }}
           git checkout nightly_dev
           git rebase origin/dev
