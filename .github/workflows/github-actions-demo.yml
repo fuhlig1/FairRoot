@@ -23,4 +23,5 @@ jobs:
           cd  ${{ github.workspace }}
           git checkout nightly_master
           git rebase master
+          git push nightly_master
       - run: echo " This job's status is ${{ job.status }}."
