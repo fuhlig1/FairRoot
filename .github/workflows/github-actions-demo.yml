@@ -14,4 +14,9 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+      - name: Switch to different branch
+        run: |
+          cd  ${{ github.workspace }}
+          git checkout nightly_master
+          git rebase master
       - run: echo " This job's status is ${{ job.status }}."
