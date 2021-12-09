@@ -37,5 +37,5 @@ fairroot_target_root_dictionary(${target}
   LINKDEF AlignmentLinkDef.h
 )
 
-install(TARGETS ${target} LIBRARY DESTINATION ${PROJECT_INSTALL_LIBDIR})
+#install(TARGETS ${target} LIBRARY DESTINATION ${PROJECT_INSTALL_LIBDIR})
 install(FILES ${headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})

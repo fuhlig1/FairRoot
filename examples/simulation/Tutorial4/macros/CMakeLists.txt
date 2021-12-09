@@ -10,14 +10,23 @@ GENERATE_ROOT_TEST_SCRIPT(${CMAKE_CURRENT_SOURCE_DIR}/run_tutorial4_createMatric
 GENERATE_ROOT_TEST_SCRIPT(${CMAKE_CURRENT_SOURCE_DIR}/run_tutorial4_createGeometryFile.C)
 GENERATE_ROOT_TEST_SCRIPT(${CMAKE_CURRENT_SOURCE_DIR}/run_tutorial4_createParameterFile.C)
 GENERATE_ROOT_TEST_SCRIPT(${CMAKE_CURRENT_SOURCE_DIR}/run_tutorial4.C)
+GENERATE_ROOT_TEST_SCRIPT(${CMAKE_CURRENT_SOURCE_DIR}/run_digi.C)
 GENERATE_ROOT_TEST_SCRIPT(${CMAKE_CURRENT_SOURCE_DIR}/run_reco.C)
 
 set(maxTestTime 60)
 
 foreach(mcEngine IN ITEMS TGeant3 TGeant4)
-  add_test(NAME ex_sim_tutorial4_${mcEngine}
+ add_test(NAME ex_sim_tutorial4_${mcEngine}
            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/run_tutorial4.sh 10 \"${mcEngine}\")
   set_tests_properties(ex_sim_tutorial4_${mcEngine} PROPERTIES
+    TIMEOUT ${maxTestTime}
+    PASS_REGULAR_EXPRESSION "Macro finished successfully"
+  )
+
+  add_test(NAME ex_digi_tutorial4_${mcEngine}
+           COMMAND ${CMAKE_CURRENT_BINARY_DIR}/run_digi.sh \"${mcEngine}\")
+  set_tests_properties(ex_digi_tutorial4_${mcEngine} PROPERTIES
+    DEPENDS ex_sim_tutorial4_${mcEngine}
     TIMEOUT ${maxTestTime}
     PASS_REGULAR_EXPRESSION "Macro finished successfully"
   )
@@ -25,7 +34,7 @@ foreach(mcEngine IN ITEMS TGeant3 TGeant4)
   add_test(NAME ex_sim_tutorial4_reco_${mcEngine}
            COMMAND ${CMAKE_CURRENT_BINARY_DIR}/run_reco.sh \"${mcEngine}\")
   set_tests_properties(ex_sim_tutorial4_reco_${mcEngine} PROPERTIES
-    DEPENDS ex_sim_tutorial4_${mcEngine}
+    DEPENDS ex_digi_tutorial4_${mcEngine}
     TIMEOUT ${maxTestTime}
     PASS_REGULAR_EXPRESSION "Macro finished successfully"
   )
