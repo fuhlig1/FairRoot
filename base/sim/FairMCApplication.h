@@ -101,6 +101,8 @@ class FairMCApplication : public TVirtualMCApplication
 
     virtual void ConstructSensitiveDetectors();
 
+    /** Define actions just before sensitive->EndOfEvent */
+    virtual void EndOfEvent();   // MC Application
     /** Define actions at the end of event */
     void FinishEvent() override;   // MC Application
     /** Define actions at the end of primary track */
@@ -218,6 +220,11 @@ class FairMCApplication : public TVirtualMCApplication
      * Add module to the list of sensitive detectors.
      */
     void AddSensitiveModule(std::string volName, FairModule* module);
+
+    /**
+     * Method introduced temporarily. It should go awway with DEPRACATED Bool_t FairDetector::ProcessHits()
+     */
+    FairVolume* GetFairVolume();
 
   private:
     // methods
