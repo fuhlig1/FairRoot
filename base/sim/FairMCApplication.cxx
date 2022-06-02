@@ -900,7 +900,6 @@ void FairMCApplication::InitGeometry()
         if (detector) {
             // check whether detector is active
             if (detector->IsActive()) {
-                detector->Initialize();
                 detector->Register();
             }
         }
