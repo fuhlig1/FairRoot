@@ -64,7 +64,7 @@ FairTutPropDet::~FairTutPropDet()
 
 void FairTutPropDet::Initialize() { FairDetector::Initialize(); }
 
-Bool_t FairTutPropDet::ProcessHits(FairVolume* vol)
+Bool_t FairTutPropDet::ProcessHits(FairVolume* /*vol*/)
 {
 
     /** This method is called from the MC stepping */
@@ -84,7 +84,8 @@ Bool_t FairTutPropDet::ProcessHits(FairVolume* vol)
     if (TVirtualMC::GetMC()->IsTrackExiting() || TVirtualMC::GetMC()->IsTrackStop()
         || TVirtualMC::GetMC()->IsTrackDisappeared()) {
         fTrackID = TVirtualMC::GetMC()->GetStack()->GetCurrentTrackNumber();
-        fVolumeID = vol->getMCid();
+        Int_t copyNo;
+        fVolumeID = TVirtualMC::GetMC()->CurrentVolID(copyNo);
 
         if (fELoss == 0.) {
             return kFALSE;
