@@ -12,7 +12,7 @@ set(suite GeoBase)
 
 set(checks_lib "${suite}_checks")
 add_library(${checks_lib} INTERFACE)
-target_link_libraries(${checks_lib} INTERFACE FairRoot::GeoBase Catch2::Catch2 fmt::fmt)
+target_link_libraries(${checks_lib} INTERFACE FairRoot::GeoBase Catch2::Catch2 fmt::fmt Boost::filesystem)
 target_include_directories(${checks_lib} INTERFACE ${CMAKE_SOURCE_DIR})
 fairroot_library_settings(${checks_lib})
 
