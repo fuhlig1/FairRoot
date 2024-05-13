@@ -38,11 +38,9 @@ TEST_CASE("FairTestGeo")
         std::istringstream mediafile( os.str() );
     */
 
-    std::fstream mediafile{};
-    mediafile.open("data/testmedia.geo", std::ios::in);
+    std::fstream mediafile{"data/testmedia.geo", std::ios::in};
 
-    std::fstream geofile{};
-    geofile.open("data/testdet_brick.geo", std::ios::in);
+    std::fstream geofile{"data/testdet_brick.geo", std::ios::in};
 
     if (!geofile.is_open()) {
         INFO("Geo file isn't open");
@@ -63,17 +61,21 @@ TEST_CASE("FairTestGeo")
 
     INFO("Media file read");
 
-    FairGeoNode* volu = new FairGeoNode();
+    auto volu = std::make_unique<FairGeoNode>();
+    //FairGeoNode* volu = new FairGeoNode();
     volu->SetName("cave");
     volu->setVolumeType(kFairGeoTopNode);
     volu->setActive();
     volu->setShape(new FairGeoBrik());
-    FairGeoMedium* medium = media.getMedium("air");
-    if (!medium) {
-        medium = new FairGeoMedium();
-        media.addMedium(medium);
+
+    if (auto air = media.getMedium("air"); air) {
+        volu->setMedium(air);
+    } else {
+        auto generic = std::make_unique<FairGeoMedium>();
+        volu->setMedium(generic.get());
+        media.addMedium(generic.release());
     }
-    volu->setMedium(medium);
+
     volu->setPoint(0, 20000., -20000., -20000.);
     volu->setPoint(1, 20000., 20000., -20000.);
     volu->setPoint(2, -20000., 20000., -20000.);
@@ -82,13 +84,14 @@ TEST_CASE("FairTestGeo")
     volu->setPoint(5, 20000., 20000., 20000.);
     volu->setPoint(6, -20000., 20000., 20000.);
     volu->setPoint(7, -20000., -20000., 20000.);
-    TList masterNodes = new TList();
-    masterNodes.Add(new FairGeoNode(*volu));
+    
+    auto masterNodes = std::make_unique<TList>();
+    masterNodes->Add(new FairGeoNode(*volu));
 
     INFO("Master volume created");
 
     FairTestGeo geo;
-    geo.setMasterNodes(&masterNodes);
+    geo.setMasterNodes(masterNodes.get());
     geo.setShapes(new FairGeoShapes());
 
     //    fairroot::tests::checkGeoSetNamingConventions(geo, "testdet", 10);
