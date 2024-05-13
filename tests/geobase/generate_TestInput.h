@@ -18,7 +18,7 @@
 namespace fairroot::tests
 {
 
-void getVolumeParmeter(std::string shape, std::vector<std::vector<float>>& parameters, std::stringstream& os)
+void getVolumeParameter(std::string shape, std::vector<std::vector<float>>& parameters, std::stringstream& os)
 {
 
     if (shape == "BOX" || shape == "TRAP" || shape == "TRD1") {
@@ -117,7 +117,7 @@ auto generateTempFileName()
     return (tempDir.native() + tempFile.native());
 }
 
-auto generateVolumeParmeter(std::string shape, std::vector<std::vector<float>>& parameters)
+auto generateVolumeParameter(std::string shape, std::vector<std::vector<float>>& parameters)
 {
 
     // stringstream which is used to collect all information added
@@ -125,7 +125,7 @@ auto generateVolumeParmeter(std::string shape, std::vector<std::vector<float>>& 
     std::stringstream os;
     os << std::fixed << std::setprecision(3);
 
-    fairroot::tests::getVolumeParmeter(shape, parameters, os);
+    fairroot::tests::getVolumeParameter(shape, parameters, os);
 
     std::string outFileName = fairroot::tests::generateTempFileName();
 
