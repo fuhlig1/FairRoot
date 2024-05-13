@@ -16,24 +16,19 @@ target_link_libraries(${checks_lib} INTERFACE FairRoot::GeoBase Catch2::Catch2 f
 target_include_directories(${checks_lib} INTERFACE ${CMAKE_SOURCE_DIR})
 fairroot_library_settings(${checks_lib})
 
-fairroot_add_catch2_test_suite(${suite}_Shapes
+fairroot_add_catch2_test_suite(${suite}
   SOURCES
   tests_FairGeoShapes.cxx
+
+# Compilation works but when running the test doesn't finish
+# Disable for the time being 
+#  FairTestGeo.cxx
+#  tests_FairGeoSet.cxx
 
   DEPENDENCIES
   FairRoot::GeoBase
   FairRoot::GeoBase_checks
 )
-
-#fairroot_add_catch2_test_suite(${suite}_FairGeoSet
-#  SOURCES
-#  FairTestGeo.cxx
-#  tests_FairGeoSet.cxx
-#
-#  DEPENDENCIES
-#  FairRoot::GeoBase
-#  FairRoot::GeoBase_checks
-#)
 
 configure_File(${CMAKE_CURRENT_SOURCE_DIR}/data/testmedia.geo ${CMAKE_CURRENT_BINARY_DIR}/data/testmedia.geo @ONLY)
 configure_File(${CMAKE_CURRENT_SOURCE_DIR}/data/testdet_brick.geo ${CMAKE_CURRENT_BINARY_DIR}/data/testdet_brick.geo @ONLY)
