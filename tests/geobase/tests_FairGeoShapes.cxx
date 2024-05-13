@@ -34,14 +34,15 @@ TEST_CASE("FairGeoBasicShape")
 {
     FairGeoBasicShape shape;
 
-    fairroot::tests::check_FairGeoShape_Construction(shape, std::string{""}, 0, 0, nullptr);
+    std::unique_ptr<TArrayD> paramArray(nullptr);
+    fairroot::tests::check_FairGeoShape_Construction(shape, std::string{""}, 0, 0, paramArray.get());
 }
 
 TEST_CASE("FairGeoAssembly")
 {
     FairGeoAssembly shape;
-
-    fairroot::tests::check_FairGeoShape_Construction(shape, std::string{"ASSEMBLY"}, 0, 0, new TArrayD(0));
+    std::unique_ptr<TArrayD> paramArray(new TArrayD(0));
+    fairroot::tests::check_FairGeoShape_Construction(shape, std::string{"ASSEMBLY"}, 0, 0, paramArray.get());
 }
 
 TEST_CASE("FairGeoBrik")
@@ -62,8 +63,9 @@ TEST_CASE("FairGeoBrik")
     FairGeoVolume volume;
 
     // Check if the constructor works as expected
+    std::unique_ptr<TArrayD> paramArray{new TArrayD(numParams)};
     fairroot::tests::check_FairGeoShape_Construction(
-        shape, std::string{"BOX "}, numPoints, numParams, new TArrayD(numParams));
+        shape, std::string{"BOX "}, numPoints, numParams, paramArray.get());
 
     // Check reading and writting from volume/shape parameters
     fairroot::tests::check_FairGeoShape_ReadWrite(shape, volume, std::string{"BOX"}, numPoints, parameters);
@@ -92,8 +94,9 @@ TEST_CASE("FairGeoCone")
     FairGeoVolume volume;
 
     // Check if the constructor works as expected
+    std::unique_ptr<TArrayD> paramArray{new TArrayD(numParams)};
     fairroot::tests::check_FairGeoShape_Construction(
-        shape, std::string{"CONE"}, numPoints, numParams, new TArrayD(numParams));
+        shape, std::string{"CONE"}, numPoints, numParams, paramArray.get());
 
     // Check reading and writting from volume/shape parameters
     fairroot::tests::check_FairGeoShape_ReadWrite(shape, volume, std::string{"CONE"}, numPoints, parameters);
@@ -121,8 +124,9 @@ TEST_CASE("FairGeoCons")
     FairGeoVolume volume;
 
     // Check if the constructor works as expected
+    std::unique_ptr<TArrayD> paramArray{new TArrayD(numParams)};
     fairroot::tests::check_FairGeoShape_Construction(
-        shape, std::string{"CONS"}, numPoints, numParams, new TArrayD(numParams));
+        shape, std::string{"CONS"}, numPoints, numParams, paramArray.get());
 
     // Check reading and writting from volume/shape parameters
     fairroot::tests::check_FairGeoShape_ReadWrite(shape, volume, std::string{"CONS"}, numPoints, parameters);
@@ -147,8 +151,9 @@ TEST_CASE("FairGeoEltu")
     FairGeoVolume volume;
 
     // Check if the constructor works as expected
+    std::unique_ptr<TArrayD> paramArray{new TArrayD(numParams)};
     fairroot::tests::check_FairGeoShape_Construction(
-        shape, std::string{"ELTU"}, numPoints, numParams, new TArrayD(numParams));
+        shape, std::string{"ELTU"}, numPoints, numParams, paramArray.get());
 
     // Check reading and writting from volume/shape parameters
     fairroot::tests::check_FairGeoShape_ReadWrite(shape, volume, std::string{"ELTU"}, numPoints, parameters);
@@ -184,7 +189,8 @@ TEST_CASE("FairGeoPcon")
     // Check if the constructor works as expected
     // At construction the number of points and parameters are 0
     // The values are updated when reading the shape information
-    fairroot::tests::check_FairGeoShape_Construction(shape, std::string{"PCON"}, 0, 0, nullptr);
+    std::unique_ptr<TArrayD> paramArray(nullptr);
+    fairroot::tests::check_FairGeoShape_Construction(shape, std::string{"PCON"}, 0, 0, paramArray.get());
 
     // Check reading and writting from volume/shape parameters
     fairroot::tests::check_FairGeoShape_ReadWrite(shape, volume, std::string{"PCON"}, numPoints, parameters);
@@ -221,7 +227,8 @@ TEST_CASE("FairGeoPgon")
     // Check if the constructor works as expected
     // At construction the number of points and parameters are 0
     // The values are updated when reading the shape information
-    fairroot::tests::check_FairGeoShape_Construction(shape, std::string{"PGON"}, 0, 0, nullptr);
+    std::unique_ptr<TArrayD> paramArray(nullptr);
+    fairroot::tests::check_FairGeoShape_Construction(shape, std::string{"PGON"}, 0, 0, paramArray.get());
 
     // Check reading and writting from volume/shape parameters
     fairroot::tests::check_FairGeoShape_ReadWrite(shape, volume, std::string{"PGON"}, numPoints, parameters);
@@ -244,8 +251,9 @@ TEST_CASE("FairGeoSphe")
     FairGeoVolume volume;
 
     // Check if the constructor works as expected
+    std::unique_ptr<TArrayD>paramArray{new TArrayD(numParams)};
     fairroot::tests::check_FairGeoShape_Construction(
-        shape, std::string{"SPHE"}, numPoints, numParams, new TArrayD(numParams));
+        shape, std::string{"SPHE"}, numPoints, numParams,paramArray.get());
 
     // Check reading and writting from volume/shape parameters
     fairroot::tests::check_FairGeoShape_ReadWrite(shape, volume, std::string{"SPHE"}, numPoints, parameters);
@@ -269,8 +277,9 @@ TEST_CASE("FairGeoTorus")
     FairGeoVolume volume;
 
     // Check if the constructor works as expected
+    std::unique_ptr<TArrayD>paramArray{new TArrayD(numParams)};
     fairroot::tests::check_FairGeoShape_Construction(
-        shape, std::string{"TORUS"}, numPoints, numParams, new TArrayD(numParams));
+        shape, std::string{"TORUS"}, numPoints, numParams,paramArray.get());
 
     // Check reading and writting from volume/shape parameters
     fairroot::tests::check_FairGeoShape_ReadWrite(shape, volume, std::string{"TORUS"}, numPoints, parameters);
@@ -298,8 +307,9 @@ TEST_CASE("FairGeoTrap")
     FairGeoVolume volume;
 
     // Check if the constructor works as expected
+    std::unique_ptr<TArrayD>paramArray{new TArrayD(numParams)};
     fairroot::tests::check_FairGeoShape_Construction(
-        shape, std::string{"TRAP"}, numPoints, numParams, new TArrayD(numParams));
+        shape, std::string{"TRAP"}, numPoints, numParams,paramArray.get());
 
     // Check reading and writting from volume/shape parameters
     fairroot::tests::check_FairGeoShape_ReadWrite(shape, volume, std::string{"TRAP"}, numPoints, parameters);
@@ -332,8 +342,9 @@ TEST_CASE("FairGeoTrd1")
     FairGeoVolume volume;
 
     // Check if the constructor works as expected
+    std::unique_ptr<TArrayD>paramArray{new TArrayD(numParams)};
     fairroot::tests::check_FairGeoShape_Construction(
-        shape, std::string{"TRD1"}, numPoints, numParams, new TArrayD(numParams));
+        shape, std::string{"TRD1"}, numPoints, numParams,paramArray.get());
 
     // Check reading and writting from volume/shape parameters
     fairroot::tests::check_FairGeoShape_ReadWrite(shape, volume, std::string{"TRD1"}, numPoints, parameters);
@@ -358,8 +369,9 @@ TEST_CASE("FairGeoTube")
     FairGeoVolume volume;
 
     // Check if the constructor works as expected
+    std::unique_ptr<TArrayD>paramArray{new TArrayD(numParams)};
     fairroot::tests::check_FairGeoShape_Construction(
-        shape, std::string{"TUBE"}, numPoints, numParams, new TArrayD(numParams));
+        shape, std::string{"TUBE"}, numPoints, numParams,paramArray.get());
 
     // Check reading and writting from volume/shape parameters
     fairroot::tests::check_FairGeoShape_ReadWrite(shape, volume, std::string{"TUBE"}, numPoints, parameters);
@@ -386,8 +398,9 @@ TEST_CASE("FairGeoTubs")
     FairGeoVolume volume;
 
     // Check if the constructor works as expected
+    std::unique_ptr<TArrayD>paramArray{new TArrayD(numParams)};
     fairroot::tests::check_FairGeoShape_Construction(
-        shape, std::string{"TUBS"}, numPoints, numParams, new TArrayD(numParams));
+        shape, std::string{"TUBS"}, numPoints, numParams,paramArray.get());
 
     // Check reading and writting from volume/shape parameters
     fairroot::tests::check_FairGeoShape_ReadWrite(shape, volume, std::string{"TUBS"}, numPoints, parameters);
