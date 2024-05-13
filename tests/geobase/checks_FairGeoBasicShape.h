@@ -16,6 +16,7 @@
 #include <TArrayD.h>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
+#include <cstdio>
 #include <string>
 
 using Catch::Matchers::WithinRel;
@@ -26,17 +27,17 @@ using Catch::Matchers::WithinRel;
 namespace fairroot::tests
 {
 
-auto check_FairGeoTransform(FairGeoTransform* _trans)
+auto check_FairGeoTransform(FairGeoTransform& _trans)
 {
-    const FairGeoRotation& rot = _trans->getRotMatrix();
+    const FairGeoRotation& rot = _trans.getRotMatrix();
     REQUIRE(rot.isUnitMatrix());
 
-    const FairGeoVector& vec = _trans->getTransVector();
+    const FairGeoVector& vec = _trans.getTransVector();
     REQUIRE_THAT(vec.getValues(0), WithinRel(0., 0.001));
     REQUIRE_THAT(vec.getValues(1), WithinRel(0., 0.001));
     REQUIRE_THAT(vec.getValues(2), WithinRel(0., 0.001));
 
-    const FairGeoVector& vec_cm = _trans->getTranslation();
+    const FairGeoVector& vec_cm = _trans.getTranslation();
     REQUIRE_THAT(vec_cm.getValues(0), WithinRel(0., 0.001));
     REQUIRE_THAT(vec_cm.getValues(1), WithinRel(0., 0.001));
     REQUIRE_THAT(vec_cm.getValues(2), WithinRel(0., 0.001));
@@ -64,10 +65,10 @@ auto check_FairGeoShape_Construction(FairGeoBasicShape& shape,
         }
 
         FairGeoTransform* centerPos = shape.getCenterPosition();
-        check_FairGeoTransform(centerPos);
+        check_FairGeoTransform(*centerPos);
 
         FairGeoTransform* voluPos = shape.getVoluPosition();
-        check_FairGeoTransform(voluPos);
+        check_FairGeoTransform(*voluPos);
     }
 }
 
@@ -80,7 +81,7 @@ auto check_FairGeoShape_ReadWrite(FairGeoBasicShape& shape,
     // generate temporary file with parameters below describing the shape defined by the shapeName
     // with the respective coordinates
     // The name of the temporary file is returned
-    std::string fileName = fairroot::tests::generateVolumeParmeter(shapeName, parameters);
+    std::string fileName = fairroot::tests::generateVolumeParameter(shapeName, parameters);
 
     // open the file with the shape/volume parameters
     // read the content from file and close the file
@@ -152,8 +153,8 @@ auto check_FairGeoShape_ReadWrite(FairGeoBasicShape& shape,
 
     // Remove the temporary files
     //    std::cout << shapeName << ": " << fileName.c_str() << "\n";
-    std::remove(fileName.c_str());
-    std::remove(testFileName.c_str());
+    CHECK(std::remove(fileName.c_str())==0);
+    CHECK(std::remove(testFileName.c_str())==0);
 }
 
 }   // namespace fairroot::tests
