@@ -113,8 +113,7 @@ auto generateTempFileName()
     // there is no good solution available from C and C++ standards
     boost::filesystem::path tempDir = boost::filesystem::temp_directory_path();
     boost::filesystem::path tempFile = boost::filesystem::unique_path();
-    std::string outFileName = tempDir.native() + tempFile.native();
-    return (tempDir.native() + tempFile.native());
+    return ( (tempDir / tempFile).native());
 }
 
 auto generateVolumeParameter(std::string shape, std::vector<std::vector<float>>& parameters)
