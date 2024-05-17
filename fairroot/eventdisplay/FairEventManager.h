@@ -102,17 +102,17 @@ class FairEventManager : public TEveEventManager
      */
     virtual void SwitchBackground(Bool_t light);
     /* functions below are obsolete  **/
-    virtual void SetPriOnly(Bool_t Pri) {}
+    virtual void SetPriOnly([[maybe_unused]] Bool_t Pri) {}
     virtual Bool_t IsPriOnly() { return kFALSE; }
-    virtual void SelectPDG(Int_t PDG) {}
+    virtual void SelectPDG([[maybe_unused]] Int_t PDG) {}
     virtual Int_t GetCurrentPDG() { return 0; }
-    virtual void SetMaxEnergy(Float_t max) {}
-    virtual void SetMinEnergy(Float_t min) {}
-    virtual void SetEvtMaxEnergy(Float_t max) {}
-    virtual void SetEvtMinEnergy(Float_t min) {}
+    virtual void SetMaxEnergy([[maybe_unused]] Float_t max) {}
+    virtual void SetMinEnergy([[maybe_unused]] Float_t min) {}
+    virtual void SetEvtMaxEnergy([[maybe_unused]] Float_t max) {}
+    virtual void SetEvtMinEnergy([[maybe_unused]] Float_t min) {}
     virtual void SetEvtTime(Float_t time) { fTimeEvent = time; }
-    virtual void SetEvtTimeText(Double_t time);
-    virtual void SetEvtNumberText(Int_t evtNumber);
+    virtual void SetEvtTimeText([[maybe_unused]] Double_t time);
+    virtual void SetEvtNumberText([[maybe_unused]] Int_t evtNumber);
     void SetUseTimeOfEvent(Bool_t val) { fUseTimeOfEvent = val; }
     void SetAnimatedTracks(Bool_t val) { fAnimatedTracks = val; }
     void SetClearHandler(Bool_t val) { fClearHandler = val; }

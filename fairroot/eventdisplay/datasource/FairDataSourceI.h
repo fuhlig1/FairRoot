@@ -41,7 +41,7 @@ class FairDataSourceI : public TObject
     }
     virtual int GetNData() = 0;
     virtual TObject* GetData(int index) = 0;
-    virtual double GetTime(int index) { return -1.0; };
+    virtual double GetTime([[maybe_unused]] int index) { return -1.0; };
     virtual TString GetBranchName() const { return fBranchName; };
     virtual void Reset() = 0;   //< Resets the data containers
 

@@ -28,7 +28,7 @@ FairGeoTracksDraw::FairGeoTracksDraw(const char* name)
     , fVisualizer(nullptr)
 {}
 
-void FairGeoTracksDraw::Exec(Option_t* option) { fVisualizer->Repaint(); }
+void FairGeoTracksDraw::Exec(Option_t*) { fVisualizer->Repaint(); }
 
 InitStatus FairGeoTracksDraw::Init()
 {

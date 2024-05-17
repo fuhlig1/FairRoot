@@ -19,7 +19,7 @@ FairEveAnimationControl::FairEveAnimationControl(TGedFrame *frame,
                                                  TGCompositeFrame *tab,
                                                  TString name,
                                                  Int_t width,
-                                                 Int_t buttons)
+                                                 Int_t /*buttons*/)
     : fWidth(width)
     , fValMin(0)
     , fValMax(10)

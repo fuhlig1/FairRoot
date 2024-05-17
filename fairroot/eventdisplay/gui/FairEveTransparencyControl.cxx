@@ -36,7 +36,7 @@ FairEveTransparencyControl::FairEveTransparencyControl(TGFrame const *parent, ch
     fNumber->Connect("ValueSet(Long_t)", this->ClassName(), this, "ValueSet()");
 }
 
-void FairEveTransparencyControl::Toggled(Bool_t on)
+void FairEveTransparencyControl::Toggled(Bool_t)
 {
     if (fCheck->IsOn()) {
         FairEventManager::Instance()->SetTransparency(kFALSE, fNumber->GetIntNumber());

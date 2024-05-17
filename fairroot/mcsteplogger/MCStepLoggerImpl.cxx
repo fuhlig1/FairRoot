@@ -225,7 +225,7 @@ extern "C" void dispatchFinishRun(FairMCApplication* app, char const* libname, c
     (app->*origMethod)();
 }
 
-extern "C" void performLogging(FairMCApplication* app)
+extern "C" void performLogging(FairMCApplication*)
 {
     static TVirtualMC* mc = TVirtualMC::GetMC();
     logger.addStep(mc);
