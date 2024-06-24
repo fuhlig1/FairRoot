@@ -1,7 +1,6 @@
 # Environment Variables
 
-In the following section the environment variables used by FairRoot are
-documented. Some of these variables are mandatory for proper working of
+In the following section the environment variables used by FairRoot are documented. Some of these variables are mandatory for proper working of
 FairRoot, some of them are optional. 
 
 ## Build time environment variables
