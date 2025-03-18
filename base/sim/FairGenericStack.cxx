@@ -48,7 +48,10 @@ FairGenericStack::FairGenericStack(Int_t)
     , fFSNofSecondaries(0)
 {}
 
-FairGenericStack::~FairGenericStack() { delete fDetIter; }
+FairGenericStack::~FairGenericStack()
+{
+    delete fDetIter;
+}
 
 FairGenericStack::FairGenericStack(const FairGenericStack& rhs)
     : TVirtualMCStack(rhs)
@@ -109,7 +112,8 @@ void FairGenericStack::FastSimMoveParticleTo(Double_t xx,
         LOG(fatal) << "FairStack::FastSimMoveParticleTo(" << xx << "," << yy << "," << zz << ": " << curVolName << " = "
                    << targetVolName << ") crashes the simulation.";
     } else {
-        LOG(debug) << "gMC says track is in \"" << curVolName << "\" moving particle to \"" << targetVolName << "\".";
+        LOG(debug) << "TVirtualMC::GetMC() says track is in \"" << curVolName << "\" moving particle to \""
+                   << targetVolName << "\".";
     }
 
     Int_t tobedone = 1;
