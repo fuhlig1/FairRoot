@@ -130,23 +130,45 @@ function(fairroot_target_root_dictionary target)
   # add a custom command to generate the dictionary using rootcling
   # cmake-format: off
   set(space " ")
-  add_custom_command(
-    OUTPUT ${dictionaryFile} ${pcmFile} ${rootmapFile}
-    VERBATIM
-    COMMAND ${CMAKE_COMMAND} -E env "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$ENV{LD_LIBRARY_PATH}"
-      ${ROOT_CINT_EXECUTABLE}
-      -f ${dictionaryFile}
-      -inlineInputHeader
-      -rmf ${rootmapFile}
-      -rml $<TARGET_FILE_NAME:${target}>
-      -I$<JOIN:${includeDirs},$<SEMICOLON>-I>
-      ${extra_includes}
-      -excludePath "${CMAKE_BINARY_DIR}"
-      $<$<BOOL:${prop}>:-D$<JOIN:${prop},$<SEMICOLON>-D>>
-      ${headers}
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_BINARY_DIR}/${pcmBase} ${pcmFile}
-    COMMAND_EXPAND_LISTS
-    DEPENDS ${headers})
+  if (APPLE AND CMAKE_OSX_SYSROOT)
+    add_custom_command(
+      OUTPUT ${dictionaryFile} ${pcmFile} ${rootmapFile}
+      VERBATIM
+      COMMAND ${CMAKE_COMMAND} -E env 
+        "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$ENV{LD_LIBRARY_PATH}"
+        "SDKROOT=${CMAKE_OSX_SYSROOT}"
+         ${ROOT_CINT_EXECUTABLE}
+        -f ${dictionaryFile}
+        -inlineInputHeader
+        -rmf ${rootmapFile}
+        -rml $<TARGET_FILE_NAME:${target}>
+        -I$<JOIN:${includeDirs},$<SEMICOLON>-I>
+        ${extra_includes}
+        -excludePath "${CMAKE_BINARY_DIR}"
+        $<$<BOOL:${prop}>:-D$<JOIN:${prop},$<SEMICOLON>-D>>
+        ${headers}
+      COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_BINARY_DIR}/${pcmBase} ${pcmFile}
+      COMMAND_EXPAND_LISTS
+      DEPENDS ${headers})
+  else()
+    add_custom_command(
+      OUTPUT ${dictionaryFile} ${pcmFile} ${rootmapFile}
+      VERBATIM
+      COMMAND ${CMAKE_COMMAND} -E env "LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$ENV{LD_LIBRARY_PATH}"
+        ${ROOT_CINT_EXECUTABLE}
+        -f ${dictionaryFile}
+        -inlineInputHeader
+        -rmf ${rootmapFile}
+        -rml $<TARGET_FILE_NAME:${target}>
+        -I$<JOIN:${includeDirs},$<SEMICOLON>-I>
+        ${extra_includes}
+        -excludePath "${CMAKE_BINARY_DIR}"
+        $<$<BOOL:${prop}>:-D$<JOIN:${prop},$<SEMICOLON>-D>>
+        ${headers}
+      COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_BINARY_DIR}/${pcmBase} ${pcmFile}
+      COMMAND_EXPAND_LISTS
+      DEPENDS ${headers})
+  endif()
   # cmake-format: on
 
   # add dictionary source to the target sources
